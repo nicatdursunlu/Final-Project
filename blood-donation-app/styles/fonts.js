@@ -1,22 +1,19 @@
 import * as Font from "expo-font";
 
-import QuicksandBold from "../assets/fonts/Quicksand-Bold.ttf";
-import QuicksandMedium from "../assets/fonts/Quicksand-Medium.ttf";
-import QuicksandRegular from "../assets/fonts/Quicksand-Regular.ttf";
-import QuicksandSemiBold from "../assets/fonts/Quicksand-SemiBold.ttf";
+import OpenSansRegular from "../assets/fonts/OpenSans-Regular.ttf";
+import OpenSansSemiBold from "../assets/fonts/OpenSans-SemiBold.ttf";
+import OpenSansBold from "../assets/fonts/OpenSans-Bold.ttf";
 
 export const loadFonts = () => {
   return Font.loadAsync({
-    QuicksandBold,
-    QuicksandMedium,
-    QuicksandRegular,
-    QuicksandSemiBold,
+    OpenSansRegular,
+    OpenSansSemiBold,
+    OpenSansBold,
   });
 };
 
 export const FONT_FAMILIES = Object.freeze({
-  regular: "QuicksandRegular",
-  medium: "QuicksandMedium",
-  semi: "QuicksandSemiBold",
-  bold: "QuicksandBold",
+  regular: "OpenSansRegular",
+  semi: "OpenSansSemiBold",
+  bold: "OpenSansBold",
 });
