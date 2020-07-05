@@ -6,7 +6,7 @@ import { COLORS } from "./../styles/colors";
 
 export const Link = ({ title, onPress, style }) => (
   <TouchableOpacity onPress={onPress}>
-    <CustomText weight="medium" style={{ ...styles.title, ...style }}>
+    <CustomText weight="semi" style={{ ...styles.title, ...style }}>
       {title}
     </CustomText>
   </TouchableOpacity>
@@ -14,8 +14,8 @@ export const Link = ({ title, onPress, style }) => (
 
 const styles = StyleSheet.create({
   title: {
-    color: COLORS.PRIMARY,
-    fontSize: 15,
+    color: "#fff",
+    fontSize: 16,
     textDecorationLine: "underline",
   },
 });

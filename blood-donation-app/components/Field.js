@@ -4,7 +4,7 @@ import { Input } from "@ui-kitten/components";
 
 export const Field = ({
   label,
-  fullName,
+  value,
   placeholder,
   accessoryRight,
   secureTextEntry,
@@ -12,11 +12,12 @@ export const Field = ({
   captionIcon,
   onChangeText,
   style,
+  keyboardType,
 }) => {
   return (
     <Input
       label={label}
-      value={fullName}
+      value={value}
       placeholder={placeholder}
       accessoryRight={accessoryRight}
       caption={caption}
@@ -24,6 +25,7 @@ export const Field = ({
       secureTextEntry={secureTextEntry}
       onChangeText={onChangeText}
       style={{ ...style }}
+      keyboardType={keyboardType}
     />
   );
 };

@@ -1,32 +1,28 @@
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
-import { IndexPath, Layout, Select, SelectItem } from "@ui-kitten/components";
+import { Select, SelectItem } from "@ui-kitten/components";
 
-export const SelectGroup = ({ onChangeBloodType, types }) => {
-  //useState to detirmine index array whic index
-  const [selectedIndex, setSelectedIndex] = useState(new IndexPath(0));
-  //handled selected value to drop to outside component
+export const SelectGroup = ({
+  onChangeOption,
+  options,
+  label,
+  placeholder,
+}) => {
+  const [selectedIndex, setSelectedIndex] = useState("");
   const selectHandler = (index) => {
     setSelectedIndex(index);
-    onChangeBloodType(types[selectedIndex]);
+    onChangeOption(options[selectedIndex]);
   };
-
   return (
-    <Layout style={styles.container} level="1">
-      <Select
-        label="blood type"
-        value={types[selectedIndex - 1]}
-        selectedIndex={selectedIndex}
-        onSelect={selectHandler}
-      >
-        {types.map((type) => (
-          <SelectItem key={type} title={type} />
-        ))}
-      </Select>
-    </Layout>
+    <Select
+      label={label}
+      placeholder={placeholder}
+      value={options[selectedIndex]}
+      selectedIndex={selectedIndex}
+      onSelect={selectHandler}
+    >
+      {options.map((option) => (
+        <SelectItem key={option} title={option} />
+      ))}
+    </Select>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {},
-});
