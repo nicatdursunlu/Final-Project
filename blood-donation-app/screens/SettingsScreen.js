@@ -1,16 +1,12 @@
 import React, { useState } from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 
-import {
-  IndexPath,
-  Layout,
-  Select,
-  SelectItem,
-  Toggle,
-} from "@ui-kitten/components";
+import { Toggle } from "@ui-kitten/components";
 
 import { CustomText } from "../components";
 import { GLOBAL_STYLES } from "../styles/globalStyles";
+import { SelectGroup } from "./../components/SelectGroup";
+import { LANGUAGES } from "../utils/selectOptions";
 
 export const SettingsScreen = ({ navigation }) => {
   const [checked, setChecked] = useState(false);
@@ -24,8 +20,14 @@ export const SettingsScreen = ({ navigation }) => {
     setNotChecked(isChecked);
   };
 
-  const [selectedIndex, setSelectedIndex] = useState(new IndexPath(0));
+  const [filterBy, setFilterBy] = useState({ language: "" });
 
+  const filterHandler = (name, val) => {
+    setFilterBy((filter) => ({
+      ...filter,
+      [name]: val,
+    }));
+  };
   return (
     <View style={styles.container}>
       <View style={styles.body}>
@@ -39,16 +41,11 @@ export const SettingsScreen = ({ navigation }) => {
         </View>
         <View style={styles.options}>
           <CustomText style={styles.optionsText}>Language</CustomText>
-          <Layout style={styles.languageOptions} level="1">
-            <Select
-              selectedIndex={selectedIndex}
-              onSelect={(index) => setSelectedIndex(index)}
-            >
-              <SelectItem title="English" />
-              <SelectItem title="Russian" />
-              <SelectItem title="Azerbaijan" />
-            </Select>
-          </Layout>
+          <SelectGroup
+            style={styles.languageOptions}
+            options={LANGUAGES}
+            onChangeOption={(index) => filterHandler("bloodType", index)}
+          />
         </View>
         <View style={styles.options}>
           <CustomText style={styles.optionsText}>Notifications</CustomText>

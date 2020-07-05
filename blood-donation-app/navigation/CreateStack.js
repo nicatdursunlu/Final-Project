@@ -2,8 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { CreateScreen } from "./../screens";
-import { HeaderIcon } from "./../components";
-import { ICONS } from "./../styles";
+import { HeaderAction } from "./../components/HeaderAction";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -15,15 +14,19 @@ export const CreateStack = () => {
         component={CreateScreen}
         options={({ navigation }) => ({
           headerRight: () => (
-            <HeaderIcon
-              iconName={ICONS.menu}
-              side="right"
+            <HeaderAction
+              name="menu"
+              pack="feather"
               onPress={() => navigation.toggleDrawer()}
             />
           ),
-          headerLeft: () => (
-            <HeaderIcon iconName={ICONS.back} side="right" onPress={() => {}} />
-          ),
+          // headerLeft: () => (
+          //   <HeaderAction
+          //     name="arrow-left"
+          //     pack="feather"
+          //     onPress={() => navigation.goBack()}
+          //   />
+          // ),
         })}
       />
     </Navigator>
