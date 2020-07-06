@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Input } from "@ui-kitten/components";
@@ -14,15 +14,8 @@ const useInputState = (initialValue = "") => {
 
 export const CreateScreen = () => {
   const multilineInputState = useInputState();
-  const [filterBy, setFilterBy] = useState({ bloodType: "" });
+  const [bloodType, setBloodType] = useState("");
   const [value, setValue] = useState();
-
-  const filterHandler = (name, val) => {
-    setFilterBy((filter) => ({
-      ...filter,
-      [name]: val,
-    }));
-  };
 
   return (
     <KeyboardAwareScrollView
@@ -31,12 +24,12 @@ export const CreateScreen = () => {
     >
       <View style={styles.container}>
         <View style={styles.body}>
-          <SelectGroup
+          {/* <SelectGroup
             placeholder="Select your blood type"
             label="Blood type"
             options={BLOOD_TYPES}
-            onChangeOption={(index) => filterHandler("bloodType", index)}
-          />
+            onChangeOption={(index) => setBloodType(index)}
+          /> */}
           <TouchableOpacity>
             <View style={styles.options}>
               <CustomText style={styles.optionsText}>Add location</CustomText>
@@ -48,14 +41,12 @@ export const CreateScreen = () => {
             onChangeText={(nextValue) => setValue(nextValue)}
             style={styles.bottomSpacing}
           />
-          <Fragment>
-            <Input
-              multiline={true}
-              textStyle={{ minHeight: 110 }}
-              placeholder="Tell us more..."
-              {...multilineInputState}
-            />
-          </Fragment>
+          <Input
+            multiline={true}
+            textStyle={{ minHeight: 110 }}
+            placeholder="Tell us more..."
+            {...multilineInputState}
+          />
           <CustomBtn title="Post" style={styles.btn} onPress={() => {}} />
         </View>
       </View>

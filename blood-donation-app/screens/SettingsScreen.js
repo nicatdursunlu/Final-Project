@@ -20,14 +20,7 @@ export const SettingsScreen = ({ navigation }) => {
     setNotChecked(isChecked);
   };
 
-  const [filterBy, setFilterBy] = useState({ language: "" });
-
-  const filterHandler = (name, val) => {
-    setFilterBy((filter) => ({
-      ...filter,
-      [name]: val,
-    }));
-  };
+  const [language, setLanguage] = useState("");
   return (
     <View style={styles.container}>
       <View style={styles.body}>
@@ -44,7 +37,7 @@ export const SettingsScreen = ({ navigation }) => {
           <SelectGroup
             style={styles.languageOptions}
             options={LANGUAGES}
-            onChangeOption={(index) => filterHandler("bloodType", index)}
+            onChangeOption={(index) => setLanguage(index)}
           />
         </View>
         <View style={styles.options}>
