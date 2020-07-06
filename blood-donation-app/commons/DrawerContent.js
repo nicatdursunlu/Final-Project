@@ -1,84 +1,101 @@
 import React from "react";
 import { StyleSheet, View, Image, ImageBackground } from "react-native";
+import { connect } from "react-redux";
 
 import { CustomText, DrawerButton } from "../components";
 import { IMAGES } from "../styles/images";
 import { ICONS } from "../styles/icons";
 import { GLOBAL_STYLES } from "../styles/globalStyles";
+import {
+  selectAuthFullname,
+  selectAuthUsername,
+  selectAuthPhoto,
+  logOut,
+} from "../store/auth";
 
-export const DrawerContent = ({ navigation }) => {
-  return (
-    <View style={styles.container}>
-      <ImageBackground
-        style={styles.imgBackground}
-        source={IMAGES.welcomeImgBG}
-      >
-        <View style={styles.row}>
-          <Image style={styles.avatar} source={IMAGES.femaleAvatar} />
-          <View style={styles.namesWrapper}>
-            <CustomText weight="bold" style={styles.fullName}>
-              Mary Jane
-            </CustomText>
-            <View style={styles.usernameWrapper}>
-              <Image style={styles.profileIcon} source={ICONS.profile} />
-              <CustomText weight="bold" style={styles.username}>
-                mary_j
+const mapStateToProps = (state) => ({
+  fullName: selectAuthFullname(state),
+  username: selectAuthUsername(state),
+  photo: selectAuthPhoto(state),
+});
+
+export const DrawerContent = connect(mapStateToProps, { logOut })(
+  ({ navigation, fullName, username, photo, logOut }) => {
+    return (
+      <View style={styles.container}>
+        <ImageBackground
+          style={styles.imgBackground}
+          source={IMAGES.welcomeImgBG}
+        >
+          <View style={styles.row}>
+            <View style={styles.imageWrapper}>
+              <Image style={styles.avatar} source={{ uri: photo }} />
+            </View>
+            <View style={styles.namesWrapper}>
+              <CustomText weight="bold" style={styles.fullName}>
+                {fullName}
               </CustomText>
+              <View style={styles.usernameWrapper}>
+                <Image style={styles.profileIcon} source={ICONS.profile} />
+                <CustomText weight="bold" style={styles.username}>
+                  {username}
+                </CustomText>
+              </View>
+            </View>
+          </View>
+        </ImageBackground>
+
+        <View style={styles.navigation}>
+          <View style={styles.navContainer}>
+            <CustomText style={styles.navHeader}>Peferences</CustomText>
+            <View style={styles.navWrapper}>
+              <DrawerButton title="My posts" iconName="grid" pack="feather" />
+              <DrawerButton
+                title="Saved"
+                iconName="bookmark"
+                pack="font-awesome"
+              />
+              <DrawerButton
+                title="Settings"
+                iconName="settings"
+                pack="material"
+                onPress={() => navigation.navigate("Settings")}
+              />
+            </View>
+          </View>
+          <View style={styles.navContainer}>
+            <CustomText style={styles.navHeader}>Support</CustomText>
+            <View style={styles.navWrapper}>
+              <DrawerButton
+                title="About"
+                iconName="info-circle"
+                pack="font-awesome"
+              />
+              <DrawerButton
+                title="Contact"
+                iconName="question"
+                pack="font-awesome"
+              />
+              <DrawerButton
+                title="Rate the App"
+                iconName="star"
+                pack="font-awesome"
+              />
             </View>
           </View>
         </View>
-      </ImageBackground>
-
-      <View style={styles.navigation}>
-        <View style={styles.navContainer}>
-          <CustomText style={styles.navHeader}>Peferences</CustomText>
-          <View style={styles.navWrapper}>
-            <DrawerButton title="My posts" iconName="grid" pack="feather" />
-            <DrawerButton
-              title="Saved"
-              iconName="bookmark"
-              pack="font-awesome"
-            />
-            <DrawerButton
-              title="Settings"
-              iconName="settings"
-              pack="material"
-              onPress={() => navigation.navigate("Settings")}
-            />
-          </View>
-        </View>
-        <View style={styles.navContainer}>
-          <CustomText style={styles.navHeader}>Support</CustomText>
-          <View style={styles.navWrapper}>
-            <DrawerButton
-              title="About"
-              iconName="info-circle"
-              pack="font-awesome"
-            />
-            <DrawerButton
-              title="Contact"
-              iconName="question"
-              pack="font-awesome"
-            />
-            <DrawerButton
-              title="Rate the App"
-              iconName="star"
-              pack="font-awesome"
-            />
-          </View>
+        <View style={{ position: "absolute", bottom: 20 }}>
+          <DrawerButton
+            title="Log out"
+            iconName="log-out"
+            pack="feather"
+            onPress={logOut}
+          />
         </View>
       </View>
-      <View style={{ position: "absolute", bottom: 20 }}>
-        <DrawerButton
-          title="Log out"
-          iconName="log-out"
-          pack="feather"
-          onPress={() => navigation.navigate("Welcome")}
-        />
-      </View>
-    </View>
-  );
-};
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -95,10 +112,19 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     alignItems: "center",
   },
-  avatar: {
+  imageWrapper: {
     width: 100,
     height: 100,
+    borderRadius: 100,
+    overflow: "hidden",
+    backgroundColor: "#eee",
+    elevation: 3,
+    borderRadius: 100,
     marginRight: 15,
+  },
+  avatar: {
+    width: "100%",
+    height: "100%",
   },
   fullName: {
     color: "white",

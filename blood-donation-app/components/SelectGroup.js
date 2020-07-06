@@ -6,6 +6,7 @@ export const SelectGroup = ({
   options,
   label,
   placeholder,
+  style = {},
 }) => {
   const [selectedIndex, setSelectedIndex] = useState("");
   const selectHandler = (index) => {
@@ -16,9 +17,10 @@ export const SelectGroup = ({
     <Select
       label={label}
       placeholder={placeholder}
-      value={options[selectedIndex]}
+      value={options[selectedIndex - 1]}
       selectedIndex={selectedIndex}
       onSelect={selectHandler}
+      style={style}
     >
       {options.map((option) => (
         <SelectItem key={option} title={option} />
