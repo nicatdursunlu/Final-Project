@@ -1,13 +1,24 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { AppLoading } from "expo";
 
-import { loadFonts } from "./styles/fonts";
-import { FindScreen } from "./screens";
 import { RootNav } from "./navigation/RootNav";
+import { StatusBar } from "expo-status-bar";
+
+import * as eva from "@eva-design/eva";
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import {
+  FeatherIconsPack,
+  MaterialIconsPack,
+  FontAwesomeIconsPack,
+} from "./utils";
+
+import { loadFonts } from "./styles/fonts";
+
+// import { enableScreens } from "react-native-screens";
+// enableScreens();
 
 export default function App() {
-
   const [loaded, setLoaded] = useState(false);
   if (!loaded) {
     return (
@@ -18,6 +29,20 @@ export default function App() {
       />
     );
   }
-
-  return <RootNav />;
+  return (
+    <Fragment>
+      <StatusBar style="dark" />
+      <IconRegistry
+        icons={[
+          EvaIconsPack,
+          FeatherIconsPack,
+          FontAwesomeIconsPack,
+          MaterialIconsPack,
+        ]}
+      />
+      <ApplicationProvider {...eva} theme={eva.light}>
+        <RootNav />
+      </ApplicationProvider>
+    </Fragment>
+  );
 }
