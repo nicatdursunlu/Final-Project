@@ -1,11 +1,16 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { CustomText } from "../../components";
 
-export const SingleChatScreen = () => {
+import { ChatMessages } from "./ChatMessages";
+import { ChatForm } from "./ChatForm";
+import { Button } from "@ui-kitten/components";
+
+export const SingleChatScreen = ({ route }) => {
   return (
     <View style={styles.container}>
-      <CustomText>SingleChatScreen</CustomText>
+      <Button onPress={() => console.log("checked", route)}>check</Button>
+      <ChatMessages />
+      <ChatForm />
     </View>
   );
 };
@@ -13,8 +18,6 @@ export const SingleChatScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
   },
 });
