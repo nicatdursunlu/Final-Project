@@ -2,18 +2,11 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { Filters } from "./Filters";
-import { Suggesitions } from "./Suggestions";
-
-const DUMMY = ["all", "people", "posts", "blood centers"];
-const BLOOD_TYPES = ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"];
+import { Suggestions } from "./Suggestions";
+import { BLOOD_TYPES, FILTERS } from "../../utils/selectOptions";
 
 export const FindScreen = () => {
-  //FILTER OBJECT TO DETIRMENI WHICH BLOOD TYPE AND TYPE OF SEARCH
-  const [filterBy, setFilterBy] = useState({
-    byType: "",
-    bloodType: "",
-  });
-  //FILTER HANDLERE JUST SET VALUE TO PROPER VALUE
+  const [filterBy, setFilterBy] = useState({ byType: "", bloodType: "" });
   const filterHandler = (name, val) => {
     setFilterBy((filter) => ({
       ...filter,
@@ -21,17 +14,17 @@ export const FindScreen = () => {
     }));
   };
 
-  console.log(filterBy);
   return (
     <View style={styles.container}>
       <Filters
-        filters={DUMMY}
+        filters={FILTERS}
         filterType={filterBy.byType}
-        changeFilterType={(type) => filterHandler("byType", type)}
+        changeFilterType={(index) => filterHandler("byType", index)}
       />
-      <Suggesitions
-        onChangeBloodType={(type) => filterHandler("bloodType", type)}
-        types={BLOOD_TYPES}
+      <Suggestions
+        placeholder="Search by blood type"
+        options={BLOOD_TYPES}
+        onChangeOption={(index) => filterHandler("bloodType", index)}
       />
     </View>
   );
@@ -40,6 +33,6 @@ export const FindScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFF",
+    backgroundColor: "#fff",
   },
 });

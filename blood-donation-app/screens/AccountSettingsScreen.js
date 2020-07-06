@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Input, Icon } from "@ui-kitten/components";
+import { Icon } from "@ui-kitten/components";
 
 import { CustomBtn, Field } from "./../components";
-import { GLOBAL_STYLES, IconCollection } from "./../styles";
+import { GLOBAL_STYLES } from "./../styles";
 
 export const AccountSettingsScreen = () => {
   const fieldsInitialState = {
@@ -17,8 +17,13 @@ export const AccountSettingsScreen = () => {
   const [visible, setVisible] = useState(true);
   const [fields, setFields] = useState(fieldsInitialState);
 
-  const toggleVisibility = () => setVisible(!visible);
-
+  const togglePass = (props) => (
+    <Icon
+      {...props}
+      name={visible ? "eye" : "eye-off"}
+      onPress={() => setVisible(!visible)}
+    />
+  );
   const fieldsChangeHandler = (name, value) => {
     setFields((fields) => ({
       ...fields,
@@ -44,13 +49,7 @@ export const AccountSettingsScreen = () => {
           label="Current password"
           placeholder="password"
           secureTextEntry={visible}
-          accessoryRight={(props) => (
-            <IconCollection
-              name={visible ? "eye" : "eye-off"}
-              props={props}
-              onPress={toggleVisibility}
-            />
-          )}
+          accessoryRight={togglePass}
           onChangeText={(val) => fieldsChangeHandler("password", val)}
           style={styles.bottomSpacing}
         />
@@ -59,16 +58,10 @@ export const AccountSettingsScreen = () => {
           value={fields.newPassword}
           label="New password"
           placeholder="password"
-          secureTextEntry={visible}
+          secureTextEntry={!visible}
           caption="Should contain at least 8 symbols"
           captionIcon={AlertIcon}
-          accessoryRight={(props) => (
-            <IconCollection
-              name={visible ? "eye" : "eye-off"}
-              props={props}
-              onPress={toggleVisibility}
-            />
-          )}
+          accessoryRight={togglePass}
           onChangeText={(val) => fieldsChangeHandler("newPassword", val)}
           style={styles.bottomSpacing}
         />
