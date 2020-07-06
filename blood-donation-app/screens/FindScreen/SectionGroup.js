@@ -12,7 +12,7 @@ export const SectionGroup = ({ item }) => {
       </CustomText>
       <View style={styles.select}>
         <CustomText style={styles.selected}>{item.selected}</CustomText>
-        <Image style={styles.icon} resizeMode="contain" source={ICONS.goto} />
+        <Image style={styles.icon} resizeMode="contain" source={ICONS.right} />
       </View>
     </TouchableOpacity>
   );

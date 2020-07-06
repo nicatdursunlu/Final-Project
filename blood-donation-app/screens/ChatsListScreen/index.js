@@ -1,11 +1,24 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import { CustomText } from "../../components";
+import { StyleSheet, View, FlatList } from "react-native";
 
-export const ChatsListScreen = () => {
+import { ChatsCover } from "./ChatsCover";
+import { CHATS } from "./../../utils/selectOptions";
+
+export const ChatsListScreen = ({ navigation }) => {
+  const moveToSingleChat = ({ item }) => {
+    navigation.navigate("SingleChat", { item });
+  };
+
   return (
     <View style={styles.container}>
-      <CustomText>ChatsListScreen</CustomText>
+      <FlatList
+        data={CHATS}
+        contentContainerStyle={styles.list}
+        renderItem={({ item }) => (
+          <ChatsCover onPress={() => moveToSingleChat({ item })} chat={item} />
+        )}
+        keyExtractor={(item) => item.id}
+      />
     </View>
   );
 };
@@ -13,8 +26,9 @@ export const ChatsListScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
   },
+  list: {},
 });

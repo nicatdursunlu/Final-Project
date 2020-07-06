@@ -4,17 +4,24 @@ import { StyleSheet, View } from "react-native";
 import { CustomText, SelectGroup } from "../../components";
 import { GLOBAL_STYLES } from "../../styles";
 import { SectionGroup } from "./SectionGroup";
+import { TITLES } from "./../../utils/selectOptions";
 
-const DUMMY = [{ title: "Serach on map" }, { title: "To who can i donate" }];
-
-export const Suggesitions = ({ onChangeBloodType, types }) => {
+export const Suggestions = ({
+  label,
+  options,
+  placeholder,
+  onChangeOption,
+}) => {
   return (
     <View style={styles.container}>
-      <CustomText style={styles.title}>Suggesitions</CustomText>
-
-      <SelectGroup types={types} onChangeBloodType={onChangeBloodType} />
-
-      {DUMMY.map((item) => (
+      <CustomText style={styles.title}>Suggestions</CustomText>
+      <SelectGroup
+        label={label}
+        placeholder={placeholder}
+        options={options}
+        onChangeOption={onChangeOption}
+      />
+      {TITLES.map((item) => (
         <SectionGroup key={item.title} item={item} />
       ))}
     </View>
