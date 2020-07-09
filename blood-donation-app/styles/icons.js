@@ -1,7 +1,3 @@
-import React from "react";
-import { TouchableWithoutFeedback } from "react-native";
-import { Icon } from "@ui-kitten/components";
-
 import bloodDonation from "./../assets/icons/blood-donation.png";
 import mark from "./../assets/icons/mark.png";
 import tag from "./../assets/icons/tag.png";
@@ -34,12 +30,4 @@ export const ICONS = {
   request,
   pending,
   location,
-};
-
-export const IconCollection = ({ props, name, onPress, pack }) => {
-  return (
-    <TouchableWithoutFeedback onPress={onPress}>
-      <Icon {...props} name={name} pack={pack} />
-    </TouchableWithoutFeedback>
-  );
 };

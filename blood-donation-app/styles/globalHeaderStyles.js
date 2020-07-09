@@ -6,7 +6,6 @@ export const globalHeaderStyles = {
   },
   headerTitleAlign: "center",
   headerTitleStyle: {
-    fontFamily: "QuicksandSemiBold",
     fontSize: 21,
   },
 };
