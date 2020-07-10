@@ -42,6 +42,7 @@ export default function App() {
           ]}
         />
         <ApplicationProvider {...eva} theme={eva.light}>
+          <StatusBar />
           <RootNav />
         </ApplicationProvider>
       </PersistGate>

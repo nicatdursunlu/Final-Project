@@ -2,30 +2,31 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { ChatsListScreen, SingleChatScreen } from "../screens";
-import { HeaderAction } from "./../components";
+import { TopNavigationAction } from "@ui-kitten/components";
+import { leftIcon } from "../styles/icons";
+import { HeaderStyles } from "../styles";
 
 const { Navigator, Screen } = createStackNavigator();
 
-export const ChatsStack = ({ navigation }) => {
+export const ChatsStack = () => {
   return (
     <Navigator>
       <Screen
         name="Chats"
         component={ChatsListScreen}
-        options={{ title: "Chats" }}
+        options={{ ...HeaderStyles, title: "Chats" }}
       />
       <Screen
         name="SingleChat"
         component={SingleChatScreen}
-        options={{
+        options={({ navigation }) => ({
           headerLeft: () => (
-            <HeaderAction
-              name="arrow-left"
-              pack="feather"
+            <TopNavigationAction
+              icon={leftIcon}
               onPress={() => navigation.goBack()}
             />
           ),
-        }}
+        })}
       />
     </Navigator>
   );
