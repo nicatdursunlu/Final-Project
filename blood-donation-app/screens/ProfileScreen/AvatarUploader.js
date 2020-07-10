@@ -1,8 +1,9 @@
 import React from "react";
 import { StyleSheet, View, Image, Alert, Button } from "react-native";
+import { connect } from "react-redux";
+
 import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
-import { connect } from "react-redux";
 
 import { selectAuthPhoto, uploadAuthPhoto } from "../../store/auth";
 
@@ -44,7 +45,14 @@ export const AvatarUploader = connect(mapStateToProps, { uploadAuthPhoto })(
     return (
       <View style={styles.container}>
         <View style={styles.imageWrapper}>
-          <Image source={{ uri: photo }} style={styles.photo} />
+          <Image
+            source={{
+              uri: photo
+                ? photo
+                : "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png",
+            }}
+            style={styles.photo}
+          />
         </View>
         <View style={styles.row}>
           <View style={styles.btn}>
@@ -90,10 +98,19 @@ async function requestCameraPermissions() {
   try {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     console.log("status: ", status);
-    if (status === "granted") {
-      return true;
-    } else {
-      Alert.alert("Fail", "Need provide camera permission for this feature");
+    if (status === "granted") return true;
+    else {
+      Alert.alert(
+        "Access denied",
+        "Go to device settings and enable acces",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+        ],
+        { cancelable: false }
+      );
       return false;
     }
   } catch (error) {

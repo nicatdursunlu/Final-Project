@@ -6,6 +6,9 @@ const SET_AUTH_STATUS = "SET_AUTH_STATUS";
 const SET_AUTH_SUCCESS = "SET_AUTH_SUCCESS";
 const SET_AUTH_LOGOUT = "SET_AUTH_LOGOUT";
 const SET_AUTH_PHOTO = "SET_AUTH_PHOTO";
+const DELETE_AUTH_PHOTO = "DELETE_AUTH_PHOTO";
+const CHANGE_USERNAME = "CHANGE_USERNAME";
+const RESET_PASSWORD = "RESET_PASSWORD";
 
 // SELECTORS
 export const MODULE_NAME = "auth";
@@ -14,6 +17,8 @@ export const selectAuthUserID = (state) => state[MODULE_NAME].userID;
 export const selectAuthUsername = (state) => state[MODULE_NAME].username;
 export const selectAuthFullname = (state) => state[MODULE_NAME].fullName;
 export const selectAuthPhoto = (state) => state[MODULE_NAME].photo;
+export const selectAuthBloodType = (state) => state[MODULE_NAME].bloodType;
+export const selectAuthEmail = (state) => state[MODULE_NAME].email;
 
 // REDUCER
 const initialState = {
@@ -22,8 +27,8 @@ const initialState = {
   username: null,
   fullName: null,
   bloodType: null,
+  email: null,
   gender: null,
-  birthDate: null,
   photo: null,
 };
 
@@ -43,13 +48,23 @@ export function reducer(state = initialState, { type, payload }) {
         fullName: payload.fullName,
         bloodType: payload.bloodType,
         gender: payload.gender,
-        birthDate: payload.birthDate,
         photo: payload.photo,
+        email: payload.email,
       };
     case SET_AUTH_PHOTO:
       return {
         ...state,
         photo: payload,
+      };
+    case DELETE_AUTH_PHOTO:
+      return {
+        ...state,
+        photo: "",
+      };
+    case CHANGE_USERNAME:
+      return {
+        ...state,
+        username: payload,
       };
     case SET_AUTH_LOGOUT:
       return {
@@ -58,9 +73,9 @@ export function reducer(state = initialState, { type, payload }) {
         userID: null,
         username: null,
         fullName: null,
-        bloodType: null,
-        gender: null,
-        birthDate: null,
+        email: null,
+        // bloodType: null,
+        // gender: null,
       };
 
     default:
@@ -84,32 +99,45 @@ export const setAuthPhoto = (payload) => ({
   payload,
 });
 
+export const deleteAuthPhoto = () => ({
+  type: DELETE_AUTH_PHOTO,
+});
+
+export const changeUsername = (payload) => ({
+  type: CHANGE_USERNAME,
+  payload,
+});
+
+export const resetPassword = (payload) => ({
+  type: RESET_PASSWORD,
+  payload,
+});
+
 export const setAuthLogout = () => ({
   type: SET_AUTH_LOGOUT,
 });
 
 // MIDDLEWARES
 
-export const signUp = (
-  email,
-  password,
-  username,
-  fullName,
-  bloodType,
-  gender,
-  birthDate
-) => async (dispatch) => {
+export const signUp = (email, password, username, fullName) => async (
+  dispatch
+) => {
   try {
     const {
       user: { uid },
-    } = await fbApp.auth.createUserWithEmailAndPassword(email, password);
+    } = await fbApp.auth
+      .createUserWithEmailAndPassword(email, password)
+      .catch(function (error) {
+        Alert.alert(error.code, error.message);
+        console.log(error.code, error.message);
+      });
 
     fbApp.db.ref(`users/${uid}`).set({
       username,
       fullName,
-      bloodType,
-      gender,
-      birthDate,
+      email,
+      bloodType: "",
+      gender: "",
       photo: "",
     });
 
@@ -118,22 +146,19 @@ export const signUp = (
         userID: uid,
         username,
         fullName,
-        bloodType,
-        gender,
-        birthDate,
       })
     );
   } catch (error) {
     console.log("signUp error: ", error);
-    Alert.alert(error.message);
+    Alert.alert("Failed", error.message);
   }
 };
 
-export const logIn = (email, password) => async (dispatch) => {
+export const logIn = (Email, password) => async (dispatch) => {
   try {
     const {
       user: { uid },
-    } = await fbApp.auth.signInWithEmailAndPassword(email, password);
+    } = await fbApp.auth.signInWithEmailAndPassword(Email, password);
 
     const userDataSnapshot = await fbApp.db.ref(`users/${uid}`).once("value");
     console.log("userDataSnapshot: ", userDataSnapshot);
@@ -142,8 +167,8 @@ export const logIn = (email, password) => async (dispatch) => {
       fullName,
       bloodType,
       gender,
-      birthDate,
       photo,
+      email,
     } = userDataSnapshot.val();
 
     dispatch(
@@ -153,13 +178,13 @@ export const logIn = (email, password) => async (dispatch) => {
         fullName,
         bloodType,
         gender,
-        birthDate,
         photo,
+        email,
       })
     );
   } catch (error) {
     console.log("logIn error", error);
-    Alert.alert(error.message);
+    Alert.alert("Authentication failed", error.message);
   }
 };
 
@@ -190,6 +215,31 @@ export const uploadAuthPhoto = (uri) => async (dispatch, getState) => {
   }
 };
 
-// fbApp.auth.onAuthStateChanged((user) => {
-//   console.log("AuthStateChanged", user);
-// });
+export const deleteUserAvatar = () => async (dispatch, getState) => {
+  try {
+    const userID = selectAuthUserID(getState());
+    await fbApp.db.ref(`users/${userID}/photo`).set("");
+    dispatch(deleteAuthPhoto());
+  } catch (error) {
+    Alert.alert(error.message);
+  }
+};
+
+export const sendEmail = (email) => async (dispatch) => {
+  try {
+    await fbApp.auth.sendPasswordResetEmail(email);
+    dispatch(resetPassword({ email }));
+  } catch (error) {
+    console.log("sendEmail error: ", error);
+  }
+};
+
+export const editUsername = (username) => async (dispatch, getState) => {
+  try {
+    const userID = selectAuthUserID(getState());
+    await fbApp.db.ref(`users/${userID}/username`).set(username);
+    dispatch(changeUsername(username));
+  } catch (error) {
+    console.log("editUsername: ", error);
+  }
+};

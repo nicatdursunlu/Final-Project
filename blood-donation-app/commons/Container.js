@@ -1,22 +1,31 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { GLOBAL_STYLES } from "../styles/globalStyles";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-export const Container = ({ children, style }) => (
-  <View style={styles.container}>
-    <View style={[styles.content, style]}>{children}</View>
-  </View>
+export const Container = ({ children }) => (
+  <SafeAreaView style={styles.body}>
+    <KeyboardAwareScrollView
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
+      contentContainerStyle={styles.container}
+    >
+      <View style={styles.content}>{children}</View>
+    </KeyboardAwareScrollView>
+  </SafeAreaView>
 );
 
 const styles = StyleSheet.create({
+  body: {
+    flex: 1,
+    backgroundColor: "#fff",
+    paddingTop: 80,
+  },
   container: {
     flex: 1,
-    backgroundColor: "white",
-    alignItems: "center",
-    ///justifyContent: 'center',
   },
   content: {
+    alignItems: "center",
+    paddingHorizontal: 15,
     flex: 1,
-    paddingHorizontal: GLOBAL_STYLES.HORIZONTAL,
   },
 });
