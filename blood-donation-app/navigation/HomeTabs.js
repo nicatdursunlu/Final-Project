@@ -11,36 +11,24 @@ import { ChatsStack } from "./ChatsStack";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
-export const HomeTabs = () => {
+export const HomeTabs = ({ navigation }) => {
   return (
     <Navigator
       tabBarOptions={{ showLabel: false }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => {
           let name = "";
-          let pack = "";
-          if (route.name === "Home") {
-            name = "home";
-            pack = "font-awesome";
-          } else if (route.name === "Find") {
-            name = "search";
-            pack = "font-awesome";
-          } else if (route.name === "Create") {
-            name = "plus-circle";
-            pack = "font-awesome";
-          } else if (route.name === "Chats") {
-            name = "comments";
-            pack = "font-awesome";
-          } else if (route.name === "Profile") {
-            name = "user";
-            pack = "font-awesome";
-          }
+          if (route.name === "Home") name = "home";
+          else if (route.name === "Find") name = "search";
+          else if (route.name === "Create") name = "plus-circle";
+          else if (route.name === "Chats") name = "message-circle";
+          else if (route.name === "Profile") name = "user";
 
           return (
             <Icon
               name={name}
-              pack={pack}
-              style={[styles.icon, { color: focused ? "#000" : "#c1c1c1" }]}
+              pack="feather"
+              style={focused ? styles.focus : styles.icon}
             />
           );
         },
@@ -58,6 +46,10 @@ export const HomeTabs = () => {
 const styles = StyleSheet.create({
   icon: {
     height: 22,
-    marginRight: 10,
+    color: "#c1c1c1",
+  },
+  focus: {
+    height: 22,
+    color: "#f06767",
   },
 });

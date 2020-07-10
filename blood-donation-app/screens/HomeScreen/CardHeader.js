@@ -2,12 +2,17 @@ import React from "react";
 import { StyleSheet, View, Image } from "react-native";
 
 import { CustomText } from "../../components";
-import { IMAGES, ICONS } from "../../styles";
 import { getTimeFromPosted } from "../../utils/getTimeFromPosted";
 
-export const CardHeader = ({ userAvatar, name, time, requestType }) => {
-  const isRequsted = requestType === "request";
+export const CardHeader = ({
+  author_id,
+  userID,
+  user_photo,
+  author_name,
+  time,
+}) => {
   const formattedTime = getTimeFromPosted(time);
+  const isMe = author_id === userID;
   return (
     <View style={styles.cardHeaderRow}>
       <View style={styles.userInfo}>
@@ -16,33 +21,20 @@ export const CardHeader = ({ userAvatar, name, time, requestType }) => {
             resizeMode="cover"
             style={styles.image}
             source={{
-              uri: userAvatar,
+              uri: user_photo
+                ? user_photo
+                : "https://cdn.pixabay.com/photo/2013/07/13/12/07/avatar-159236_1280.png",
             }}
           />
         </View>
         <View>
           <CustomText weight="semi" style={styles.name}>
-            {name}
+            {isMe ? "Me" : author_name}
           </CustomText>
           <CustomText weight="regular" style={styles.lastSeen}>
             {formattedTime}
           </CustomText>
         </View>
-      </View>
-      <View style={styles.requestInfo}>
-        <Image
-          style={styles.icon}
-          source={isRequsted ? ICONS.request : ICONS.pending}
-        />
-        <CustomText
-          weight="semi"
-          style={{
-            ...styles.reqTitle,
-            ...{ color: isRequsted ? "#6979F8" : "#FFCF5C" },
-          }}
-        >
-          {isRequsted ? "request" : "pending"}
-        </CustomText>
       </View>
     </View>
   );
