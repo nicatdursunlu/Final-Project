@@ -1,58 +1,108 @@
 import React, { useState } from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Input } from "@ui-kitten/components";
+import { connect } from "react-redux";
+import { Input, Icon } from "@ui-kitten/components";
 
-import { CustomText, CustomBtn, SelectGroup, Field } from "../components";
+import {
+  CustomText,
+  CustomBtn,
+  Field,
+  SelectGroup,
+  MapModal,
+} from "../components";
+
+import { getWidthByPercents } from "./../utils/getWidthByPercents";
+
 import { GLOBAL_STYLES } from "../styles/globalStyles";
 import { BLOOD_TYPES } from "../utils/selectOptions";
+import { addPostToList } from "../store/posts";
+import { Container } from "./../commons";
 
-const useInputState = (initialValue = "") => {
-  const [value, setValue] = useState(initialValue);
-  return { value, onChangeText: setValue };
-};
+export const CreateScreen = connect(null, { addPostToList })(
+  ({ addPostToList }) => {
+    const [fields, setFields] = useState({
+      bloodType: "",
+      number: "",
+      location: "",
+      desc: "",
+      coordinates: [],
+    });
+    const [isMapOpen, setIsMapOpen] = useState(false);
 
-export const CreateScreen = () => {
-  const multilineInputState = useInputState();
-  const [bloodType, setBloodType] = useState("");
-  const [value, setValue] = useState();
+    const fieldsChangeHandler = (name, value) => {
+      setFields((fields) => ({
+        ...fields,
+        [name]: value,
+      }));
+    };
 
-  return (
-    <KeyboardAwareScrollView
-      style={styles.container}
-      behavior={Platform.OS == "ios" ? "padding" : "height"}
-    >
-      <View style={styles.container}>
+    const onSubmit = () => {
+      addPostToList(fields);
+    };
+
+    return (
+      <Container>
+        <SelectGroup
+          options={BLOOD_TYPES}
+          onChangeOption={(val) => fieldsChangeHandler("bloodType", val)}
+        />
         <View style={styles.body}>
-          {/* <SelectGroup
-            placeholder="Select your blood type"
-            label="Blood type"
-            options={BLOOD_TYPES}
-            onChangeOption={(index) => setBloodType(index)}
-          /> */}
-          <TouchableOpacity>
+          <TouchableOpacity
+            style={{ width: "100%" }}
+            onPress={() => setIsMapOpen(true)}
+          >
             <View style={styles.options}>
-              <CustomText style={styles.optionsText}>Add location</CustomText>
+              <CustomText weight="semi">Add location</CustomText>
+              <Icon name="chevron-right" pack="feather" style={styles.icon} />
             </View>
           </TouchableOpacity>
           <Field
+            label="Add location name, important"
+            placeholder="Icharishahar, Baku "
+            onChangeText={(val) => fieldsChangeHandler("location", val)}
+            style={{ marginBottom: 15 }}
+          />
+          <Field
             label="Add contact number(recommended)"
-            keyboardType={"phone-pad"}
-            onChangeText={(nextValue) => setValue(nextValue)}
-            style={styles.bottomSpacing}
+            placeholder="example: +994 77 777 77 77"
+            keyboardType="phone-pad"
+            onChangeText={(val) => fieldsChangeHandler("number", val)}
+            style={{ marginBottom: 15 }}
           />
           <Input
             multiline={true}
             textStyle={{ minHeight: 110 }}
             placeholder="Tell us more..."
-            {...multilineInputState}
+            onChangeText={(val) => fieldsChangeHandler("desc", val)}
+            style={{ marginBottom: 15 }}
           />
-          <CustomBtn title="Post" style={styles.btn} onPress={() => {}} />
+          <CustomBtn
+            title="Post"
+            width={getWidthByPercents(80, 2)}
+            onPress={onSubmit}
+          />
         </View>
-      </View>
-    </KeyboardAwareScrollView>
-  );
-};
+        <MapModal
+          visible={isMapOpen}
+          close={() => setIsMapOpen(false)}
+          onSave={(coordinates) => {
+            setFields((field) => ({
+              ...field,
+              coordinates: [coordinates.latitude, coordinates.longitude],
+            }));
+            setIsMapOpen(false);
+          }}
+          initialRegion={{
+            latitude: 40.434742,
+            longitude: 49.838531,
+            latitudeDelta: 0.5522,
+            longitudeDelta: 0.5521,
+          }}
+        />
+      </Container>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   container: {
@@ -60,24 +110,24 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   body: {
-    flex: 1,
-    paddingHorizontal: GLOBAL_STYLES.HORIZONTAL,
-    marginTop: GLOBAL_STYLES.TOP,
+    zIndex: -1,
+    width: "100%",
+    alignItems: "center",
   },
-
   options: {
-    justifyContent: "space-between",
+    width: "100%",
+    marginVertical: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     flexDirection: "row",
-    marginBottom: 5,
-    height: 50,
-    borderColor: "rgba(0, 0, 0, 0.2)",
-    borderBottomWidth: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderWidth: 1,
+    borderRadius: 4,
+    borderColor: "rgb(228, 233, 242)",
+    backgroundColor: "rgb(247, 249, 252)",
   },
-  optionsText: {
-    fontSize: 16,
-    padding: 14,
-  },
-  btn: {
-    marginTop: GLOBAL_STYLES.TOP,
+  icon: {
+    height: 15,
   },
 });

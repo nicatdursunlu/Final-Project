@@ -1,38 +1,32 @@
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 
-import { Filters } from "./Filters";
-import { Suggestions } from "./Suggestions";
-import { BLOOD_TYPES, FILTERS } from "../../utils/selectOptions";
+import { CustomText, SelectGroup } from "../../components";
+import { SectionGroup } from "./SectionGroup";
+import { TITLES, BLOOD_TYPES } from "./../../utils/selectOptions";
+import { Container } from "../../commons";
 
 export const FindScreen = () => {
-  const [filterBy, setFilterBy] = useState({ byType: "", bloodType: "" });
-  const filterHandler = (name, val) => {
-    setFilterBy((filter) => ({
-      ...filter,
-      [name]: val,
-    }));
-  };
-
+  const [bloodType, setBloodType] = useState(BLOOD_TYPES[0]);
   return (
-    <View style={styles.container}>
-      <Filters
-        filters={FILTERS}
-        filterType={filterBy.byType}
-        changeFilterType={(index) => filterHandler("byType", index)}
-      />
-      <Suggestions
-        placeholder="Search by blood type"
+    <Container>
+      <CustomText style={styles.title}>Find People by blood type</CustomText>
+      <SelectGroup
         options={BLOOD_TYPES}
-        onChangeOption={(index) => filterHandler("bloodType", index)}
+        onChangeOption={(val) => setBloodType(val)}
       />
-    </View>
+      {TITLES.map((item) => (
+        <SectionGroup key={item.title} item={item} />
+      ))}
+    </Container>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
+  title: {
+    alignSelf: "flex-start",
+    color: "#6979F8",
+    fontSize: 17,
+    marginBottom: 10,
   },
 });

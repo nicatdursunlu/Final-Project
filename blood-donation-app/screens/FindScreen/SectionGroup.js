@@ -1,35 +1,38 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 
-import { ICONS } from "../../styles";
 import { CustomText } from "../../components";
+import { Icon } from "@ui-kitten/components";
 
 export const SectionGroup = ({ item }) => {
   return (
-    <TouchableOpacity key={item.title} style={styles.context}>
-      <CustomText weight="semi" style={styles.type}>
+    <TouchableOpacity key={item.title} style={styles.options}>
+      <CustomText weight="semi" style={{ fontSize: 16 }}>
         {item.title}
       </CustomText>
       <View style={styles.select}>
         <CustomText style={styles.selected}>{item.selected}</CustomText>
-        <Image style={styles.icon} resizeMode="contain" source={ICONS.right} />
+        <Icon name="chevron-right" pack="feather" style={{ height: 15 }} />
       </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  context: {
+  options: {
+    width: "100%",
+    marginVertical: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-    paddingVertical: 20,
+    borderWidth: 1,
+    borderRadius: 4,
+    borderColor: "rgb(228, 233, 242)",
+    zIndex: -1,
   },
-  type: {
-    fontSize: 16,
-  },
+
   select: {
     flexDirection: "row",
     alignItems: "center",
@@ -38,10 +41,5 @@ const styles = StyleSheet.create({
     opacity: 0.5,
     fontSize: 16,
     marginRight: 7,
-  },
-  icon: {
-    marginTop: 3,
-    width: 15,
-    height: 15,
   },
 });
