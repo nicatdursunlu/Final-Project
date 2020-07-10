@@ -17,6 +17,6 @@ export function getTimeFromPosted(time) {
       return `${hour - sharedHour} hours ago`;
     }
   } else {
-    return `${day - shared} ago`;
+    return `${day - sharedDay} days ago`;
   }
 }

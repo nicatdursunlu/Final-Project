@@ -109,9 +109,17 @@ export const POSTS = [
     location: "Baku, Iceri seher, 24 a",
     time: Date.now() - 1223344,
     bloodType: "A-",
-    name: "Something Nothing",
+    name: "Something /Nothing",
     desc:
       "Qana ehtiyacim var xais edirem komek edin, komeye cox ehtiyacim var nezere alin ozumde kasibam ehtiyaicm var",
     requestType: "request",
   },
 ];
+
+export const SIGNUP_INITIAL_STATE = {
+  fullName: "",
+  username: "",
+  email: "",
+  password: "",
+  repassword: "",
+};

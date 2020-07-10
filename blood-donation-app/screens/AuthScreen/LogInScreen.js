@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { connect } from "react-redux";
-import { Input, Icon, Text } from "@ui-kitten/components";
+import { StyleSheet, Alert } from "react-native";
+import { connect, useSelector } from "react-redux";
+import { Input, Icon } from "@ui-kitten/components";
 
-import { logIn } from "../../store/auth";
-import { CustomBtn, Link } from "./../../components";
+import { logIn, selectAuthStatus } from "../../store/auth";
+import { Container } from "../../commons";
+import { userIcon } from "../../styles/icons";
 import { GLOBAL_STYLES } from "./../../styles";
+import { CustomBtn, Link } from "./../../components";
+import { getWidthByPercents } from "./../../utils/getWidthByPercents";
 
 const fieldsInitisalState = {
   email: "",
@@ -14,8 +16,10 @@ const fieldsInitisalState = {
 };
 
 export const LogInScreen = connect(null, { logIn })(({ logIn, navigation }) => {
+  const auth = useSelector(selectAuthStatus);
   const [fields, setFields] = useState(fieldsInitisalState);
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
+  const [err, setErr] = useState(false);
 
   const togglePass = (props) => (
     <Icon
@@ -24,7 +28,6 @@ export const LogInScreen = connect(null, { logIn })(({ logIn, navigation }) => {
       onPress={() => setVisible(!visible)}
     />
   );
-  const userIcon = (props) => <Icon {...props} name="user" pack="feather" />;
 
   const fieldsChangeHandler = (name, value) => {
     setFields((fields) => ({
@@ -34,48 +37,64 @@ export const LogInScreen = connect(null, { logIn })(({ logIn, navigation }) => {
   };
 
   const validateForm = () => {
-    if (fields.email.trim() === "") {
-      Alert.alert("Email required");
-      return false;
-    }
-    if (fields.password.trim() === "") {
-      Alert.alert("Password required");
-      return false;
+    for (let key in fields) {
+      if (fields[key].trim() === "") {
+        Alert.alert(`${key} is required`);
+        return false;
+      }
     }
     return true;
   };
 
   const onSubmit = () => {
-    if (validateForm) {
+    if (validateForm()) {
       logIn(fields.email, fields.password);
+      if (!auth) {
+        setErr(true);
+        setFields({
+          ...fields,
+          password: "",
+        });
+      }
     }
   };
 
   return (
-    <KeyboardAwareScrollView
-      style={styles.container}
-      behavior={Platform.OS == "ios" ? "padding" : "height"}
-    >
+    <Container>
       <Input
         value={fields.email}
-        label={<Text style={{ color: "#fff" }}>Email</Text>}
-        placeholder="email"
+        label="Username or email"
+        placeholder="username or email"
+        keyboardType="email-address"
         accessoryRight={userIcon}
         onChangeText={(val) => fieldsChangeHandler("email", val)}
-        style={(styles.bottomSpacing, { marginTop: GLOBAL_STYLES.TOP })}
+        style={{ marginBottom: 15 }}
       />
       <Input
         value={fields.password}
-        label={<Text style={{ color: "#fff" }}>Password</Text>}
+        label="Password"
         placeholder="password"
         secureTextEntry={!visible}
         accessoryRight={togglePass}
         onChangeText={(val) => fieldsChangeHandler("password", val)}
         style={styles.bottomSpacing}
       />
-      <Link title="Forgot your password?" />
-      <CustomBtn title="Login" style={styles.btn} onPress={onSubmit} />
-    </KeyboardAwareScrollView>
+      {err && (
+        <Link
+          title="Forgot your password?"
+          style={{ color: "#000" }}
+          onPress={() =>
+            navigation.navigate("ForgetPassword", { mail: fields.email })
+          }
+        />
+      )}
+      <CustomBtn
+        title="Login"
+        width={getWidthByPercents(80, 2)}
+        style={styles.btn}
+        onPress={onSubmit}
+      />
+    </Container>
   );
 });
 
