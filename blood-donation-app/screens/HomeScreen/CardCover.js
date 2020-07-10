@@ -5,23 +5,28 @@ import { CardHeader } from "./CardHeader";
 import { CardContent } from "./CardContent";
 import { CardBottom } from "./CardBottom";
 
-export const CardCover = ({ item }) => {
+export const CardCover = ({ item, navigation, userID }) => {
   const {
-    userAvatar,
-    name,
+    author_id,
+    author_name,
+    user_photo,
     time,
     bloodType,
     location,
     desc,
-    requestType,
+    coordinates,
+    saved,
+    id,
   } = item;
 
   return (
     <View style={styles.card}>
-      <CardHeader {...{ userAvatar, name, time, requestType }} />
+      <CardHeader {...{ author_id, userID, user_photo, author_name, time }} />
       <View style={styles.cardContext}>
-        <CardContent {...{ bloodType, location, desc }} />
-        <CardBottom />
+        <CardContent
+          {...{ bloodType, location, desc, coordinates, navigation }}
+        />
+        <CardBottom {...{ saved, userID, id }} />
       </View>
     </View>
   );
