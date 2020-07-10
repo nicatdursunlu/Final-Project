@@ -1,32 +1,22 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
 import { useSelector } from "react-redux";
+import { createStackNavigator } from "@react-navigation/stack";
 
 import { ProfileScreen } from "./../screens";
 import { selectAuthUsername } from "../store/auth";
-import { globalHeaderStyles } from "../styles/globalHeaderStyles";
-import { HeaderIcon } from "../components";
-import { ICONS } from "../styles";
+import { HeaderStyles } from "../styles";
 
 const { Navigator, Screen } = createStackNavigator();
 
 export const ProfileStack = () => {
   const username = useSelector(selectAuthUsername);
-
   return (
-    <Navigator screenOptions={globalHeaderStyles}>
+    <Navigator screenOptions={HeaderStyles}>
       <Screen
         name="Profile"
         component={ProfileScreen}
-        options={({ navigation }) => ({
+        options={() => ({
           title: username,
-          headerRight: () => (
-            <HeaderIcon
-              iconName={ICONS.menu}
-              side="right"
-              onPress={() => navigation.toggleDrawer()}
-            />
-          ),
         })}
       />
     </Navigator>
