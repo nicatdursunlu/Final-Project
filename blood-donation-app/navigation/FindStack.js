@@ -2,26 +2,12 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { FindScreen } from "./../screens";
-import { HeaderAction } from "./../components/HeaderAction";
+import { HeaderStyles } from "../styles";
 
 const { Navigator, Screen } = createStackNavigator();
 
-export const FindStack = ({ navigation }) => {
-  return (
-    <Navigator>
-      <Screen
-        name="Find"
-        component={FindScreen}
-        options={() => ({
-          headerRight: () => (
-            <HeaderAction
-              name="menu"
-              pack="feather"
-              onPress={() => navigation.toggleDrawer()}
-            />
-          ),
-        })}
-      />
-    </Navigator>
-  );
-};
+export const FindStack = () => (
+  <Navigator screenOptions={HeaderStyles}>
+    <Screen name="Find" component={FindScreen} />
+  </Navigator>
+);
