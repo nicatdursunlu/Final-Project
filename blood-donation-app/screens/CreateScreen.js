@@ -12,11 +12,10 @@ import {
 } from "../components";
 
 import { getWidthByPercents } from "./../utils/getWidthByPercents";
-
-import { GLOBAL_STYLES } from "../styles/globalStyles";
 import { BLOOD_TYPES } from "../utils/selectOptions";
 import { addPostToList } from "../store/posts";
 import { Container } from "./../commons";
+import { COLORS } from "../styles";
 
 export const CreateScreen = connect(null, { addPostToList })(
   ({ addPostToList }) => {
@@ -107,7 +106,7 @@ export const CreateScreen = connect(null, { addPostToList })(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: COLORS.MAIN,
   },
   body: {
     zIndex: -1,
@@ -125,7 +124,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     borderColor: "rgb(228, 233, 242)",
-    backgroundColor: "rgb(247, 249, 252)",
+    backgroundColor: COLORS.SELECT_BG,
   },
   icon: {
     height: 15,

@@ -1,7 +1,8 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { COLORS } from "./../styles/colors";
 
 export const Container = ({ children }) => (
   <SafeAreaView style={styles.body}>
@@ -17,8 +18,8 @@ export const Container = ({ children }) => (
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    backgroundColor: "#fff",
-    paddingTop: 80,
+    backgroundColor: COLORS.MAIN,
+    paddingTop: 60,
   },
   container: {
     flex: 1,

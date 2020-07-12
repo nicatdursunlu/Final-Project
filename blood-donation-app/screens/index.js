@@ -1,10 +1,11 @@
 export { FindScreen } from "./FindScreen";
-export { HomeScreen } from "./HomeScreen/index";
-export { ProfileScreen } from "./ProfileScreen";
+export { HomeScreen } from "./HomeScreen";
+export { RateScreen } from "./RateScreen";
+export { AboutScreen } from "./AboutScreen";
 export { CreateScreen } from "./CreateScreen";
+export { ProfileScreen } from "./ProfileScreen";
+export { ContactScreen } from "./ContactScreen";
+export { SettingsScreen } from "./SettingsScreen";
 export { ChatsListScreen } from "./ChatsListScreen";
 export { SingleChatScreen } from "./SingleChatScreen";
-export { SettingsScreen } from "./SettingsScreen";
-export { AboutScreen } from "./AboutScreen";
-export { ContactScreen } from "./ContactScreen";
-export { RateScreen } from "./RateScreen";
+export { EditProfileScreen } from "./EditProfileScreen/index";

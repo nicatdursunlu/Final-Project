@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 
 import { CustomText } from "../../components";
+import { COLORS } from "../../styles";
 
 export const InfoCard = ({ value, text, textStyle, style }) => {
   return (
@@ -34,13 +35,13 @@ const styles = StyleSheet.create({
     //   zIndex: 2,
   },
   valueText: {
-    color: "#000",
+    color: COLORS.TEXT,
     textAlign: "center",
     fontSize: 38,
   },
   text: {
     fontSize: 11,
-    color: "white",
+    color: COLORS.TITLE,
     textAlign: "center",
   },
 });

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
-import { Facebook, Instagram } from "react-content-loader";
 
 import { CardCover } from "./CardCover";
 import {
@@ -12,6 +11,7 @@ import {
 } from "../../store/posts";
 import { connect } from "react-redux";
 import { selectAuthUserID } from "../../store/auth";
+import { COLORS } from "../../styles";
 
 const mapStateToProps = (state) => ({
   posts: selectPostLists(state),
@@ -38,6 +38,7 @@ export const HomeScreen = connect(mapStateToProps, {
       if (type === "posts") {
         getAndListenForPosts();
       } else if (type === "saved") {
+        alert("saved");
         deleteSavedPostList();
         getAndListenSavedPosts(userID);
       }
@@ -59,12 +60,12 @@ export const HomeScreen = connect(mapStateToProps, {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
-    paddingTop: 80,
+    backgroundColor: COLORS.MAIN,
   },
   list: {
-    backgroundColor: "white",
-    paddingBottom: 15,
+    flexGrow: 1,
+    paddingBottom: 60,
     paddingHorizontal: 15,
+    paddingTop: 80,
   },
 });

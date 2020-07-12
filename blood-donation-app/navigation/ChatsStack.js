@@ -11,11 +11,7 @@ const { Navigator, Screen } = createStackNavigator();
 export const ChatsStack = () => {
   return (
     <Navigator>
-      <Screen
-        name="Chats"
-        component={ChatsListScreen}
-        options={{ ...HeaderStyles, title: "Chats" }}
-      />
+      <Screen name="Chats" component={ChatsListScreen} options={HeaderStyles} />
       <Screen
         name="SingleChat"
         component={SingleChatScreen}

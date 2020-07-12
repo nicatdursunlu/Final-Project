@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
 
-import { ICONS } from "../../styles";
+import { ICONS, COLORS } from "../../styles";
 import { CustomText } from "../../components";
 
 export const EditButton = ({ onPress, style }) => {
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontSize: 12,
-    color: "white",
+    color: COLORS.TITLE,
     paddingLeft: 12,
   },
 });

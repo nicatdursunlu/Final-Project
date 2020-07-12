@@ -1,68 +1,62 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
-
+import { connect } from "react-redux";
 import { Toggle } from "@ui-kitten/components";
 
-import { CustomText } from "../components";
-import { GLOBAL_STYLES } from "../styles/globalStyles";
-import { SelectGroup } from "./../components/SelectGroup";
+import { Container } from "../commons";
 import { LANGUAGES } from "../utils/selectOptions";
+import { CustomText, SelectGroup } from "../components";
+import {
+  setTheme,
+  setLanguage,
+  getLanguage,
+  getTheme,
+} from "../store/settings";
 
-export const SettingsScreen = ({ navigation }) => {
-  const [theme, setTheme] = useState(false);
-  const [notf, setNotf] = useState(false);
-  const [lang, setLang] = useState(LANGUAGES[0]);
+const mapStateToProps = (state) => ({
+  theme: getTheme(state),
+  language: getLanguage(state),
+});
 
+export const SettingsScreen = connect(mapStateToProps, {
+  setTheme,
+  setLanguage,
+})(({ theme, language, setTheme, setLanguage }) => {
+  const themeHandler = (val) => {
+    if (val) setTheme("dark");
+    else setTheme("light");
+  };
+
+  const languageHandler = (val) => setLanguage(val);
   return (
-    <View style={styles.container}>
-      <View style={styles.body}>
-        <View style={styles.options}>
-          <CustomText style={styles.optionsText}>Theme</CustomText>
-          <Toggle
-            style={styles.toggle}
-            checked={theme}
-            onChange={() => setTheme((theme) => !theme)}
-          ></Toggle>
-        </View>
-        <View style={styles.options}>
-          <CustomText style={styles.optionsText}>Notifications</CustomText>
-          <Toggle
-            style={styles.toggle}
-            checked={notf}
-            onChange={() => setNotf((notf) => !notf)}
-          ></Toggle>
-        </View>
-        <View style={styles.options}>
-          <CustomText style={styles.optionsText}>Language</CustomText>
-          <SelectGroup
-            value={lang}
-            style={styles.languageOptions}
-            options={LANGUAGES}
-            onChangeOption={(val) => setLang(val)}
-          />
-        </View>
+    <Container>
+      <View style={styles.options}>
+        <CustomText style={styles.optionsText}>Theme</CustomText>
+        <Toggle
+          style={styles.toggle}
+          checked={theme === "dark" ? true : false}
+          onChange={themeHandler}
+        />
       </View>
-    </View>
+      <View style={styles.options}>
+        <CustomText style={styles.optionsText}>Language</CustomText>
+        <SelectGroup
+          options={LANGUAGES}
+          initial={language}
+          onChangeOption={(val) => languageHandler(val)}
+        />
+      </View>
+    </Container>
   );
-};
+});
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  body: {
-    flex: 1,
-    paddingHorizontal: GLOBAL_STYLES.HORIZONTAL,
-    marginTop: GLOBAL_STYLES.TOP,
-  },
   options: {
     justifyContent: "space-between",
     flexDirection: "row",
     marginBottom: 5,
     height: 50,
-    borderColor: "rgba(0, 0, 0, 0.2)",
-    borderBottomWidth: 1,
+    width: "100%",
   },
   optionsText: {
     fontSize: 16,
@@ -70,9 +64,5 @@ const styles = StyleSheet.create({
   },
   toggle: {
     right: 10,
-  },
-  languageOptions: {
-    // minWidth: 128,
-    width: "20%",
   },
 });

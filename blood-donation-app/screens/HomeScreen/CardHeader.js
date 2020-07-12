@@ -3,6 +3,7 @@ import { StyleSheet, View, Image } from "react-native";
 
 import { CustomText } from "../../components";
 import { getTimeFromPosted } from "../../utils/getTimeFromPosted";
+import { COLORS } from "../../styles";
 
 export const CardHeader = ({
   author_id,
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
     height: 35,
     width: 35,
     borderRadius: 18,
-    backgroundColor: "#eee",
+    backgroundColor: COLORS.BORDER,
     marginRight: 10,
     overflow: "hidden",
   },

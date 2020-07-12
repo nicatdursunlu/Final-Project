@@ -1,13 +1,14 @@
 import React from "react";
-import { StyleSheet, View, Image, Alert } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 
-import { CustomText, Link, CustomBtn } from "../../components";
-import { Container } from "../../commons";
+import { CustomText, CustomBtn } from "../../components";
+import { Container } from "./../../commons/Container";
+import { COLORS } from "../../styles";
 
 export const UserInfo = ({ fullName, bloodType, userAvatar, email }) => {
   const myProfile = true;
   return (
-    <Container style={styles.container}>
+    <Container>
       <View style={styles.imageWrapper}>
         <Image
           style={styles.userAvatar}
@@ -56,19 +57,14 @@ export const UserInfo = ({ fullName, bloodType, userAvatar, email }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   imageWrapper: {
     width: 150,
     height: 150,
     borderRadius: 100,
     overflow: "hidden",
-    backgroundColor: "#eee",
+    backgroundColor: COLORS.BORDER,
     elevation: 3,
     alignSelf: "center",
-    // borderWidth: 3,
-    // borderColor: "#FF647C",
     marginTop: 80,
   },
   userAvatar: {
@@ -102,7 +98,7 @@ const styles = StyleSheet.create({
   btnText: {
     textTransform: "none",
     fontSize: 15,
-    color: "#fff",
+    color: COLORS.TITLE,
   },
 
   bloodType: {

@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 import { CustomText } from "./CustomText";
+import { COLORS } from "./../styles/colors";
 
 export const CustomBtn = ({
   title,
@@ -22,14 +23,14 @@ export const CustomBtn = ({
 const styles = StyleSheet.create({
   btn: {
     height: 40,
-    backgroundColor: "#ff6767",
+    backgroundColor: COLORS.PRIMARY,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 8,
   },
   title: {
     fontSize: 17,
-    color: "#fff",
+    color: COLORS.MAIN,
     textTransform: "uppercase",
   },
 });

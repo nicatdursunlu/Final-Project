@@ -1,6 +1,4 @@
 import React from "react";
-import { StyleSheet } from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Icon } from "@ui-kitten/components";
 
 import { HomeStack } from "./HomeStack";
@@ -8,14 +6,21 @@ import { CreateStack } from "./CreateStack";
 import { FindStack } from "./FindStack";
 import { ProfileStack } from "./ProfileStack";
 import { ChatsStack } from "./ChatsStack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { COLORS } from "./../styles/colors";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
-export const HomeTabs = ({ navigation }) => {
+export const HomeTabs = () => {
   return (
     <Navigator
-      tabBarOptions={{ showLabel: false }}
+      tabBarOptions={{
+        activeBackgroundColor: "#ff5757",
+        activeTintColor: COLORS.MAIN,
+        keyboardHidesTabBar: true,
+      }}
       screenOptions={({ route }) => ({
+        // unmountOnBlur: true,
         tabBarIcon: ({ focused }) => {
           let name = "";
           if (route.name === "Home") name = "home";
@@ -28,7 +33,10 @@ export const HomeTabs = ({ navigation }) => {
             <Icon
               name={name}
               pack="feather"
-              style={focused ? styles.focus : styles.icon}
+              style={{
+                height: 20,
+                color: focused ? COLORS.TITLE : COLORS.ICON,
+              }}
             />
           );
         },
@@ -42,14 +50,3 @@ export const HomeTabs = ({ navigation }) => {
     </Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  icon: {
-    height: 22,
-    color: "#c1c1c1",
-  },
-  focus: {
-    height: 22,
-    color: "#f06767",
-  },
-});

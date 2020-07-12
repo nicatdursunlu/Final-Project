@@ -17,6 +17,7 @@ import request from "./../assets/icons/request.png";
 import pending from "./../assets/icons/pending.png";
 import location from "./../assets/icons/location.png";
 import saved from "./../assets/icons/saved.png";
+import { COLORS } from "./colors";
 
 export const ICONS = {
   bloodDonation,
@@ -37,21 +38,18 @@ export const ICONS = {
   saved,
 };
 
-export const editIcon = (props) => <Icon {...props} name={name} pack={pack} />;
-export const chatIcon = (props) => <Icon {...props} name={name} pack={pack} />;
-export const saveIcon = (props) => <Icon {...props} name={name} pack={pack} />;
-export const callIcon = (props) => <Icon {...props} name={name} pack={pack} />;
-export const savedIcon = (props) => <Icon {...props} name={name} pack={pack} />;
-export const phoneIcon = (props) => <Icon {...props} name={name} pack={pack} />;
-export const donateIcon = (props) => (
-  <Icon {...props} name={name} pack={pack} />
+export const editIcon = (props) => (
+  <Icon
+    {...props}
+    name="edit"
+    pack="feather"
+    style={{ height: 25, color: COLORS.TITLE }}
+  />
 );
-export const pendingIcon = (props) => (
-  <Icon {...props} name={name} pack={pack} />
+export const savedIcon = (props) => (
+  <Icon {...props} name="bookmark" pack="feather" />
 );
-export const locationIcon = (props) => (
-  <Icon {...props} name={name} pack={pack} />
-);
+
 export const downIcon = (props) => (
   <Icon {...props} name="chevron-down" pack="feather" />
 );
@@ -68,7 +66,12 @@ export const bellIcon = (props) => (
   <Icon {...props} name="bell" pack="feather" />
 );
 export const leftIcon = (props) => (
-  <Icon {...props} name="arrow-left" pack="feather" />
+  <Icon
+    {...props}
+    name="arrow-left"
+    pack="feather"
+    style={{ height: 25, color: COLORS.TITLE }}
+  />
 );
 export const rightIcon = (props) => (
   <Icon {...props} name="arrow-right" pack="feather" />

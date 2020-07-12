@@ -4,6 +4,7 @@ import { StyleSheet, View } from "react-native";
 import { CardHeader } from "./CardHeader";
 import { CardContent } from "./CardContent";
 import { CardBottom } from "./CardBottom";
+import { COLORS } from "../../styles";
 
 export const CardCover = ({ item, navigation, userID }) => {
   const {
@@ -36,10 +37,10 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 10,
     marginBottom: 10,
-    backgroundColor: "white",
+    backgroundColor: COLORS.MAIN,
   },
   cardContext: {
-    backgroundColor: "#F5F7FB",
+    backgroundColor: COLORS.CARD_BG,
     borderRadius: 20,
     padding: 10,
   },

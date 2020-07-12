@@ -3,11 +3,12 @@ import { StyleSheet, View, TouchableOpacity, ScrollView } from "react-native";
 import { Icon } from "@ui-kitten/components";
 
 import { CustomText } from "./CustomText";
+import { COLORS } from "./../styles/colors";
 
-export const SelectGroup = ({ onChangeOption, options }) => {
+export const SelectGroup = ({ onChangeOption, options, initial }) => {
   const [groups, setGroups] = useState({
     state: false,
-    selected: options[0],
+    selected: initial || options[0],
   });
   const showHandler = () => {
     setGroups((group) => ({
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
     top: 40,
     height: 160,
     width: "100%",
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.MAIN,
     paddingHorizontal: 20,
     paddingVertical: 10,
     zIndex: 200,
@@ -89,6 +90,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     paddingVertical: 7,
     borderBottomWidth: 1,
-    borderColor: "#eee",
+    borderColor: COLORS.BORDER,
   },
 });

@@ -1,24 +1,31 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import { TopNavigationAction } from "@ui-kitten/components";
 
-import { WelcomeScreen } from "./../screens/AuthScreen/WelcomeScreen";
-import { SignUpScreen } from "./../screens/AuthScreen/SignUpScreen";
-import { LogInScreen } from "./../screens/AuthScreen/LogInScreen";
-import { Icon } from "@ui-kitten/components";
+import {
+  WelcomeScreen,
+  SignUpScreen,
+  LogInScreen,
+  ForgetPasswordScreen,
+} from "./../screens/AuthScreen";
+import { HeaderStyles } from "./../styles/HeaderStyles";
+import { leftIcon } from "../styles/icons";
+import { COLORS } from "./../styles/colors";
 
 const { Navigator, Screen } = createStackNavigator();
 
-export const AuthStack = () => {
+export const AuthStack = ({ navigation }) => {
   return (
     <Navigator
       screenOptions={{
-        headerMode: "screen",
-        headerTitleAlign: "center",
-        headerTransparent: true,
-        headerTitleStyle: {
-          fontSize: 25,
-          color: "#fff",
-        },
+        ...HeaderStyles,
+        headerTitleStyle: { fontSize: 25, color: COLORS.TEXT },
+        headerLeft: () => (
+          <TopNavigationAction
+            icon={leftIcon}
+            onPress={() => navigation.goBack()}
+          />
+        ),
       }}
     >
       <Screen
@@ -26,16 +33,12 @@ export const AuthStack = () => {
         component={WelcomeScreen}
         options={{ headerShown: false }}
       />
+      <Screen name="Signup" component={SignUpScreen} />
+      <Screen name="Login" component={LogInScreen} />
       <Screen
-        name="SignUp"
-        component={SignUpScreen}
-        options={{ title: "Sign up" }}
-      />
-
-      <Screen
-        name="LogIn"
-        component={LogInScreen}
-        options={{ title: "Log in" }}
+        name="ForgetPassword"
+        component={ForgetPasswordScreen}
+        options={{ title: "Forget Password" }}
       />
     </Navigator>
   );
