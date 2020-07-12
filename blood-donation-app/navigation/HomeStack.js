@@ -3,15 +3,19 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { TopNavigationAction } from "@ui-kitten/components";
 
 import { HomeScreen } from "./../screens";
-import { leftIcon } from "./../styles/icons";
 import { HeaderStyles } from "../styles";
+import { leftIcon } from "../styles/icons";
 
 const { Navigator, Screen } = createStackNavigator();
 
-export const HomeStack = ({ navigation }) => {
+export const HomeStack = ({ navigation, route }) => {
+  if (route.state && route.state.index > 0)
+    navigation.setOptions({ tabBarVisible: false });
+  else navigation.setOptions({ tabBarVisible: true });
+
   return (
-    <Navigator initialRouteName="Home" screenOptions={HeaderStyles}>
-      <Screen name="Home">{() => <HomeScreen type="posts" />}</Screen>
+    <Navigator screenOptions={HeaderStyles} initialRouteName="Home">
+      <Screen name="HomeScreen">{() => <HomeScreen type="posts" />}</Screen>
       <Screen
         name="Saved"
         options={({ navigation }) => ({

@@ -6,6 +6,7 @@ import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
 
 import { selectAuthPhoto, uploadAuthPhoto } from "../../store/auth";
+import { COLORS } from "../../styles";
 
 const mapStateToProps = (state) => ({
   photo: selectAuthPhoto(state),
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 100,
     overflow: "hidden",
-    backgroundColor: "#eee",
+    backgroundColor: COLORS.BORDER,
     elevation: 3,
     alignSelf: "center",
   },

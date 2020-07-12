@@ -14,7 +14,7 @@ export const Link = ({ title, onPress, style }) => (
 
 const styles = StyleSheet.create({
   title: {
-    color: "#fff",
+    color: COLORS.PRIMARY,
     fontSize: 16,
     textDecorationLine: "underline",
   },

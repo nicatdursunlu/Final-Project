@@ -2,7 +2,7 @@ import React from "react";
 import Swiper from "react-native-swiper";
 import { StyleSheet, View, Image, ImageBackground } from "react-native";
 
-import { IMAGES } from "./../../styles";
+import { IMAGES, COLORS } from "./../../styles";
 import { SLIDER_IMAGES } from "./../../utils/selectOptions";
 import { CustomText, CustomBtn, Link } from "./../../components";
 import { getWidthByPercents } from "./../../utils/getWidthByPercents";
@@ -18,8 +18,8 @@ export const WelcomeScreen = ({ navigation }) => (
       <CustomBtn
         title="Get Started"
         width={getWidthByPercents(80, 2)}
-        style={{ backgroundColor: "#fff" }}
-        titleStyle={{ color: "#ff6767" }}
+        style={{ backgroundColor: COLORS.MAIN }}
+        titleStyle={{ color: COLORS.PRIMARY }}
         onPress={() => navigation.navigate("Signup")}
       />
       <View style={styles.row}>
@@ -35,7 +35,7 @@ export const WelcomeScreen = ({ navigation }) => (
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.MAIN,
     alignItems: "center",
   },
 
@@ -54,6 +54,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 17,
-    color: "#fff",
+    color: COLORS.TITLE,
   },
 });

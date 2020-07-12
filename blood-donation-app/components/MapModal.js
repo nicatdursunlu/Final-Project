@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { StyleSheet, Modal, TouchableOpacity, Alert } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "react-native-vector-icons";
 import MapView, { Marker } from "react-native-maps";
 import { StatusBar } from "expo-status-bar";
+
+import { COLORS } from "./../styles/colors";
 
 export const MapModal = ({ onSave, close, visible, initialRegion, type }) => {
   const isStatic = type === "static";
@@ -41,14 +43,14 @@ export const MapModal = ({ onSave, close, visible, initialRegion, type }) => {
       </MapView>
 
       <TouchableOpacity style={[styles.btn, styles.btnBack]} onPress={close}>
-        <Ionicons name="md-arrow-back" size={24} color="black" />
+        <Ionicons name="md-arrow-back" size={24} color={COLORS.TEXT} />
       </TouchableOpacity>
       {onSave && (
         <TouchableOpacity
           style={[styles.btn, styles.btnSave]}
           onPress={saveHandler}
         >
-          <Ionicons name="ios-save" size={24} color="black" />
+          <Ionicons name="ios-save" size={24} color={COLORS.TEXT} />
         </TouchableOpacity>
       )}
     </Modal>
@@ -61,7 +63,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     position: "absolute",
-    backgroundColor: "white",
+    backgroundColor: COLORS.MAIN,
     width: 40,
     height: 40,
     borderRadius: 20,

@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { signUp } from "./../../store/auth";
 import { ModalWindow } from "./ModalWindow";
 import { Container } from "./../../commons";
-import { GLOBAL_STYLES } from "./../../styles";
+import { GLOBAL_STYLES, COLORS } from "./../../styles";
 import { CustomBtn, Link, Field } from "./../../components";
 import { SIGNUP_INITIAL_STATE } from "../../utils/selectOptions";
 import { getWidthByPercents } from "../../utils/getWidthByPercents";
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   link: {
     fontSize: 13,
     marginLeft: 32,
-    color: "#ff6767",
+    color: COLORS.PRIMARY,
   },
   bottomSpacing: {
     marginBottom: GLOBAL_STYLES.BOTTOM,
