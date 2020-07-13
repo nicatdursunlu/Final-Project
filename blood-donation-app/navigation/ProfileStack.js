@@ -10,8 +10,12 @@ import { HeaderStyles } from "../styles";
 
 const { Navigator, Screen } = createStackNavigator();
 
-export const ProfileStack = () => {
+export const ProfileStack = ({ navigation, route }) => {
   const username = useSelector(selectAuthUsername);
+  if (route.state && route.state.index > 0)
+    navigation.setOptions({ tabBarVisible: false });
+  else navigation.setOptions({ tabBarVisible: true });
+
   return (
     <Navigator screenOptions={HeaderStyles}>
       <Screen

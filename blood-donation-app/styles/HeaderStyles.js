@@ -2,7 +2,6 @@ import React from "react";
 import { Image } from "react-native";
 
 import { IMAGES } from "./images";
-import { COLORS } from "./colors";
 
 export const HeaderStyles = {
   headerMode: "screen",
@@ -10,7 +9,7 @@ export const HeaderStyles = {
   headerTransparent: true,
   headerTitleStyle: {
     fontSize: 20,
-    color: COLORS.TITLE,
+    color: "#fff",
   },
   headerStyle: { height: 80 },
   headerBackground: () => (

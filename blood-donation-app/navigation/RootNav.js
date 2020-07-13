@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  NavigationContainer,
-  Theme,
-  DarkTheme,
-  DefaultTheme,
-} from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { connect } from "react-redux";
 
@@ -13,15 +8,18 @@ import { AuthStack } from "./AuthStack";
 import { DrawerContent } from "../commons";
 import { selectAuthStatus } from "../store/auth";
 import { ContentStack } from "./ContentStack";
+import { getTheme } from "./../store/settings";
+import { LightTheme, DarkTheme } from "./../theme";
 
 const { Navigator, Screen } = createDrawerNavigator();
 
 const mapStateToProps = (state) => ({
   auth: selectAuthStatus(state),
+  theme: getTheme(state),
 });
 
-export const RootNav = connect(mapStateToProps)(({ auth, navigation }) => (
-  <NavigationContainer theme={DefaultTheme}>
+export const RootNav = connect(mapStateToProps)(({ auth, theme }) => (
+  <NavigationContainer>
     <Navigator
       drawerStyle={{ width: "80%" }}
       drawerContent={({ ...props }) => <DrawerContent {...props} />}
