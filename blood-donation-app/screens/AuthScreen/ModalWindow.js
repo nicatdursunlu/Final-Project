@@ -50,7 +50,7 @@ export const ModalWindow = ({ visible, onBackdropPress, onPress }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.MAIN,
+
     width: getWidthByPercents(95, 2),
     height: height * 0.7,
   },
@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
   card: {
     padding: 30,
     alignItems: "center",
-    backgroundColor: COLORS.MAIN,
   },
   text: {
     fontSize: 15,

@@ -35,7 +35,7 @@ export const WelcomeScreen = ({ navigation }) => (
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    backgroundColor: COLORS.MAIN,
+
     alignItems: "center",
   },
 

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { StyleSheet, Alert } from "react-native";
-import { connect, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { Input, Icon } from "@ui-kitten/components";
+import * as WebBrowser from "expo-web-browser";
 
-import { logIn, selectAuthStatus } from "../../store/auth";
+import { logIn, sendEmail } from "../../store/auth";
 import { Container } from "../../commons";
 import { userIcon } from "../../styles/icons";
 import { GLOBAL_STYLES } from "./../../styles";
@@ -15,88 +16,93 @@ const fieldsInitisalState = {
   password: "",
 };
 
-export const LogInScreen = connect(null, { logIn })(({ logIn, navigation }) => {
-  const auth = useSelector(selectAuthStatus);
-  const [fields, setFields] = useState(fieldsInitisalState);
-  const [visible, setVisible] = useState(false);
-  const [err, setErr] = useState(false);
+export const LogInScreen = connect(null, { logIn, sendEmail })(
+  ({ logIn, sendEmail }) => {
+    const [isLogIn, setIsLogIn] = useState(true);
+    const [fields, setFields] = useState(fieldsInitisalState);
+    const [visible, setVisible] = useState(false);
 
-  const togglePass = (props) => (
-    <Icon
-      {...props}
-      name={visible ? "eye" : "eye-off"}
-      onPress={() => setVisible(!visible)}
-    />
-  );
-
-  const fieldsChangeHandler = (name, value) => {
-    setFields((fields) => ({
-      ...fields,
-      [name]: value,
-    }));
-  };
-
-  const validateForm = () => {
-    for (let key in fields) {
-      if (fields[key].trim() === "") {
-        Alert.alert(`${key} is required`);
-        return false;
-      }
-    }
-    return true;
-  };
-
-  const onSubmit = () => {
-    if (validateForm()) {
-      logIn(fields.email, fields.password);
-      if (!auth) {
-        setErr(true);
-        setFields({
-          ...fields,
-          password: "",
-        });
-      }
-    }
-  };
-
-  return (
-    <Container>
-      <Input
-        value={fields.email}
-        label="Username or email"
-        placeholder="username or email"
-        keyboardType="email-address"
-        accessoryRight={userIcon}
-        onChangeText={(val) => fieldsChangeHandler("email", val)}
-        style={{ marginBottom: 15 }}
+    const togglePass = (props) => (
+      <Icon
+        {...props}
+        name={visible ? "eye" : "eye-off"}
+        onPress={() => setVisible(!visible)}
       />
-      <Input
-        value={fields.password}
-        label="Password"
-        placeholder="password"
-        secureTextEntry={!visible}
-        accessoryRight={togglePass}
-        onChangeText={(val) => fieldsChangeHandler("password", val)}
-        style={styles.bottomSpacing}
-      />
-      {err && (
-        <Link
-          title="Forgot your password?"
-          style={{ color: "#000" }}
-          onPress={() =>
-            navigation.navigate("ForgetPassword", { mail: fields.email })
-          }
+    );
+
+    const fieldsChangeHandler = (name, value) => {
+      setFields((fields) => ({
+        ...fields,
+        [name]: value,
+      }));
+    };
+
+    const validateForm = () => {
+      for (let key in fields) {
+        if (fields[key].trim() === "") {
+          Alert.alert(`${key} is required`);
+          return false;
+        }
+      }
+      return true;
+    };
+
+    const onSubmit = () => {
+      if (validateForm()) logIn(fields.email, fields.password);
+    };
+
+    const sendEmailHandler = () => {
+      sendEmail(fields.email);
+      WebBrowser.openBrowserAsync(
+        "https://accounts.google.com/signin/v2/identifier?service=mail&passive=true&rm=false&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&ss=1&scc=1&ltmpl=default&ltmplcache=2&emr=1&osid=1&flowName=GlifWebSignIn&flowEntry=ServiceLogin"
+      );
+      setIsLogIn(true);
+      setFields((fields) => ({
+        ...fields,
+        password: "",
+      }));
+    };
+
+    return (
+      <Container>
+        <Input
+          value={fields.email}
+          label="Email"
+          placeholder="Email"
+          keyboardType="email-address"
+          accessoryRight={userIcon}
+          onChangeText={(val) => fieldsChangeHandler("email", val)}
+          style={{ marginBottom: 15 }}
         />
-      )}
-      <CustomBtn
-        title="Login"
-        width={getWidthByPercents(80, 2)}
-        style={styles.btn}
-        onPress={onSubmit}
-      />
-    </Container>
-  );
-});
+
+        {isLogIn && (
+          <>
+            <Input
+              value={fields.password}
+              label="Password"
+              placeholder="password"
+              secureTextEntry={!visible}
+              accessoryRight={togglePass}
+              onChangeText={(val) => fieldsChangeHandler("password", val)}
+              style={styles.bottomSpacing}
+            />
+            <Link
+              title="Forgot your password?"
+              style={{ color: "#6979f8", marginBottom: 20 }}
+              onPress={() => setIsLogIn(false)}
+            />
+          </>
+        )}
+
+        <CustomBtn
+          title={isLogIn ? "Login" : "Send email"}
+          onPress={isLogIn ? onSubmit : sendEmailHandler}
+          width={getWidthByPercents(80, 2)}
+        />
+      </Container>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   image: {
@@ -106,9 +112,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: GLOBAL_STYLES.HORIZONTAL,
-  },
-  btn: {
-    marginTop: 15,
   },
   bottomSpacing: {
     marginBottom: GLOBAL_STYLES.BOTTOM,
