@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   username: {
-    color: COLORS.TOUCHABLE_TEXT,
+    color: COLORS.LINK,
     fontSize: 15,
     textAlign: "center",
     paddingBottom: 10,

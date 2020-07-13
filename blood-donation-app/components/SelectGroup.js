@@ -5,7 +5,7 @@ import { Icon } from "@ui-kitten/components";
 import { CustomText } from "./CustomText";
 import { COLORS } from "./../styles/colors";
 
-export const SelectGroup = ({ onChangeOption, options, initial }) => {
+export const SelectGroup = ({ onChangeOption, options, initial, style }) => {
   const [groups, setGroups] = useState({
     state: false,
     selected: initial || options[0],
@@ -26,7 +26,7 @@ export const SelectGroup = ({ onChangeOption, options, initial }) => {
     onChangeOption(options[index]);
   };
   return (
-    <View style={{ width: "100%" }}>
+    <View style={[{ width: "100%" }, style]}>
       <TouchableOpacity onPress={showHandler}>
         <View style={styles.container}>
           <CustomText weight="semi">{groups.selected}</CustomText>
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     top: 40,
     height: 160,
     width: "100%",
-    backgroundColor: COLORS.MAIN,
+    backgroundColor: "#fff",
     paddingHorizontal: 20,
     paddingVertical: 10,
     zIndex: 200,

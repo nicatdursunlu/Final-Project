@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     position: "absolute",
-    backgroundColor: COLORS.MAIN,
+
     width: 40,
     height: 40,
     borderRadius: 20,

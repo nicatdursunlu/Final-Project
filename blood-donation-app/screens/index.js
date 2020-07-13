@@ -9,3 +9,4 @@ export { SettingsScreen } from "./SettingsScreen";
 export { ChatsListScreen } from "./ChatsListScreen";
 export { SingleChatScreen } from "./SingleChatScreen";
 export { EditProfileScreen } from "./EditProfileScreen/index";
+export { LogInScreen, WelcomeScreen, SignUpScreen } from "./AuthScreen";

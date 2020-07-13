@@ -33,3 +33,5 @@ export default function App() {
     </Provider>
   );
 }
+
+// https://reactnavigation.org/docs/localization

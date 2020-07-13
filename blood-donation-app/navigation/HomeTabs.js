@@ -1,15 +1,17 @@
 import React from "react";
 import { Icon } from "@ui-kitten/components";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+// import { AnimatedTabBarNavigator } from "react-native-animated-nav-tab-bar";
 
 import { HomeStack } from "./HomeStack";
 import { CreateStack } from "./CreateStack";
 import { FindStack } from "./FindStack";
 import { ProfileStack } from "./ProfileStack";
 import { ChatsStack } from "./ChatsStack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { COLORS } from "./../styles/colors";
 
 const { Navigator, Screen } = createBottomTabNavigator();
+// const { Navigator, Screen } = AnimatedTabBarNavigator();
 
 export const HomeTabs = () => {
   return (
@@ -18,9 +20,9 @@ export const HomeTabs = () => {
         activeBackgroundColor: "#ff5757",
         activeTintColor: COLORS.MAIN,
         keyboardHidesTabBar: true,
+        showLabel: false,
       }}
-      screenOptions={({ route }) => ({
-        // unmountOnBlur: true,
+      screenOptions={({ navigation, route }) => ({
         tabBarIcon: ({ focused }) => {
           let name = "";
           if (route.name === "Home") name = "home";
