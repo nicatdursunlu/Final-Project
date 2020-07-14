@@ -1,0 +1,78 @@
+import React from "react";
+import { connect } from "react-redux";
+import { StyleSheet, View } from "react-native";
+import { Toggle, Divider } from "@ui-kitten/components";
+
+import { Container } from "../commons";
+import { LANGUAGES } from "../utils/selectOptions";
+import { CustomText, SelectGroup } from "../components";
+import { getWidthByPercents } from "./../utils/getWidthByPercents";
+import {
+  setTheme,
+  setLanguage,
+  getLanguage,
+  getTheme,
+} from "../store/settings";
+
+const mapStateToProps = (state) => ({
+  theme: getTheme(state),
+  language: getLanguage(state),
+});
+
+export const SettingsScreen = connect(mapStateToProps, {
+  setTheme,
+  setLanguage,
+})(({ theme, language, setTheme, setLanguage }) => {
+  const themeHandler = (val) => {
+    if (val) setTheme("dark");
+    else setTheme("light");
+  };
+
+  const languageHandler = (val) => setLanguage(val);
+  return (
+    <Container>
+      <Divider style={{ width: "100%" }} />
+      <View style={styles.options}>
+        <CustomText style={styles.optionsText}>Theme</CustomText>
+        <View style={styles.row}>
+          <CustomText>{theme === "light" ? "Light" : "Dark"}</CustomText>
+          <Toggle
+            checked={theme === "dark" ? true : false}
+            onChange={themeHandler}
+            style={{ marginLeft: 10 }}
+          />
+        </View>
+      </View>
+      <Divider style={{ width: "100%" }} />
+      <View style={styles.options}>
+        <CustomText style={styles.optionsText}>Language</CustomText>
+        <SelectGroup
+          options={LANGUAGES}
+          initial={language}
+          onChangeOption={(val) => languageHandler(val)}
+          style={{ width: getWidthByPercents(50, 2) }}
+        />
+      </View>
+      <Divider style={{ width: "100%" }} />
+    </Container>
+  );
+});
+
+const styles = StyleSheet.create({
+  options: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+    marginVertical: 5,
+    alignItems: "center",
+    height: 50,
+    width: "100%",
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  optionsText: {
+    fontSize: 16,
+    padding: 14,
+  },
+});
