@@ -1,44 +1,36 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { Divider } from "react-native-elements";
 
 import { UserInfo } from "./UserInfo";
+import { UserPosts } from "./UserPosts";
+import { Container } from "./../../commons/Container";
 import {
-  selectAuthFullname,
-  selectAuthBloodType,
-  selectAuthPhoto,
-  selectAuthEmail,
-  deleteAuthPhoto,
-  editUsername,
+  selectName,
+  selectBlood,
+  selectPhoto,
+  selectMail,
 } from "../../store/auth";
-import { COLORS } from "../../styles";
 
 const mapStateToProps = (state) => ({
-  fullName: selectAuthFullname(state),
-  bloodType: selectAuthBloodType(state),
-  photo: selectAuthPhoto(state),
-  email: selectAuthEmail(state),
+  fullName: selectName(state),
+  bloodType: selectBlood(state),
+  photo: selectPhoto(state),
+  email: selectMail(state),
 });
 
-export const ProfileScreen = connect(mapStateToProps, {
-  deleteAuthPhoto,
-  editUsername,
-})(({ fullName, bloodType, photo, email }) => {
-  return (
-    <View style={{ flex: 1, backgroundColor: COLORS.MAIN }}>
+export const ProfileScreen = connect(mapStateToProps)(
+  ({ fullName, bloodType, photo, email, navigation }) => (
+    <Container>
       <UserInfo
         fullName={fullName}
         bloodType={bloodType}
-        userAvatar={photo}
+        avatar={photo}
         email={email}
+        navigation={navigation}
       />
-    </View>
-  );
-});
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // color: COLORS.BG,
-  },
-});
+      <Divider style={{ width: "100%" }} />
+      <UserPosts />
+    </Container>
+  )
+);

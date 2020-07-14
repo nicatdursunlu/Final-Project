@@ -1,115 +1,113 @@
 import React from "react";
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import { Icon } from "@ui-kitten/components";
+import * as WebBrowser from "expo-web-browser";
 
+import { GLOBAL_STYLES } from "../../styles";
 import { CustomText, CustomBtn } from "../../components";
-import { Container } from "./../../commons/Container";
-import { COLORS } from "../../styles";
 
-export const UserInfo = ({ fullName, bloodType, userAvatar, email }) => {
+export const UserInfo = ({
+  fullName,
+  bloodType,
+  avatar,
+  email,
+  navigation,
+}) => {
   const myProfile = true;
+  const sendEmail = () => {
+    WebBrowser.openBrowserAsync("mailto:" + email);
+  };
   return (
-    <Container>
-      <View style={styles.imageWrapper}>
+    <View style={styles.container}>
+      <View style={styles.header}>
         <Image
-          style={styles.userAvatar}
+          style={styles.img}
           source={{
             uri:
-              userAvatar === ""
-                ? "https://cdn.pixabay.com/photo/2013/07/13/12/07/avatar-159236_1280.png"
-                : userAvatar,
+              avatar ||
+              "https://cdn.pixabay.com/photo/2013/07/13/12/07/avatar-159236_1280.png",
           }}
         />
-      </View>
 
-      <View style={styles.userInfo}>
-        <CustomText weight="bold" style={styles.fullName}>
-          {fullName}
-        </CustomText>
-        <CustomText weight="bold" style={styles.fullName}>
-          {email}
-        </CustomText>
-
-        {myProfile && (
-          <CustomBtn
-            title="Message"
-            style={styles.messageBtn}
-            titleStyle={styles.btnText}
-          />
-        )}
-
-        <View style={styles.row}>
-          <View style={styles.bloodType}>
-            <CustomText weight="bold" style={styles.value}>
-              {bloodType}
-            </CustomText>
-            <CustomText style={styles.text}>Blood Type</CustomText>
-          </View>
-          <View style={styles.donation}>
-            <CustomText weight="bold" style={styles.value}>
-              870 ml
-            </CustomText>
-            <CustomText style={styles.text}>total donation</CustomText>
-          </View>
+        <View style={styles.blood}>
+          <CustomText weight="bold" style={styles.value}>
+            {bloodType || "?"}
+          </CustomText>
+          <CustomText style={styles.text}>Blood Type</CustomText>
         </View>
       </View>
-    </Container>
+      <View style={styles.info}>
+        <CustomText weight="bold" style={styles.name}>
+          {fullName}
+        </CustomText>
+        <TouchableOpacity
+          onPress={myProfile ? null : sendEmail}
+          style={styles.emailRow}
+        >
+          <Icon name="mail" pack="feather" style={styles.icon} />
+          <CustomText style={styles.email}>{email}</CustomText>
+        </TouchableOpacity>
+        <CustomBtn
+          width="100%"
+          title={myProfile ? "Edit profile" : "Message"}
+          titleStyle={styles.btnText}
+          onPress={() => navigation.navigate("Edit Profile")}
+        />
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  imageWrapper: {
-    width: 150,
-    height: 150,
-    borderRadius: 100,
-    overflow: "hidden",
-    backgroundColor: COLORS.BORDER,
-    elevation: 3,
-    alignSelf: "center",
-    marginTop: 80,
-  },
-  userAvatar: {
+  container: {
+    marginHorizontal: 15,
     width: "100%",
-    height: "100%",
+    alignContent: "center",
+    marginBottom: 20,
   },
-
-  fullName: {
-    fontSize: 27,
-    paddingBottom: 10,
-  },
-  userInfo: {
-    paddingHorizontal: 20,
-    marginTop: 20,
-    alignItems: "center",
-  },
-  row: {
+  header: {
     flexDirection: "row",
-    marginTop: 30,
     alignItems: "center",
-    justifyContent: "center",
+    marginTop: 15,
   },
-
-  messageBtn: {
-    height: 35,
-    width: 100,
-    borderRadius: 10,
-    backgroundColor: "#FF647C",
-    top: 5,
+  img: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    marginRight: 20,
+  },
+  blood: {
+    alignItems: "center",
+  },
+  value: {
+    fontSize: 25,
+    color: "#FF647C",
+  },
+  text: {
+    textTransform: "uppercase",
+  },
+  info: {
+    alignItems: "center",
+    marginTop: 10,
+  },
+  name: {
+    fontSize: 27,
+  },
+  emailRow: {
+    flexDirection: "row",
+    marginVertical: GLOBAL_STYLES.BOTTOM,
+  },
+  icon: {
+    height: 20,
+    color: "#ff6767",
+  },
+  email: {
+    paddingHorizontal: 10,
+    fontSize: 15,
   },
   btnText: {
     textTransform: "none",
     fontSize: 15,
-    color: COLORS.TITLE,
-  },
-
-  bloodType: {
-    marginRight: 30,
-  },
-  value: {
-    fontSize: 20,
-    color: "#FF647C",
-    textAlign: "center",
-  },
-  text: {
-    textTransform: "uppercase",
+    color: "#fff",
   },
 });
