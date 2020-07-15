@@ -86,6 +86,7 @@ export const AvatarUploader = connect(mapStateToProps, {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
+    marginTop: 15,
   },
   photo: {
     width: 150,

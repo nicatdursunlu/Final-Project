@@ -1,5 +1,4 @@
 import React from "react";
-import { View } from "react-native";
 import { connect } from "react-redux";
 
 import { DrawerItem } from "./DrawerItem";
@@ -15,11 +14,7 @@ export const NavContainer = connect(null, { logOut })(
           key={item.name}
           name={item.name}
           title={item.title}
-          onPress={() =>
-            item.goTo === "Saved"
-              ? navigation.navigate("Home", { screen: "Saved" })
-              : navigation.navigate("Content", { screen: item.goTo })
-          }
+          onPress={() => navigation.navigate(item.goTo)}
         />
       ))}
       <DrawerItem title="Log out" name="log-out" onPress={logOut} />

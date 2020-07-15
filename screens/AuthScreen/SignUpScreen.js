@@ -8,137 +8,157 @@ import { ModalWindow } from "./ModalWindow";
 import { Container } from "./../../commons";
 import { GLOBAL_STYLES, COLORS } from "./../../styles";
 import { CustomBtn, Link, Field } from "./../../components";
-import { SIGNUP_INITIAL_STATE } from "../../utils/selectOptions";
+import { SIGNUP_INITIAL_STATE, AUTH_DATA } from "../../utils/selectOptions";
 import { getWidthByPercents } from "../../utils/getWidthByPercents";
 import { userIcon, mailIcon, captionIcon } from "../../styles/icons";
 
-export const SignUpScreen = connect(null, { signUp })(
-  ({ navigation, signUp }) => {
-    const [fields, setFields] = useState(SIGNUP_INITIAL_STATE);
-    const [showPass, setShowPass] = useState(false);
-    const [showModal, setShowModal] = useState(false);
-    const [checked, setChecked] = useState(false);
+export const SignUpScreen = connect(null, { signUp })(({ signUp }) => {
+  const [fields, setFields] = useState(SIGNUP_INITIAL_STATE);
+  const [showPass, setShowPass] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [checked, setChecked] = useState(false);
 
-    const fieldsChangeHandler = (name, value) => {
-      setFields((fields) => ({
-        ...fields,
-        [name]: value,
-      }));
-    };
+  const fieldsChangeHandler = (name, value) => {
+    setFields((fields) => ({
+      ...fields,
+      [name]: value,
+    }));
+  };
 
-    const togglePass = (props) => (
-      <Icon
-        {...props}
-        name={showPass ? "eye" : "eye-off"}
-        onPress={() => setShowPass(!showPass)}
+  const togglePass = (props) => (
+    <Icon
+      {...props}
+      name={showPass ? "eye" : "eye-off"}
+      onPress={() => setShowPass(!showPass)}
+    />
+  );
+
+  const toggleModal = () => {
+    setChecked(true);
+    setShowModal(false);
+  };
+
+  const validateForm = () => {
+    for (let key in fields) {
+      if (fields[key].trim() === "") {
+        Alert.alert(`${key} is required`);
+        return false;
+      } else if (fields.password !== fields.repassword) {
+        Alert.alert("Passwords must match");
+        return false;
+      } else if (!checked) {
+        Alert.alert("Agree with our Terms and Conditions");
+        return false;
+      } else return true;
+    }
+  };
+
+  const onSubmit = () => {
+    const { email, password, username, fullName } = fields;
+    if (validateForm()) signUp(email, password, username, fullName);
+  };
+
+  const DUMMY = [
+    {
+      label: "Full name",
+      value: "fullName",
+      placeholder: "John Doe",
+      name: "fullName",
+    },
+    {
+      label: "Username",
+      value: "username",
+      placeholder: "john_doe",
+      name: "username",
+      accessoryRight: userIcon,
+    },
+    {
+      label: "Email",
+      value: "email",
+      placeholder: "johndoe@gmail.com",
+      name: "email",
+      accessoryRight: mailIcon,
+      keyboardType: "email-address",
+    },
+
+    {
+      label: "Password",
+      value: "password",
+      placeholder: "password",
+      name: "password",
+      accessoryRight: togglePass,
+      caption: "should contain at least 6 symbols",
+      captionIcon: captionIcon,
+      secureTextEntry: !showPass,
+    },
+    {
+      label: "Repeat password",
+      value: "repassword",
+      placeholder: "confirm password",
+      name: "repassword",
+      accessoryRight: togglePass,
+      caption: "should contain at least 6 symbols",
+      captionIcon: captionIcon,
+      secureTextEntry: !showPass,
+    },
+  ];
+
+  return (
+    <Container>
+      {DUMMY.map((item) => {
+        const {
+          label,
+          value,
+          placeholder,
+          name,
+          accessoryRight,
+          caption,
+          captionIcon,
+          secureTextEntry,
+        } = item;
+        return (
+          <Field
+            key={item.value}
+            label={label}
+            value={fields[value]}
+            placeholder={placeholder}
+            onChangeText={(val) => fieldsChangeHandler(name, val)}
+            accessoryRight={accessoryRight}
+            caption={caption}
+            captionIcon={captionIcon}
+            secureTextEntry={secureTextEntry}
+            style={styles.bottomSpacing}
+          />
+        );
+      })}
+      <View style={styles.container}>
+        <CheckBox checked={checked} onChange={(val) => setChecked(val)}>
+          {
+            <Text style={styles.checkText}>
+              By creating an account, you agree to our
+            </Text>
+          }
+        </CheckBox>
+        <Link
+          title="Terms & Conditions"
+          style={styles.link}
+          onPress={() => setShowModal(!showModal)}
+        />
+        <ModalWindow
+          onBackdropPress={() => setShowModal(false)}
+          onPress={toggleModal}
+          visible={showModal}
+        />
+      </View>
+      <CustomBtn
+        title="Create Account"
+        style={styles.bottomSpacing}
+        width={getWidthByPercents(80, 2)}
+        onPress={onSubmit}
       />
-    );
-
-    const toggleModal = () => {
-      setChecked(true);
-      setShowModal(false);
-    };
-
-    const validateForm = () => {
-      for (let key in fields) {
-        if (fields[key].trim() === "") {
-          Alert.alert(`${key} is required`);
-          return false;
-        } else if (fields.password !== fields.repassword) {
-          Alert.alert("Passwords must match");
-          return false;
-        } else if (!checked) {
-          Alert.alert("Agree with our Terms and Conditions");
-          return false;
-        } else return true;
-      }
-    };
-
-    const onSubmit = () => {
-      const { email, password, username, fullName } = fields;
-      if (validateForm()) signUp(email, password, username, fullName);
-    };
-
-    return (
-      <Container>
-        <Field
-          label="Full name"
-          value={fields.fullName}
-          placeholder="John Doe"
-          onChangeText={(val) => fieldsChangeHandler("fullName", val)}
-          style={styles.bottomSpacing}
-        />
-        <Field
-          value={fields.username}
-          label="Username"
-          placeholder="john_doe"
-          onChangeText={(val) => fieldsChangeHandler("username", val)}
-          style={styles.bottomSpacing}
-          accessoryRight={userIcon}
-        />
-        <Field
-          value={fields.email}
-          label="Emai"
-          placeholder="johndoe@gmail.com"
-          keyboardType="email-address"
-          style={styles.bottomSpacing}
-          accessoryRight={mailIcon}
-          onChangeText={(val) => fieldsChangeHandler("email", val)}
-        />
-        <Field
-          value={fields.password}
-          label="Password"
-          placeholder="password"
-          secureTextEntry={!showPass}
-          accessoryRight={togglePass}
-          captionIcon={captionIcon}
-          caption="should contain at least 6 symbols"
-          style={styles.bottomSpacing}
-          onChangeText={(val) => fieldsChangeHandler("password", val)}
-        />
-        <Field
-          value={fields.repassword}
-          label="Repeat Password"
-          placeholder="confirm password"
-          secureTextEntry={!showPass}
-          accessoryRight={togglePass}
-          style={styles.bottomSpacing}
-          captionIcon={captionIcon}
-          caption="should contain at least 6 symbols"
-          onChangeText={(val) => fieldsChangeHandler("repassword", val)}
-        />
-        <View style={styles.container}>
-          <CheckBox
-            checked={checked}
-            onChange={(nextChecked) => setChecked(nextChecked)}
-          >
-            {
-              <Text style={styles.checkText}>
-                By creating an account, you agree to our
-              </Text>
-            }
-          </CheckBox>
-          <Link
-            title="Terms & Conditions"
-            style={styles.link}
-            onPress={() => setShowModal(!showModal)}
-          />
-          <ModalWindow
-            onBackdropPress={() => setShowModal(false)}
-            onPress={toggleModal}
-            visible={showModal}
-          />
-        </View>
-        <CustomBtn
-          title="Create Account"
-          style={styles.bottomSpacing}
-          width={getWidthByPercents(80, 2)}
-          onPress={onSubmit}
-        />
-      </Container>
-    );
-  }
-);
+    </Container>
+  );
+});
 
 const styles = StyleSheet.create({
   container: {

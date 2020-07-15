@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Input } from "@ui-kitten/components";
 import { connect } from "react-redux";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-import { CustomText, SelectGroup, CustomBtn } from "../../components";
 import { AvatarUploader } from "./AvatarUploader";
+import { GLOBAL_STYLES } from "../../styles";
+import { BLOOD_TYPES } from "../../utils/selectOptions";
+import { getWidthByPercents } from "../../utils/getWidthByPercents";
+import { CustomText, SelectGroup, CustomBtn } from "../../components";
 import {
   selectName,
   selectUsername,
@@ -15,10 +19,6 @@ import {
   addBloodType,
   uploadPhoto,
 } from "../../store/auth";
-import { getWidthByPercents } from "../../utils/getWidthByPercents";
-import { GLOBAL_STYLES } from "../../styles";
-import { BLOOD_TYPES } from "../../utils/selectOptions";
-import { Container } from "../../commons";
 
 const mapStateToProps = (state) => ({
   fullName: selectName(state),
@@ -35,7 +35,6 @@ export const EditProfileScreen = connect(mapStateToProps, {
 })(
   ({
     username,
-    photo,
     fullName,
     bloodType,
     editUsername,
@@ -72,18 +71,10 @@ export const EditProfileScreen = connect(mapStateToProps, {
     };
 
     return (
-      <Container>
-        {/* <Image
-          source={{
-            uri:
-              photo ||
-              "https://cdn.pixabay.com/photo/2013/07/13/12/07/avatar-159236_1280.png",
-          }}
-          style={styles.photo}
-        />
-        <TouchableOpacity onPress={() => setIsEdit(!isEdit)}>
-          <CustomText style={styles.text}>Change Profile Photo</CustomText>
-        </TouchableOpacity> */}
+      <KeyboardAwareScrollView
+        style={styles.container}
+        contentContainerStyle={styles.body}
+      >
         <AvatarUploader navigation={navigation} />
         <View style={styles.row}>
           <CustomText>Fullname</CustomText>
@@ -125,32 +116,38 @@ export const EditProfileScreen = connect(mapStateToProps, {
             onPress={onSubmit}
           />
         </View>
-      </Container>
+      </KeyboardAwareScrollView>
     );
   }
 );
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  body: {
+    flexGrow: 1,
+    paddingHorizontal: 15,
+  },
   row: {
     flexDirection: "row",
     alignItems: "baseline",
     width: "100%",
     justifyContent: "space-between",
-    marginBottom: GLOBAL_STYLES.BOTTOM,
+    marginVertical: 7,
   },
   field: {
     width: getWidthByPercents(70, 2),
   },
   bloodType: {
-    zIndex: 2,
-    paddingBottom: 10,
     width: getWidthByPercents(70, 2),
   },
   actions: {
-    width: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     zIndex: -2,
+    marginTop: 20,
   },
 });

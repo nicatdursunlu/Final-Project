@@ -1,4 +1,6 @@
+import React from "react";
 import { IMAGES } from "./../styles/images";
+import { userIcon, mailIcon, captionIcon } from "../styles/icons";
 
 export const BLOOD_TYPES = ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"];
 export const GENDERS = ["Male", "Female", "None"];
@@ -22,6 +24,59 @@ export const SIGNUP_INITIAL_STATE = {
   password: "",
   repassword: "",
 };
+
+const togglePass = () => (
+  <Icon
+    name={showPass ? "eye" : "eye-off"}
+    pack="feather"
+    onPress={() => setShowPass(!showPass)}
+  />
+);
+
+export const AUTH_DATA = [
+  {
+    label: "Full name",
+    value: "fullName",
+    placeholder: "John Doe",
+    name: "fullName",
+  },
+  {
+    label: "Username",
+    value: "username",
+    placeholder: "john_doe",
+    name: "username",
+    accessoryRight: userIcon,
+  },
+  {
+    label: "Email",
+    value: "email",
+    placeholder: "johndoe@gmail.com",
+    name: "email",
+    accessoryRight: mailIcon,
+    keyboardType: "email-address",
+  },
+
+  {
+    label: "Password",
+    value: "password",
+    placeholder: "password",
+    name: "password",
+    // accessoryRight: togglePass,
+    caption: "should contain at least 6 symbols",
+    captionIcon: captionIcon,
+    // secureTextEntry: !showPass,
+  },
+  {
+    label: "Repeat password",
+    value: "repassword",
+    placeholder: "confirm password",
+    name: "repassword",
+    // accessoryRight: togglePass,
+    caption: "should contain at least 6 symbols",
+    captionIcon: captionIcon,
+    // secureTextEntry: !showPass,
+  },
+];
 
 export const ITEMS = [
   {

@@ -1,11 +1,14 @@
 import React from "react";
+import { StyleSheet, ScrollView, View } from "react-native";
+import { Divider } from "@ui-kitten/components";
 import { connect } from "react-redux";
-import { Divider } from "react-native-elements";
 
 import { UserInfo } from "./UserInfo";
-import { UserPosts } from "./UserPosts";
-import { Container } from "./../../commons/Container";
+import { CustomText } from "../../components";
+import { selectPostLists } from "../../store/posts";
+import { CardCover } from "./../HomeScreen/CardCover";
 import {
+  selectUserID,
   selectName,
   selectBlood,
   selectPhoto,
@@ -13,24 +16,53 @@ import {
 } from "../../store/auth";
 
 const mapStateToProps = (state) => ({
-  fullName: selectName(state),
-  bloodType: selectBlood(state),
-  photo: selectPhoto(state),
   email: selectMail(state),
+  photo: selectPhoto(state),
+  userID: selectUserID(state),
+  fullName: selectName(state),
+  posts: selectPostLists(state),
+  bloodType: selectBlood(state),
 });
 
 export const ProfileScreen = connect(mapStateToProps)(
-  ({ fullName, bloodType, photo, email, navigation }) => (
-    <Container>
-      <UserInfo
-        fullName={fullName}
-        bloodType={bloodType}
-        avatar={photo}
-        email={email}
-        navigation={navigation}
-      />
-      <Divider style={{ width: "100%" }} />
-      <UserPosts />
-    </Container>
-  )
+  ({ userID, fullName, bloodType, photo, email, navigation, posts }) => {
+    const myposts = posts.filter((post) => post.author_id === userID);
+    return (
+      <ScrollView style={styles.container} contentContainerStyle={styles.body}>
+        <UserInfo
+          fullName={fullName}
+          bloodType={bloodType}
+          avatar={photo}
+          email={email}
+          navigation={navigation}
+        />
+        <Divider />
+        <CustomText style={styles.text}>My Posts</CustomText>
+        <Divider />
+
+        {myposts.map((item) => (
+          <CardCover
+            key={item.id}
+            item={item}
+            navigation={navigation}
+            userID={userID}
+          />
+        ))}
+      </ScrollView>
+    );
+  }
 );
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  body: {
+    flexGrow: 1,
+    paddingHorizontal: 15,
+  },
+  text: {
+    paddingVertical: 10,
+    alignSelf: "center",
+  },
+});

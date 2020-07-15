@@ -1,10 +1,9 @@
 import React from "react";
-import { View } from "react-native";
+import { Divider } from "@ui-kitten/components";
 
 import { CardHeader } from "./CardHeader";
 import { CardContent } from "./CardContent";
 import { CardBottom } from "./CardBottom";
-import { Divider } from "@ui-kitten/components";
 
 export const CardCover = ({ item, navigation, userID }) => {
   const {
@@ -19,16 +18,13 @@ export const CardCover = ({ item, navigation, userID }) => {
     saved,
     id,
   } = item;
-
   return (
     <>
-      <View style={{ paddingHorizontal: 15 }}>
-        <CardHeader {...{ author_id, userID, user_photo, author_name, time }} />
-        <CardContent
-          {...{ bloodType, location, desc, coordinates, navigation }}
-        />
-        <CardBottom {...{ saved, userID, id }} />
-      </View>
+      <CardHeader {...{ author_id, userID, user_photo, author_name, time }} />
+      <CardContent
+        {...{ bloodType, location, desc, coordinates, navigation }}
+      />
+      <CardBottom {...{ saved, userID, id }} />
       <Divider style={{ marginVertical: 30, backgroundColor: "lightgray" }} />
     </>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Switch } from "react-native";
 import { Toggle, Divider } from "@ui-kitten/components";
 
 import { Container } from "../commons";
@@ -8,10 +8,10 @@ import { LANGUAGES } from "../utils/selectOptions";
 import { CustomText, SelectGroup } from "../components";
 import { getWidthByPercents } from "./../utils/getWidthByPercents";
 import {
-  setTheme,
-  setLanguage,
-  getLanguage,
   getTheme,
+  setTheme,
+  getLanguage,
+  setLanguage,
 } from "../store/settings";
 
 const mapStateToProps = (state) => ({
@@ -28,7 +28,6 @@ export const SettingsScreen = connect(mapStateToProps, {
     else setTheme("light");
   };
 
-  const languageHandler = (val) => setLanguage(val);
   return (
     <Container>
       <Divider style={{ width: "100%" }} />
@@ -49,7 +48,7 @@ export const SettingsScreen = connect(mapStateToProps, {
         <SelectGroup
           options={LANGUAGES}
           initial={language}
-          onChangeOption={(val) => languageHandler(val)}
+          onChangeOption={setLanguage}
           style={{ width: getWidthByPercents(50, 2) }}
         />
       </View>
