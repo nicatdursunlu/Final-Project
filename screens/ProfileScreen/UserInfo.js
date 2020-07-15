@@ -60,7 +60,6 @@ export const UserInfo = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 15,
     width: "100%",
     alignContent: "center",
     marginBottom: 20,

@@ -19,9 +19,9 @@ export const CardHeader = ({
         resizeMode="cover"
         style={styles.image}
         source={{
-          uri: user_photo
-            ? user_photo
-            : "https://cdn.pixabay.com/photo/2013/07/13/12/07/avatar-159236_1280.png",
+          uri:
+            user_photo ||
+            "https://cdn.pixabay.com/photo/2013/07/13/12/07/avatar-159236_1280.png",
         }}
       />
       <View>

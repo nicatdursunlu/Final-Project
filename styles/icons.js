@@ -1,5 +1,6 @@
 import React from "react";
 import { Icon } from "@ui-kitten/components";
+import { COLORS } from "./colors";
 
 import bloodDonation from "./../assets/icons/blood-donation.png";
 import mark from "./../assets/icons/mark.png";
@@ -17,8 +18,7 @@ import request from "./../assets/icons/request.png";
 import pending from "./../assets/icons/pending.png";
 import location from "./../assets/icons/location.png";
 import saved from "./../assets/icons/saved.png";
-import { COLORS } from "./colors";
-
+import left from "./../assets/icons/left_arrow.png";
 export const ICONS = {
   bloodDonation,
   mark,
@@ -36,6 +36,7 @@ export const ICONS = {
   pending,
   location,
   saved,
+  left,
 };
 
 export const editIcon = (props) => (

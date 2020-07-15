@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
+import { connect } from "react-redux";
 
 import { CardCover } from "./CardCover";
+import { selectUserID } from "../../store/auth";
 import {
   getAndListenForPosts,
   selectPostLists,
@@ -9,8 +11,6 @@ import {
   selectSavedLists,
   deleteSavedPostList,
 } from "../../store/posts";
-import { connect } from "react-redux";
-import { selectUserID } from "../../store/auth";
 
 const mapStateToProps = (state) => ({
   posts: selectPostLists(state),
@@ -49,6 +49,7 @@ export const HomeScreen = connect(mapStateToProps, {
           renderItem={({ item }) => (
             <CardCover item={item} navigation={navigation} userID={userID} />
           )}
+          keyExtractor={(item) => item.id}
         />
       </View>
     );
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
   },
   list: {
     flexGrow: 1,
-    paddingBottom: 60,
-    paddingTop: 80,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
   },
 });

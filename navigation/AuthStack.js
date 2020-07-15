@@ -8,10 +8,10 @@ import { leftIcon } from "../styles/icons";
 
 const { Navigator, Screen } = createStackNavigator();
 
-export const AuthStack = ({ navigation }) => (
+export const AuthStack = () => (
   <Navigator
-    screenOptions={{
-      ...HeaderStyles,
+    screenOptions={({ navigation }) => ({
+      // ...HeaderStyles,
       headerTitleStyle: { fontSize: 25, color: "#fff" },
       headerLeft: () => (
         <TopNavigationAction
@@ -19,7 +19,7 @@ export const AuthStack = ({ navigation }) => (
           onPress={() => navigation.goBack()}
         />
       ),
-    }}
+    })}
   >
     <Screen
       name="Welcome"
