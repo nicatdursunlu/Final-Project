@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { AppLoading } from "expo";
 import { Provider } from "react-redux";
+import * as eva from "@eva-design/eva";
+import { StatusBar } from "expo-status-bar";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { PersistGate } from "redux-persist/integration/react";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
-import { EvaIconsPack } from "@ui-kitten/eva-icons";
-import * as eva from "@eva-design/eva";
 
 import store, { persistor } from "./store/index";
 import { RootNav } from "./navigation/RootNav";
@@ -27,6 +28,7 @@ export default function App() {
       <PersistGate loading={null} persistor={persistor}>
         <IconRegistry icons={[EvaIconsPack, FeatherIconsPack]} />
         <ApplicationProvider {...eva} theme={eva.light}>
+          <StatusBar style="auto" />
           <RootNav />
         </ApplicationProvider>
       </PersistGate>

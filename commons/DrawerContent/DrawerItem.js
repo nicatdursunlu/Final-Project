@@ -30,6 +30,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    color: COLORS.DRAWER_TEXT,
+    color: "rgba(0,0,0,.7)",
   },
 });
