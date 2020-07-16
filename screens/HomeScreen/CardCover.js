@@ -20,7 +20,9 @@ export const CardCover = ({ item, navigation, userID }) => {
   } = item;
   return (
     <>
-      <CardHeader {...{ author_id, userID, user_photo, author_name, time }} />
+      <CardHeader
+        {...{ author_id, userID, user_photo, author_name, time, navigation }}
+      />
       <CardContent
         {...{ bloodType, location, desc, coordinates, navigation }}
       />

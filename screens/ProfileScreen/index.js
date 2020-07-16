@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, ScrollView, View } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, ScrollView } from "react-native";
 import { Divider } from "@ui-kitten/components";
 import { connect } from "react-redux";
 
@@ -13,6 +13,9 @@ import {
   selectBlood,
   selectPhoto,
   selectMail,
+  getAndListenForUsers,
+  selectOtherUser,
+  initOtherUser,
 } from "../../store/auth";
 
 const mapStateToProps = (state) => ({
@@ -22,32 +25,51 @@ const mapStateToProps = (state) => ({
   fullName: selectName(state),
   posts: selectPostLists(state),
   bloodType: selectBlood(state),
+  otherProfile: selectOtherUser(state),
 });
 
-export const ProfileScreen = connect(mapStateToProps)(
-  ({ userID, fullName, bloodType, photo, email, navigation, posts }) => {
+export const ProfileScreen = connect(mapStateToProps, {
+  getAndListenForUsers,
+  initOtherUser,
+})(
+  ({
+    userID,
+    fullName,
+    bloodType,
+    photo,
+    email,
+    navigation,
+    posts,
+    route,
+    otherProfile,
+    getAndListenForUsers,
+    initOtherUser,
+  }) => {
     const myposts = posts.filter((post) => post.author_id === userID);
+    const isMyProfile = route.params?.type;
+    useEffect(() => {
+      if (isMyProfile === "other")
+        getAndListenForUsers(route.params?.author_id);
+      return initOtherUser;
+    }, []);
+    const userInfo = !!route.params?.type
+      ? otherProfile
+      : { fullName, bloodType, photo, email };
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.body}>
-        <UserInfo
-          fullName={fullName}
-          bloodType={bloodType}
-          avatar={photo}
-          email={email}
-          navigation={navigation}
-        />
+        <UserInfo {...{ ...userInfo }} navigation={navigation} />
         <Divider />
         <CustomText style={styles.text}>My Posts</CustomText>
         <Divider />
 
-        {myposts.map((item) => (
+        {/* {myposts.map((item) => (
           <CardCover
             key={item.id}
             item={item}
             navigation={navigation}
             userID={userID}
           />
-        ))}
+        ))} */}
       </ScrollView>
     );
   }

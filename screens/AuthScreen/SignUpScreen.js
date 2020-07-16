@@ -4,13 +4,12 @@ import { CheckBox, Text, Icon } from "@ui-kitten/components";
 import { connect } from "react-redux";
 
 import { signUp } from "./../../store/auth";
-import { ModalWindow } from "./ModalWindow";
 import { Container } from "./../../commons";
+import { ModalWindow } from "./ModalWindow";
 import { GLOBAL_STYLES, COLORS } from "./../../styles";
 import { CustomBtn, Link, Field } from "./../../components";
 import { SIGNUP_INITIAL_STATE, AUTH_DATA } from "../../utils/selectOptions";
 import { getWidthByPercents } from "../../utils/getWidthByPercents";
-import { userIcon, mailIcon, captionIcon } from "../../styles/icons";
 
 export const SignUpScreen = connect(null, { signUp })(({ signUp }) => {
   const [fields, setFields] = useState(SIGNUP_INITIAL_STATE);
@@ -58,63 +57,18 @@ export const SignUpScreen = connect(null, { signUp })(({ signUp }) => {
     if (validateForm()) signUp(email, password, username, fullName);
   };
 
-  const DUMMY = [
-    {
-      label: "Full name",
-      value: "fullName",
-      placeholder: "John Doe",
-      name: "fullName",
-    },
-    {
-      label: "Username",
-      value: "username",
-      placeholder: "john_doe",
-      name: "username",
-      accessoryRight: userIcon,
-    },
-    {
-      label: "Email",
-      value: "email",
-      placeholder: "johndoe@gmail.com",
-      name: "email",
-      accessoryRight: mailIcon,
-      keyboardType: "email-address",
-    },
-
-    {
-      label: "Password",
-      value: "password",
-      placeholder: "password",
-      name: "password",
-      accessoryRight: togglePass,
-      caption: "should contain at least 6 symbols",
-      captionIcon: captionIcon,
-      secureTextEntry: !showPass,
-    },
-    {
-      label: "Repeat password",
-      value: "repassword",
-      placeholder: "confirm password",
-      name: "repassword",
-      accessoryRight: togglePass,
-      caption: "should contain at least 6 symbols",
-      captionIcon: captionIcon,
-      secureTextEntry: !showPass,
-    },
-  ];
-
   return (
     <Container>
-      {DUMMY.map((item) => {
+      {AUTH_DATA.map((item) => {
         const {
           label,
           value,
           placeholder,
           name,
           accessoryRight,
+          keyboardType,
           caption,
           captionIcon,
-          secureTextEntry,
         } = item;
         return (
           <Field
@@ -123,10 +77,17 @@ export const SignUpScreen = connect(null, { signUp })(({ signUp }) => {
             value={fields[value]}
             placeholder={placeholder}
             onChangeText={(val) => fieldsChangeHandler(name, val)}
-            accessoryRight={accessoryRight}
+            keyboardType={keyboardType}
+            accessoryRight={
+              value === "password" || value === "repassword"
+                ? togglePass
+                : accessoryRight
+            }
             caption={caption}
             captionIcon={captionIcon}
-            secureTextEntry={secureTextEntry}
+            secureTextEntry={
+              (value === "password" || value === "repassword") && !showPass
+            }
             style={styles.bottomSpacing}
           />
         );

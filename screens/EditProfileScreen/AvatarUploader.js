@@ -7,6 +7,7 @@ import * as ImagePicker from "expo-image-picker";
 import { selectPhoto, uploadPhoto, removeAvatar } from "../../store/auth";
 import { CustomText } from "../../components";
 import { ModalWindow } from "./ModalWindow";
+import { avatarMaker } from "../../components/avatarMaker";
 
 const mapStateToProps = (state) => ({
   photo: selectPhoto(state),
@@ -21,7 +22,7 @@ const imagePickerOptions = {
 export const AvatarUploader = connect(mapStateToProps, {
   uploadPhoto,
   removeAvatar,
-})(({ photo, uploadPhoto, removeAvatar }) => {
+})(({ photo, uploadPhoto, removeAvatar, fullName }) => {
   const [isEdit, setIsEdit] = useState(false);
   const selectImage = async (isCamera) => {
     try {
@@ -61,14 +62,12 @@ export const AvatarUploader = connect(mapStateToProps, {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={{
-          uri:
-            photo ||
-            "https://cdn.pixabay.com/photo/2013/07/13/12/07/avatar-159236_1280.png",
-        }}
-        style={styles.photo}
-      />
+      {photo ? (
+        <Image source={{ uri: photo }} style={styles.photo} />
+      ) : (
+        <View style={styles.photo}>{avatarMaker(fullName, 45)}</View>
+      )}
+
       <TouchableOpacity onPress={() => setIsEdit(!isEdit)}>
         <CustomText style={styles.text}>Change Profile Photo</CustomText>
       </TouchableOpacity>
@@ -92,7 +91,6 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     borderRadius: 80,
-    zIndex: -2,
   },
   text: {
     fontSize: 16,
@@ -103,10 +101,7 @@ const styles = StyleSheet.create({
 
 async function requestCameraPermissions() {
   try {
-    const { status } = await Permissions.askAsync(
-      Permissions.CAMERA_ROLL,
-      Permissions.CAMERA
-    );
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     console.log("status: ", status);
     if (status === "granted") return true;
     else {

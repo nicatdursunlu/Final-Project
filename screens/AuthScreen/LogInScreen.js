@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import { StyleSheet, Alert } from "react-native";
+import { Alert } from "react-native";
 import { connect } from "react-redux";
-import { Input, Icon } from "@ui-kitten/components";
 import * as WebBrowser from "expo-web-browser";
+import { Input, Icon } from "@ui-kitten/components";
 
-import { logIn, sendEmail } from "../../store/auth";
 import { Container } from "../../commons";
 import { userIcon } from "../../styles/icons";
-import { GLOBAL_STYLES } from "./../../styles";
+import { getWidthByPercents } from "./../../utils";
+import { logIn, sendEmail } from "../../store/auth";
 import { CustomBtn, Link } from "./../../components";
-import { getWidthByPercents } from "./../../utils/getWidthByPercents";
 
 const fieldsInitisalState = {
   email: "",
@@ -37,18 +36,14 @@ export const LogInScreen = connect(null, { logIn, sendEmail })(
       }));
     };
 
-    const validateForm = () => {
+    const onSubmit = () => {
       for (let key in fields) {
         if (fields[key].trim() === "") {
           Alert.alert(`${key} is required`);
           return false;
         }
       }
-      return true;
-    };
-
-    const onSubmit = () => {
-      if (validateForm()) logIn(fields.email, fields.password);
+      return logIn(fields.email, fields.password);
     };
 
     const sendEmailHandler = () => {
@@ -84,7 +79,7 @@ export const LogInScreen = connect(null, { logIn, sendEmail })(
               secureTextEntry={!visible}
               accessoryRight={togglePass}
               onChangeText={(val) => fieldsChangeHandler("password", val)}
-              style={styles.bottomSpacing}
+              style={{ marginBottom: 15 }}
             />
             <Link
               title="Forgot your password?"
@@ -103,17 +98,3 @@ export const LogInScreen = connect(null, { logIn, sendEmail })(
     );
   }
 );
-
-const styles = StyleSheet.create({
-  image: {
-    flex: 1,
-    resizeMode: "cover",
-  },
-  container: {
-    flex: 1,
-    paddingHorizontal: GLOBAL_STYLES.HORIZONTAL,
-  },
-  bottomSpacing: {
-    marginBottom: GLOBAL_STYLES.BOTTOM,
-  },
-});
