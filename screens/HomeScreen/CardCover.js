@@ -17,6 +17,7 @@ export const CardCover = ({ item, navigation, userID }) => {
     coordinates,
     saved,
     id,
+    number,
   } = item;
   return (
     <>
@@ -26,7 +27,7 @@ export const CardCover = ({ item, navigation, userID }) => {
       <CardContent
         {...{ bloodType, location, desc, coordinates, navigation }}
       />
-      <CardBottom {...{ saved, userID, id }} />
+      <CardBottom {...{ saved, userID, id, number }} />
       <Divider style={{ marginVertical: 30, backgroundColor: "lightgray" }} />
     </>
   );

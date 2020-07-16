@@ -34,9 +34,8 @@ export const HomeScreen = connect(mapStateToProps, {
     type,
   }) => {
     useEffect(() => {
-      if (type === "posts") {
-        getAndListenForPosts();
-      } else if (type === "saved") {
+      if (type === "posts") getAndListenForPosts();
+      else {
         deleteSavedPostList();
         getAndListenSavedPosts(userID);
       }
@@ -53,6 +52,7 @@ export const HomeScreen = connect(mapStateToProps, {
           data={type === "posts" ? posts : savedPosts}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
+          initialNumToRender={4}
         />
       </View>
     );

@@ -1,6 +1,7 @@
 import React from "react";
-import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity, Alert } from "react-native";
 import { connect } from "react-redux";
+import call from "react-native-phone-call";
 
 import { toggleSavePost } from "../../store/posts";
 import { CustomText } from "../../components";
@@ -9,11 +10,29 @@ import { COLORS } from "../../styles";
 import { Icon } from "@ui-kitten/components";
 
 export const CardBottom = connect(null, { toggleSavePost })(
-  ({ saved, userID, id, toggleSavePost }) => {
+  ({ saved, userID, id, toggleSavePost, number }) => {
     const isSaved = saved.find((item) => item === userID);
+
+    // const args = {
+    //   number: number,
+    //   prompt: false,
+    // };
+
     return (
       <View style={styles.container}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            number
+              ? call({
+                  number: number,
+                  prompt: false,
+                })
+              : Alert.alert(
+                  "Number is not provided",
+                  "Try to write user via dm"
+                )
+          }
+        >
           <View style={styles.btn}>
             <Icon name="phone" pack="feather" style={styles.icon} />
             <CustomText weight="bold" style={styles.btnTitle}>
