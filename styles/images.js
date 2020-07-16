@@ -4,6 +4,7 @@ import slider2 from "./../assets/images/slider2.png";
 import slider3 from "./../assets/images/slider3.png";
 import slider4 from "./../assets/images/slider4.png";
 import header from "./../assets/images/header.png";
+
 import footer from "./../assets/images/footer.png";
 import poster from "./../assets/images/poster.png";
 

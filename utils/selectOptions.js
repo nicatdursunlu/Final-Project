@@ -1,9 +1,7 @@
-import React from "react";
 import { IMAGES } from "./../styles/images";
 import { userIcon, mailIcon, captionIcon } from "../styles/icons";
 
 export const BLOOD_TYPES = ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"];
-export const GENDERS = ["Male", "Female", "None"];
 export const LANGUAGES = ["English", "Azerbaijani", "Russian"];
 export const TITLES = [
   { title: "Search on map" },
@@ -24,14 +22,6 @@ export const SIGNUP_INITIAL_STATE = {
   password: "",
   repassword: "",
 };
-
-const togglePass = () => (
-  <Icon
-    name={showPass ? "eye" : "eye-off"}
-    pack="feather"
-    onPress={() => setShowPass(!showPass)}
-  />
-);
 
 export const AUTH_DATA = [
   {
@@ -61,20 +51,16 @@ export const AUTH_DATA = [
     value: "password",
     placeholder: "password",
     name: "password",
-    // accessoryRight: togglePass,
     caption: "should contain at least 6 symbols",
     captionIcon: captionIcon,
-    // secureTextEntry: !showPass,
   },
   {
     label: "Repeat password",
     value: "repassword",
     placeholder: "confirm password",
     name: "repassword",
-    // accessoryRight: togglePass,
     caption: "should contain at least 6 symbols",
     captionIcon: captionIcon,
-    // secureTextEntry: !showPass,
   },
 ];
 
