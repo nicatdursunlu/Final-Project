@@ -41,14 +41,17 @@ export const HomeScreen = connect(mapStateToProps, {
         getAndListenSavedPosts(userID);
       }
     }, []);
+
+    const renderItem = ({ item }) => (
+      <CardCover item={item} navigation={navigation} userID={userID} />
+    );
+
     return (
       <View style={styles.container}>
         <FlatList
           contentContainerStyle={styles.list}
           data={type === "posts" ? posts : savedPosts}
-          renderItem={({ item }) => (
-            <CardCover item={item} navigation={navigation} userID={userID} />
-          )}
+          renderItem={renderItem}
           keyExtractor={(item) => item.id}
         />
       </View>

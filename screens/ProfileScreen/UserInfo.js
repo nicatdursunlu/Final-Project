@@ -5,30 +5,20 @@ import * as WebBrowser from "expo-web-browser";
 
 import { GLOBAL_STYLES } from "../../styles";
 import { CustomText, CustomBtn } from "../../components";
+import { avatarMaker } from "./../../components/avatarMaker";
 
-export const UserInfo = ({
-  fullName,
-  bloodType,
-  avatar,
-  email,
-  navigation,
-}) => {
-  const myProfile = true;
+export const UserInfo = ({ fullName, bloodType, photo, email, navigation }) => {
   const sendEmail = () => {
     WebBrowser.openBrowserAsync("mailto:" + email);
   };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Image
-          style={styles.img}
-          source={{
-            uri:
-              avatar ||
-              "https://cdn.pixabay.com/photo/2013/07/13/12/07/avatar-159236_1280.png",
-          }}
-        />
-
+        {/* {photo ? (
+          <Image style={styles.img} source={{ uri: photo }} />
+        ) : (
+          <View style={styles.img}>{avatarMaker(fullName, 40)}</View>
+        )} */}
         <View style={styles.blood}>
           <CustomText weight="bold" style={styles.value}>
             {bloodType || "?"}
@@ -40,16 +30,13 @@ export const UserInfo = ({
         <CustomText weight="bold" style={styles.name}>
           {fullName}
         </CustomText>
-        <TouchableOpacity
-          onPress={myProfile ? null : sendEmail}
-          style={styles.emailRow}
-        >
+        <TouchableOpacity onPress={sendEmail} style={styles.emailRow}>
           <Icon name="mail" pack="feather" style={styles.icon} />
           <CustomText style={styles.email}>{email}</CustomText>
         </TouchableOpacity>
         <CustomBtn
           width="100%"
-          title={myProfile ? "Edit profile" : "Message"}
+          title={"Edit profile"}
           titleStyle={styles.btnText}
           onPress={() => navigation.navigate("Edit Profile")}
         />

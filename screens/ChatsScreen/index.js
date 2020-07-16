@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
+import { connect } from "react-redux";
 
 import { ChatsCover } from "./ChatsCover";
-import { connect } from "react-redux";
+import { CustomText } from "../../components";
+import { GLOBAL_STYLES } from "../../styles";
 import {
   getAndListenForChatLists,
   selecteChatsLists,
   makeReadMessage,
 } from "../../store/chats";
-import { CustomText } from "../../components";
-import { GLOBAL_STYLES } from "../../styles";
 
 const mapStateToProps = (state) => ({
   lists: selecteChatsLists(state),
@@ -27,7 +27,12 @@ export const ChatsScreen = connect(mapStateToProps, {
     navigation.navigate("SingleChat", { companion_name, companion_img, id });
     makeReadMessage(id);
   };
-
+  const renderItem = ({ item }) => (
+    <ChatsCover
+      chat={item}
+      onPress={() => gotoChat(item.id, item.companion_img, item.companion_name)}
+    />
+  );
   return (
     <View style={styles.container}>
       <CustomText weight="bold" style={styles.title}>
@@ -36,14 +41,7 @@ export const ChatsScreen = connect(mapStateToProps, {
       <FlatList
         data={lists}
         contentContainerStyle={styles.list}
-        renderItem={({ item }) => (
-          <ChatsCover
-            chat={item}
-            onPress={() =>
-              gotoChat(item.id, item.companion_img, item.companion_name)
-            }
-          />
-        )}
+        renderItem={renderItem}
       />
     </View>
   );

@@ -1,8 +1,9 @@
 import React from "react";
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 
 import { CustomText } from "../../components";
-import { getTimeFromPosted } from "../../utils/getTimeFromPosted";
+import { getTimeFromPosted } from "../../utils";
+import { avatarMaker } from "./../../components/avatarMaker";
 
 export const CardHeader = ({
   author_id,
@@ -10,28 +11,36 @@ export const CardHeader = ({
   user_photo,
   author_name,
   time,
+  navigation,
 }) => {
   const formattedTime = getTimeFromPosted(time);
   const isMe = author_id === userID;
+
+  const goTo = () => {
+    if (!isMe) {
+      navigation.navigate("Profile", { author_id, author_name, type: "other" });
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Image
-        resizeMode="cover"
-        style={styles.image}
-        source={{
-          uri:
-            user_photo ||
-            "https://cdn.pixabay.com/photo/2013/07/13/12/07/avatar-159236_1280.png",
-        }}
-      />
-      <View>
+      {user_photo ? (
+        <Image
+          resizeMode="cover"
+          style={styles.image}
+          source={{ uri: user_photo }}
+        />
+      ) : (
+        <View style={styles.image}>{avatarMaker(author_name, 15)}</View>
+      )}
+      <TouchableOpacity onPress={goTo}>
         <CustomText weight="semi" style={styles.name}>
           {isMe ? "Me" : author_name}
         </CustomText>
         <CustomText weight="regular" style={styles.lastSeen}>
           {formattedTime}
         </CustomText>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };

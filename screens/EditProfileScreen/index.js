@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Input } from "@ui-kitten/components";
 import { connect } from "react-redux";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { AvatarUploader } from "./AvatarUploader";
-import { GLOBAL_STYLES } from "../../styles";
 import { BLOOD_TYPES } from "../../utils/selectOptions";
 import { getWidthByPercents } from "../../utils/getWidthByPercents";
 import { CustomText, SelectGroup, CustomBtn } from "../../components";
+import { Container } from "./../../commons/Container";
 import {
   selectName,
   selectUsername,
@@ -71,11 +70,8 @@ export const EditProfileScreen = connect(mapStateToProps, {
     };
 
     return (
-      <KeyboardAwareScrollView
-        style={styles.container}
-        contentContainerStyle={styles.body}
-      >
-        <AvatarUploader navigation={navigation} />
+      <Container>
+        <AvatarUploader navigation={navigation} fullName={fullName} />
         <View style={styles.row}>
           <CustomText>Fullname</CustomText>
           <Input
@@ -116,7 +112,7 @@ export const EditProfileScreen = connect(mapStateToProps, {
             onPress={onSubmit}
           />
         </View>
-      </KeyboardAwareScrollView>
+      </Container>
     );
   }
 );
@@ -149,5 +145,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     zIndex: -2,
     marginTop: 20,
+    width: "100%",
   },
 });
