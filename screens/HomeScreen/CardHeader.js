@@ -18,7 +18,11 @@ export const CardHeader = ({
 
   const goTo = () => {
     if (!isMe) {
-      navigation.navigate("Profile", { author_id, author_name, type: "other" });
+      navigation.navigate("ProfileScreen", {
+        author_id,
+        author_name,
+        type: "other",
+      });
     }
   };
 

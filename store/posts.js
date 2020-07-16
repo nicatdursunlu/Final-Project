@@ -211,7 +211,6 @@ export const getAndListenSavedPosts = (userID) => async (dispatch) => {
     });
 
     dispatch(setSavedPost(sortedSavedPost));
-    // dispatch(setSavedPost(savedPostsArr));
   } catch (error) {
     console.log("getAndListenSavedPost error =>", error);
   }

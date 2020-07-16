@@ -5,7 +5,7 @@ import * as WebBrowser from "expo-web-browser";
 
 import { GLOBAL_STYLES } from "../../styles";
 import { CustomText, CustomBtn } from "../../components";
-import { avatarMaker } from "./../../components/avatarMaker";
+import { avatarMaker } from "./../../components";
 
 export const UserInfo = ({ fullName, bloodType, photo, email, navigation }) => {
   const sendEmail = () => {

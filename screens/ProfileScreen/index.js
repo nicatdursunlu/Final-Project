@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import { UserInfo } from "./UserInfo";
 import { CustomText } from "../../components";
 import { selectPostLists } from "../../store/posts";
-import { CardCover } from "./../HomeScreen/CardCover";
 import {
   selectUserID,
   selectName,
