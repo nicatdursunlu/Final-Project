@@ -11,6 +11,8 @@ const CHANGE_USERNAME = "CHANGE_USERNAME";
 const CHANGE_FULL_NAME = "CHANGE_FULL_NAME";
 const RESET_PASSWORD = "RESET_PASSWORD";
 const SELECT_BLOOD_TYPE = "SELECT_BLOOD_TYPE";
+const SET_OTHER_USER = "SET_OTHER_USER";
+const INIT_OTHER_USER = "INIT_OTHER_USER";
 
 // SELECTORS
 export const MODULE_NAME = "auth";
@@ -21,6 +23,7 @@ export const selectName = (state) => state[MODULE_NAME].fullName;
 export const selectPhoto = (state) => state[MODULE_NAME].photo;
 export const selectBlood = (state) => state[MODULE_NAME].bloodType;
 export const selectMail = (state) => state[MODULE_NAME].email;
+export const selectOtherUser = (state) => state[MODULE_NAME].otherUser;
 
 // REDUCER
 const initialState = {
@@ -31,10 +34,16 @@ const initialState = {
   bloodType: null,
   email: null,
   photo: null,
+  otherUser: {},
 };
 
 export function reducer(state = initialState, { type, payload }) {
   switch (type) {
+    case SET_OTHER_USER:
+      return {
+        ...state,
+        otherUser: payload,
+      };
     case SET_AUTH_STATUS:
       return {
         ...state,
@@ -90,12 +99,22 @@ export function reducer(state = initialState, { type, payload }) {
         fullName: null,
         email: null,
       };
+    case INIT_OTHER_USER:
+      return {
+        ...state,
+        otherUser: {},
+      };
     default:
       return state;
   }
 }
 
 // ACTION CREATORS
+export const setOtherUser = (payload) => ({
+  type: SET_OTHER_USER,
+  payload,
+});
+
 export const setAuthStatus = (payload) => ({
   type: SET_AUTH_STATUS,
   payload,
@@ -139,6 +158,10 @@ export const setAuthLogout = () => ({
   type: SET_AUTH_LOGOUT,
 });
 
+export const initOtherUser = () => ({
+  type: INIT_OTHER_USER,
+});
+
 // MIDDLEWARES
 export const signUp = (email, password, username, fullName) => async (
   dispatch
@@ -158,6 +181,7 @@ export const signUp = (email, password, username, fullName) => async (
         userID: uid,
         username,
         fullName,
+        email,
       })
     );
 
@@ -209,24 +233,6 @@ export const logOut = () => async (dispatch) => {
     dispatch(setAuthLogout());
   } catch (error) {
     console.log("logOut error", error);
-  }
-};
-
-export const uploadPhoto = (uri) => async (dispatch, getState) => {
-  try {
-    const response = await fetch(uri);
-    const blob = await response.blob();
-
-    const key = (await fbApp.db.ref("keys").push()).key;
-    const snap = await fbApp.storage.ref(key).put(blob);
-    const url = await snap.ref.getDownloadURL();
-
-    const userID = selectUserID(getState());
-    const result = await fbApp.db.ref(`users/${userID}/photo`).set(url);
-
-    dispatch(setPhoto(url));
-  } catch (error) {
-    Alert.alert(error.message);
   }
 };
 
@@ -292,4 +298,33 @@ export const changePassword = () => async (dispatch) => {
     const user = fbApp.auth.currentUser;
     user.updatePassword("123456789123");
   } catch (error) {}
+};
+
+export const uploadPhoto = (uri) => async (dispatch, getState) => {
+  try {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+
+    const key = (await fbApp.db.ref("keys").push()).key;
+    const snap = await fbApp.storage.ref(key).put(blob);
+    const url = await snap.ref.getDownloadURL();
+
+    const userID = selectUserID(getState());
+    const result = await fbApp.db.ref(`users/${userID}/photo`).set(url);
+
+    dispatch(setPhoto(url));
+  } catch (error) {
+    Alert.alert(error.message);
+  }
+};
+
+export const getAndListenForUsers = (author_id) => async (dispatch) => {
+  try {
+    const key = await fbApp.db.ref(`users/${author_id}`).key;
+    const user = await fbApp.db.ref(`users/${author_id}`).once("value");
+    dispatch(setOtherUser({ userID: key, ...user.val() }));
+    // console.log("ggg", { userID: key, ...user.val() });
+  } catch (err) {
+    console.log("user not found", err);
+  }
 };

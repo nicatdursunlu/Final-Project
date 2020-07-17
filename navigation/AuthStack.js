@@ -11,7 +11,7 @@ const { Navigator, Screen } = createStackNavigator();
 export const AuthStack = () => (
   <Navigator
     screenOptions={({ navigation }) => ({
-      // ...HeaderStyles,
+      ...HeaderStyles,
       headerTitleStyle: { fontSize: 25, color: "#fff" },
       headerLeft: () => (
         <TopNavigationAction
