@@ -18,6 +18,7 @@ export const ModalWindow = ({
     { title: "Remove Current Photo", onPress: deleteHandler },
     { title: "Cancel", onPress: onBackdropPress },
   ];
+
   return (
     <Modal
       visible={visible}

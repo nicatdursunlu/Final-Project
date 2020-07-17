@@ -1,7 +1,8 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Linking } from "react-native";
 import { SocialIcon } from "react-native-elements";
 import { Icon } from "@ui-kitten/components";
+import call from "react-native-phone-call";
 
 import { GLOBAL_STYLES } from "../styles";
 import { CustomText } from "../components";
@@ -13,14 +14,29 @@ export const ContactScreen = () => (
     <CustomText style={{ padding: 20 }}>
       If you have any comment or question, please get in touch with us!
     </CustomText>
-    <View style={styles.row}>
+    <TouchableOpacity
+      style={styles.row}
+      onPress={() =>
+        call({
+          number: "7700",
+          prompt: false,
+        })
+      }
+    >
       <Icon name="phone-call" pack="feather" style={styles.icon} />
       <CustomText>*7700</CustomText>
-    </View>
-    <View style={styles.row}>
+    </TouchableOpacity>
+    <TouchableOpacity
+      style={styles.row}
+      onPress={() =>
+        Linking.openURL(
+          "mailto:e-donor@gmail.com?subject=Support&body=Description"
+        )
+      }
+    >
       <Icon name="mail" pack="feather" style={styles.icon} />
-      <CustomText>e-Donor@gmail.com</CustomText>
-    </View>
+      <CustomText>e-donor@gmail.com</CustomText>
+    </TouchableOpacity>
     <CustomText style={styles.text}>
       Follow us on Social Media for Latest Updates!
     </CustomText>
