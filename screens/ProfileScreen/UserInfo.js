@@ -14,11 +14,11 @@ export const UserInfo = ({ fullName, bloodType, photo, email, navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        {/* {photo ? (
+        {photo ? (
           <Image style={styles.img} source={{ uri: photo }} />
         ) : (
           <View style={styles.img}>{avatarMaker(fullName, 40)}</View>
-        )} */}
+        )}
         <View style={styles.blood}>
           <CustomText weight="bold" style={styles.value}>
             {bloodType || "?"}
