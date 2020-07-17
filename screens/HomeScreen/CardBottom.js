@@ -12,12 +12,6 @@ import { Icon } from "@ui-kitten/components";
 export const CardBottom = connect(null, { toggleSavePost })(
   ({ saved, userID, id, toggleSavePost, number }) => {
     const isSaved = saved.find((item) => item === userID);
-
-    // const args = {
-    //   number: number,
-    //   prompt: false,
-    // };
-
     return (
       <View style={styles.container}>
         <TouchableOpacity

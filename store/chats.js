@@ -63,7 +63,6 @@ export const initChatList = () => ({
 export const getAndListenForChatLists = () => async (dispatch, getState) => {
   try {
     const userID = selectUserID(getState());
-    console.log("userId", userID);
     await firebase
       .firestore()
       .collection("users_chats_lists")
@@ -176,16 +175,36 @@ export const sendMessage = (messageObj) => async (dispatch, getState) => {
       .split("_")
       .find((chatID) => chatID !== userID);
 
-    await firebase
+    const ref = await firebase
       .firestore()
       .collection("messages")
-      .doc(messageObj.chatID)
-      .update({
-        messages: firebase.firestore.FieldValue.arrayUnion({
-          author_id: userID,
-          text: messageObj.text,
-          time: Date.now(),
-        }),
+      .doc(messageObj.chatID);
+
+    ref
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          ref.update({
+            messages: firebase.firestore.FieldValue.arrayUnion({
+              author_id: userID,
+              text: messageObj.text,
+              time: Date.now(),
+            }),
+          });
+        } else {
+          ref.set({
+            messages: [
+              {
+                author_id: userID,
+                text: messageObj.text,
+                time: Date.now(),
+              },
+            ],
+          });
+        }
+      })
+      .catch(function (error) {
+        console.log("send message error", error);
       });
 
     await firebase

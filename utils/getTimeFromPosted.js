@@ -4,11 +4,11 @@ export function getTimeFromPosted(time) {
 
   const sharedMinute = postSharedDate.getMinutes();
   const sharedHour = postSharedDate.getHours();
-  const sharedDay = postSharedDate.getDay();
+  const sharedDay = postSharedDate.getDate();
 
   const minute = date.getMinutes();
   const hour = date.getHours();
-  const day = date.getDay();
+  const day = date.getDate();
 
   if (day - sharedDay === 0) {
     if (hour - sharedHour === 0) {

@@ -1,4 +1,4 @@
-export function generatePrivateChatID(firstID, secondID) {
+export function generateChatID(firstID, secondID) {
   return [firstID, secondID]
     .sort((a, b) => {
       if (a === b) return 0;
