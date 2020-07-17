@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Image, Alert, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Alert,
+  TouchableOpacity,
+  Platform,
+  ActionSheetIOS,
+} from "react-native";
 import { connect } from "react-redux";
 import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
@@ -7,7 +15,7 @@ import * as ImagePicker from "expo-image-picker";
 import { selectPhoto, uploadPhoto, removeAvatar } from "../../store/auth";
 import { CustomText } from "../../components";
 import { ModalWindow } from "./ModalWindow";
-import { avatarMaker } from "../../components/avatarMaker";
+import { AvatarMaker } from "../../components/AvatarMaker";
 
 const mapStateToProps = (state) => ({
   photo: selectPhoto(state),
@@ -60,15 +68,34 @@ export const AvatarUploader = connect(mapStateToProps, {
     setIsEdit(false);
   };
 
+  const onPress = () => setIsEdit(!isEdit);
+  const oniosPress = () =>
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: [
+          "Cancel",
+          "Take Photo",
+          "Choose from Gallery",
+          "Remove Current Photo",
+        ],
+        destructiveButtonIndex: 3,
+        cancelButtonIndex: 0,
+      },
+      (buttonIndex) => {
+        if (buttonIndex === 1) takePhoto();
+        else if (buttonIndex === 2) chooseFromGallery();
+        else if (buttonIndex === 3) deleteHandler();
+      }
+    );
+
   return (
     <View style={styles.container}>
       {photo ? (
         <Image source={{ uri: photo }} style={styles.photo} />
       ) : (
-        <View style={styles.photo}>{avatarMaker(fullName, 45)}</View>
+        <View style={styles.photo}>{AvatarMaker(fullName, 45)}</View>
       )}
-
-      <TouchableOpacity onPress={() => setIsEdit(!isEdit)}>
+      <TouchableOpacity onPress={Platform.OS === "ios" ? oniosPress : onPress}>
         <CustomText style={styles.text}>Change Profile Photo</CustomText>
       </TouchableOpacity>
       <ModalWindow
