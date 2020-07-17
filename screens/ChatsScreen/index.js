@@ -11,6 +11,7 @@ import {
 } from "../../store/chats";
 import { CustomText } from "../../components";
 import { GLOBAL_STYLES } from "../../styles";
+import { initOtherUser } from "../../store/auth";
 
 const mapStateToProps = (state) => ({
   lists: selecteChatsLists(state),
@@ -29,12 +30,11 @@ export const ChatsScreen = connect(mapStateToProps, {
     lists,
   }) => {
     useEffect(() => {
-      initChatList();
       getAndListenForChatLists();
-      console.log("list", lists);
+      return initChatList;
     }, []);
 
-    const gotoChat = (id, companion_img, companion_name) => {
+    const gotoChat = ({ id, companion_img, companion_name }) => {
       navigation.navigate("SingleChat", {
         companion_name,
         companion_img,
@@ -52,12 +52,7 @@ export const ChatsScreen = connect(mapStateToProps, {
           data={lists}
           contentContainerStyle={styles.list}
           renderItem={({ item }) => (
-            <ChatsCover
-              chat={item}
-              onPress={() =>
-                gotoChat(item.id, item.companion_img, item.companion_name)
-              }
-            />
+            <ChatsCover chat={item} onPress={() => gotoChat(item)} />
           )}
         />
       </View>

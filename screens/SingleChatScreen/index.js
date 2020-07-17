@@ -63,7 +63,6 @@ export const SingleChatScreen = connect(mapStateToProps, {
         ...messageObj,
         text: "",
       }));
-      console.log("messageObj", messageObj);
     };
     return (
       <View style={styles.body}>

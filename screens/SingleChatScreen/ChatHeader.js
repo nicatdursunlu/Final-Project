@@ -1,73 +1,66 @@
 import React from "react";
 import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
-import { CustomText } from "../../components";
-import { StatusBar } from "expo-status-bar";
 import { LinearGradient } from "expo-linear-gradient";
+import { StatusBar } from "expo-status-bar";
+
 import { ICONS } from "../../styles";
+import { CustomText, avatarMaker } from "../../components";
 
 export const ChatHeader = ({ route, navigation, children }) => {
   const { companion_img, companion_name } = route?.params;
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <StatusBar
-          backgroundColor="transparent"
-          translucent={true}
-          barStyl="dark"
-        />
-        <LinearGradient
-          style={styles.gradient}
-          start={[-0.7, -7]}
-          colors={["white", "#859bde"]}
-        />
-        <TouchableOpacity
-          style={styles.leftIcon}
-          onPress={() => navigation.goBack()}
-        >
-          <Image style={styles.left} resizeMode="cover" source={ICONS.left} />
-        </TouchableOpacity>
+      <StatusBar
+        backgroundColor="transparent"
+        translucent={true}
+        barStyle="dark"
+      />
+      <LinearGradient
+        style={styles.gradient}
+        start={[-0.7, -7]}
+        colors={["white", "#859bde"]}
+      />
+      <TouchableOpacity onPress={() => navigation.navigate("Chats")}>
+        <Image style={styles.left} source={ICONS.left} />
+      </TouchableOpacity>
+      {!!companion_img && (
         <Image style={styles.img} source={{ uri: companion_img }} />
-        <CustomText weight="semi" style={styles.name}>
-          {companion_name}
-        </CustomText>
-      </View>
+      )}
+      {!companion_img && (
+        <View style={styles.img}>{avatarMaker(companion_name, 20)}</View>
+      )}
+      <CustomText weight="semi" style={styles.name}>
+        {companion_name}
+      </CustomText>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
-  },
-  header: {
-    height: 100,
+    paddingTop: 25,
+    paddingBottom: 10,
     overflow: "hidden",
     flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 15,
   },
   gradient: {
     ...StyleSheet.absoluteFill,
   },
+  left: {
+    height: 20,
+    width: 20,
+    marginRight: 30,
+  },
   img: {
-    marginLeft: 50,
-    marginTop: 50,
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: "#eee",
+    marginRight: 10,
   },
   name: {
     color: "#fbfbfb",
     fontSize: 15,
-    marginTop: 60,
-    marginLeft: 10,
-  },
-  leftIcon: {
-    position: "absolute",
-    left: 20,
-    top: 60,
-  },
-  left: {
-    height: 20,
-    width: 20,
   },
 });

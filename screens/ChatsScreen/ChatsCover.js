@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 
-import { CustomText } from "../../components";
+import { CustomText, avatarMaker } from "../../components";
 import { getMessageTime } from "../../utils/getMessageTime";
 
 const { width } = Dimensions.get("screen");
@@ -17,7 +17,12 @@ export const ChatsCover = ({ chat, onPress }) => {
 
   return (
     <TouchableOpacity style={styles.listCover} onPress={onPress}>
-      <Image style={styles.userAvatar} source={{ uri: companion_img }} />
+      {!!companion_img && (
+        <Image style={styles.userAvatar} source={{ uri: companion_img }} />
+      )}
+      {!companion_img && (
+        <View style={styles.userAvatar}>{avatarMaker(companion_name, 23)}</View>
+      )}
       <View style={styles.content}>
         <View style={styles.row}>
           <View style={styles.infoContent}>
