@@ -8,6 +8,10 @@ const { Navigator, Screen } = createDrawerNavigator();
 
 export const DrawerStack = () => (
   <Navigator drawerContent={({ ...props }) => <DrawerContent {...props} />}>
-    <Screen name="Profile" component={ProfileScreen} />
+    <Screen
+      name="Profile"
+      component={ProfileScreen}
+      options={{ headerShown: false }}
+    />
   </Navigator>
 );

@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
 async function requestCameraPermissions() {
   try {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    console.log("status: ", status);
     if (status === "granted") return true;
     else {
       Alert.alert(

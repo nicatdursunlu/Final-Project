@@ -4,7 +4,7 @@ import { TopNavigationAction } from "@ui-kitten/components";
 import { createStackNavigator } from "@react-navigation/stack";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
-import { HomeTabs } from "./HomeTabs";
+import { BottomTabs } from "./BottomTabs";
 import { HeaderStyles } from "../styles";
 import { leftIcon } from "../styles/icons";
 import { selectUsername } from "../store/auth";
@@ -35,8 +35,8 @@ export const AppStack = () => {
       })}
     >
       <Screen
-        name="HomeTabs"
-        component={HomeTabs}
+        name="BottomTabs"
+        component={BottomTabs}
         options={({ route }) => ({
           ...HeaderStyles,
           headerTitle: getHeaderTitle(route),

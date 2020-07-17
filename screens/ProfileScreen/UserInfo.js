@@ -7,7 +7,14 @@ import { GLOBAL_STYLES } from "../../styles";
 import { CustomText, CustomBtn } from "../../components";
 import { avatarMaker } from "./../../components";
 
-export const UserInfo = ({ fullName, bloodType, photo, email, navigation }) => {
+export const UserInfo = ({
+  fullName,
+  bloodType,
+  photo,
+  email,
+  profileType,
+  onPress,
+}) => {
   const sendEmail = () => {
     WebBrowser.openBrowserAsync("mailto:" + email);
   };
@@ -36,9 +43,9 @@ export const UserInfo = ({ fullName, bloodType, photo, email, navigation }) => {
         </TouchableOpacity>
         <CustomBtn
           width="100%"
-          title={"Edit profile"}
+          title={!!profileType ? "Send Message" : "Edit profile"}
           titleStyle={styles.btnText}
-          onPress={() => navigation.navigate("Edit Profile")}
+          onPress={onPress}
         />
       </View>
     </View>

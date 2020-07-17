@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { UserInfo } from "./UserInfo";
 import { CustomText } from "../../components";
 import { selectPostLists } from "../../store/posts";
+import { generateChatID } from "./../../utils/generateChatID";
 import {
   selectUserID,
   selectName,
@@ -45,18 +46,34 @@ export const ProfileScreen = connect(mapStateToProps, {
     initOtherUser,
   }) => {
     const myposts = posts.filter((post) => post.author_id === userID);
-    const isMyProfile = route.params?.type;
+    const profileType = route.params?.type;
     useEffect(() => {
-      if (isMyProfile === "other")
+      if (profileType === "other")
         getAndListenForUsers(route.params?.author_id);
       return initOtherUser;
     }, []);
-    const userInfo = !!route.params?.type
+    const userInfo = !!profileType
       ? otherProfile
       : { fullName, bloodType, photo, email };
+
+    const onPressHandeler = () => {
+      if (!!profileType) {
+        navigation.navigate("SingleChat", {
+          companion_name: otherProfile.fullName,
+          companion_img: otherProfile.photo,
+          chatID: generateChatID(userID, otherProfile.userID),
+        });
+      } else {
+        navigation.navigate("Edit Profile");
+      }
+    };
     return (
       <ScrollView style={styles.container} contentContainerStyle={styles.body}>
-        <UserInfo {...{ ...userInfo }} navigation={navigation} />
+        <UserInfo
+          {...{ ...userInfo }}
+          profileType={profileType}
+          onPress={onPressHandeler}
+        />
         <Divider />
         <CustomText style={styles.text}>My Posts</CustomText>
         <Divider />

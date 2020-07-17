@@ -17,7 +17,8 @@ export const CardHeader = ({
   const isMe = author_id === userID;
 
   const goTo = () => {
-    if (!isMe) {
+    if (isMe) navigation.navigate("Profile");
+    else {
       navigation.navigate("ProfileScreen", {
         author_id,
         author_name,
