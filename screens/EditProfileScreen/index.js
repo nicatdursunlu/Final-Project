@@ -4,7 +4,7 @@ import { Input } from "@ui-kitten/components";
 import { connect } from "react-redux";
 
 import { AvatarUploader } from "./AvatarUploader";
-import { BLOOD_TYPES } from "../../utils/selectOptions";
+import { BLOOD_TYPES } from "../../utils/dummy";
 import { getWidthByPercents } from "../../utils/getWidthByPercents";
 import { CustomText, SelectGroup, CustomBtn } from "../../components";
 import { Container } from "./../../commons/Container";

@@ -15,10 +15,10 @@ export const RateScreen = () => (
 
     <Rating
       showRating
-      imageSize={40}
+      startingValue={5}
+      ratingCount={5}
+      size={20}
       style={{ paddingBottom: 50 }}
-      defaultRating={5}
-      size={40}
     />
     <CustomBtn
       width={getWidthByPercents(80, 2)}

@@ -1,11 +1,16 @@
 import React from "react";
-import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  TouchableOpacity,
+  Linking,
+  Platform,
+} from "react-native";
 import { Icon } from "@ui-kitten/components";
-import * as WebBrowser from "expo-web-browser";
 
 import { GLOBAL_STYLES } from "../../styles";
-import { CustomText, CustomBtn } from "../../components";
-import { avatarMaker } from "./../../components";
+import { CustomText, CustomBtn, AvatarMaker } from "../../components";
 
 export const UserInfo = ({
   fullName,
@@ -16,7 +21,7 @@ export const UserInfo = ({
   onPress,
 }) => {
   const sendEmail = () => {
-    WebBrowser.openBrowserAsync("mailto:" + email);
+    !!profileType ? Linking.openURL("mailto:", email) : console.log("hey");
   };
   return (
     <View style={styles.container}>
@@ -24,7 +29,7 @@ export const UserInfo = ({
         {photo ? (
           <Image style={styles.img} source={{ uri: photo }} />
         ) : (
-          <View style={styles.img}>{avatarMaker(fullName, 40)}</View>
+          <View style={styles.img}>{AvatarMaker(fullName, 40)}</View>
         )}
         <View style={styles.blood}>
           <CustomText weight="bold" style={styles.value}>
@@ -56,18 +61,18 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     alignContent: "center",
-    marginBottom: 20,
+    marginVertical: 20,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 15,
   },
   img: {
     width: 120,
     height: 120,
     borderRadius: 60,
     marginRight: 20,
+    backgroundColor: "#f2f4f8",
   },
   blood: {
     alignItems: "center",

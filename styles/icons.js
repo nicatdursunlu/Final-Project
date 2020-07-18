@@ -1,7 +1,3 @@
-import React from "react";
-import { Icon } from "@ui-kitten/components";
-import { COLORS } from "./colors";
-
 import bloodDonation from "./../assets/icons/blood-donation.png";
 import mark from "./../assets/icons/mark.png";
 import tag from "./../assets/icons/tag.png";
@@ -38,48 +34,3 @@ export const ICONS = {
   saved,
   left,
 };
-
-export const editIcon = (props) => (
-  <Icon
-    {...props}
-    name="edit"
-    pack="feather"
-    style={{ height: 25, color: COLORS.TITLE }}
-  />
-);
-export const savedIcon = (props) => (
-  <Icon {...props} name="bookmark" pack="feather" />
-);
-
-export const downIcon = (props) => (
-  <Icon {...props} name="chevron-down" pack="feather" />
-);
-export const menuIcon = (props) => (
-  <Icon {...props} name="menu" pack="feather" />
-);
-export const mailIcon = (props) => (
-  <Icon {...props} name="mail" pack="feather" />
-);
-export const eyeIcon = (props) => <Icon {...props} name="eye" />;
-export const eyeoffIcon = (props) => <Icon {...props} name="eye-off" />;
-
-export const bellIcon = (props) => (
-  <Icon {...props} name="bell" pack="feather" />
-);
-export const leftIcon = (props) => (
-  <Icon
-    {...props}
-    name="arrow-left"
-    pack="feather"
-    style={{ height: 25, color: COLORS.TITLE }}
-  />
-);
-export const rightIcon = (props) => (
-  <Icon {...props} name="arrow-right" pack="feather" />
-);
-export const userIcon = (props) => (
-  <Icon {...props} name="user" pack="feather" />
-);
-export const captionIcon = (props) => (
-  <Icon {...props} name="alert-circle-outline" />
-);

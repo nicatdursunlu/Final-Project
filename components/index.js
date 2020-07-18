@@ -1,5 +1,5 @@
 export { CustomText } from "./CustomText";
-export { avatarMaker } from "./avatarMaker";
+export { AvatarMaker } from "./AvatarMaker";
 export { MapModal } from "./MapModal";
 export { CustomBtn } from "./CustomBtn";
 export { Field } from "./Field";

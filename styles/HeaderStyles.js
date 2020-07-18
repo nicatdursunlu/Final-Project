@@ -1,6 +1,5 @@
 import React from "react";
 import { Image } from "react-native";
-
 import { IMAGES } from "./images";
 
 export const HeaderStyles = {
@@ -10,7 +9,9 @@ export const HeaderStyles = {
     fontSize: 20,
     color: "#fff",
   },
-  headerStyle: { height: 72 },
+  headerStyle: {
+    height: 72,
+  },
   headerBackground: () => (
     <Image
       source={IMAGES.header}

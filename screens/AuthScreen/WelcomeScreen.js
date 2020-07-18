@@ -3,7 +3,7 @@ import Swiper from "react-native-swiper";
 import { StyleSheet, View, Image, ImageBackground } from "react-native";
 
 import { IMAGES, COLORS } from "./../../styles";
-import { SLIDER_IMAGES } from "./../../utils/selectOptions";
+import { SLIDER_IMAGES } from "../../utils/dummy";
 import { CustomText, CustomBtn, Link } from "./../../components";
 import { getWidthByPercents } from "./../../utils/getWidthByPercents";
 

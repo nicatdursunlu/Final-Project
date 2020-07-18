@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Alert } from "react-native";
-import { CheckBox, Text, Icon } from "@ui-kitten/components";
+import { CheckBox, Text, Icon, Input } from "@ui-kitten/components";
 import { connect } from "react-redux";
 
 import { signUp } from "./../../store/auth";
 import { Container } from "./../../commons";
 import { ModalWindow } from "./ModalWindow";
 import { GLOBAL_STYLES, COLORS } from "./../../styles";
-import { CustomBtn, Link, Field } from "./../../components";
-import { SIGNUP_INITIAL_STATE, AUTH_DATA } from "../../utils/selectOptions";
+import { CustomBtn, Link } from "./../../components";
+import { SIGNUP_INITIAL_STATE, AUTH_DATA } from "../../utils/dummy";
 import { getWidthByPercents } from "../../utils/getWidthByPercents";
 
 export const SignUpScreen = connect(null, { signUp })(({ signUp }) => {
@@ -71,7 +71,7 @@ export const SignUpScreen = connect(null, { signUp })(({ signUp }) => {
           captionIcon,
         } = item;
         return (
-          <Field
+          <Input
             key={item.value}
             label={label}
             value={fields[value]}

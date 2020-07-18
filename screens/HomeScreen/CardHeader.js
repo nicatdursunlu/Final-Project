@@ -3,7 +3,7 @@ import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 
 import { CustomText } from "../../components";
 import { getTimeFromPosted } from "../../utils";
-import { avatarMaker } from "./../../components/avatarMaker";
+import { AvatarMaker } from "../../components/AvatarMaker";
 
 export const CardHeader = ({
   author_id,
@@ -15,16 +15,14 @@ export const CardHeader = ({
 }) => {
   const formattedTime = getTimeFromPosted(time);
   const isMe = author_id === userID;
-
   const goTo = () => {
-    if (isMe) navigation.navigate("Profile");
-    else {
-      navigation.navigate("ProfileScreen", {
-        author_id,
-        author_name,
-        type: "other",
-      });
-    }
+    isMe
+      ? navigation.navigate("Profile")
+      : navigation.navigate("ProfileScreen", {
+          author_id,
+          author_name,
+          type: "other",
+        });
   };
 
   return (
@@ -36,7 +34,7 @@ export const CardHeader = ({
           source={{ uri: user_photo }}
         />
       ) : (
-        <View style={styles.image}>{avatarMaker(author_name, 15)}</View>
+        <View style={styles.image}>{AvatarMaker(author_name, 15)}</View>
       )}
       <TouchableOpacity onPress={goTo}>
         <CustomText weight="semi" style={styles.name}>
@@ -54,6 +52,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
+    width: "100%",
   },
   image: {
     width: 35,

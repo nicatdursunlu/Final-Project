@@ -4,7 +4,7 @@ import { StyleSheet, View, Switch } from "react-native";
 import { Toggle, Divider } from "@ui-kitten/components";
 
 import { Container } from "../commons";
-import { LANGUAGES } from "../utils/selectOptions";
+import { LANGUAGES } from "../utils/dummy";
 import { CustomText, SelectGroup } from "../components";
 import { getWidthByPercents } from "./../utils/getWidthByPercents";
 import {

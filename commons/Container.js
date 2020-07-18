@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export const Container = ({ children, style }) => (
@@ -16,11 +16,11 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     backgroundColor: "#fff",
-    // paddingTop: 80,
   },
   container: {
     flexGrow: 1,
     alignItems: "center",
     paddingHorizontal: 15,
+    backgroundColor: "#fff",
   },
 });
