@@ -1,31 +1,24 @@
 import React from "react";
-import {
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-  View,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, Image, View } from "react-native";
 
-import { CustomText, avatarMaker } from "../../components";
+import { CustomText, AvatarMaker } from "../../components";
 import { getMessageTime } from "../../utils/getMessageTime";
-
-const { width } = Dimensions.get("screen");
 
 export const ChatsCover = ({ chat, onPress }) => {
   const { companion_name, companion_img, last_msg, time, readed } = chat;
-
   return (
-    <TouchableOpacity style={styles.listCover} onPress={onPress}>
-      {!!companion_img && (
-        <Image style={styles.userAvatar} source={{ uri: companion_img }} />
-      )}
-      {!companion_img && (
-        <View style={styles.userAvatar}>{avatarMaker(companion_name, 23)}</View>
-      )}
-      <View style={styles.content}>
-        <View style={styles.row}>
-          <View style={styles.infoContent}>
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.listCover}>
+        {!!companion_img && (
+          <Image style={styles.userAvatar} source={{ uri: companion_img }} />
+        )}
+        {!companion_img && (
+          <View style={styles.userAvatar}>
+            {AvatarMaker(companion_name, 23)}
+          </View>
+        )}
+        <View style={styles.content}>
+          <View>
             <CustomText weight="semi" style={styles.title}>
               {companion_name}
             </CustomText>
@@ -52,28 +45,24 @@ export const ChatsCover = ({ chat, onPress }) => {
 const styles = StyleSheet.create({
   listCover: {
     flexDirection: "row",
-    width: width,
-    height: 60,
+    height: 65,
     alignItems: "center",
   },
   content: {
     flex: 1,
-    justifyContent: "flex-start",
-    marginRight: 15,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
+
   userAvatar: {
     borderRadius: 25,
     width: 50,
     height: 50,
-    marginLeft: 15,
     marginRight: 15,
   },
-  infoContent: {
-    maxWidth: width * 0.5,
-  },
   title: {
-    fontSize: 20,
-    marginRight: 10,
+    fontSize: 18,
     color: "#859bde",
   },
   lastMessage: {
@@ -82,17 +71,10 @@ const styles = StyleSheet.create({
   timeRow: {
     alignItems: "center",
     justifyContent: "space-between",
-    width: 50,
   },
   time: {
     fontSize: 11,
     marginBottom: 15,
-  },
-  row: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
   },
   unread: {
     width: 10,

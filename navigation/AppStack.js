@@ -1,12 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { TopNavigationAction } from "@ui-kitten/components";
+import { TopNavigationAction, Icon } from "@ui-kitten/components";
 import { createStackNavigator } from "@react-navigation/stack";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 import { BottomTabs } from "./BottomTabs";
 import { HeaderStyles } from "../styles";
-import { leftIcon } from "../styles/icons";
 import { selectUsername } from "../store/auth";
 import {
   ProfileScreen,
@@ -28,7 +27,14 @@ export const AppStack = () => {
       screenOptions={({ navigation }) => ({
         headerLeft: () => (
           <TopNavigationAction
-            icon={leftIcon}
+            icon={(props) => (
+              <Icon
+                {...props}
+                name="arrow-left"
+                pack="feather"
+                style={{ height: 25, color: "#152222" }}
+              />
+            )}
             onPress={() => navigation.goBack()}
           />
         ),
@@ -37,7 +43,7 @@ export const AppStack = () => {
       <Screen
         name="BottomTabs"
         component={BottomTabs}
-        options={({ route }) => ({
+        options={({ route, navigation }) => ({
           ...HeaderStyles,
           headerTitle: getHeaderTitle(route),
           headerLeft: null,
@@ -46,7 +52,7 @@ export const AppStack = () => {
       <Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={({ route }) => ({ title: route.params?.author_name })}
+        options={{ headerShown: false }}
       />
       <Screen
         name="SingleChat"

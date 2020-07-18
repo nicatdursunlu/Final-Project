@@ -8,7 +8,10 @@ import { ChatsScreen, CreateScreen, FindScreen, HomeScreen } from "../screens";
 
 const { Navigator, Screen } = AnimatedTabBarNavigator();
 
-export const BottomTabs = () => {
+export const BottomTabs = ({ navigation, route }) => {
+  if (route.state && route.state.index === 4)
+    navigation.setOptions({ headerShown: false });
+  else navigation.setOptions({ headerShown: true });
   return (
     <Navigator
       initialRouteName="Home"
@@ -16,7 +19,6 @@ export const BottomTabs = () => {
         activeBackgroundColor: "rgba(255, 57,57,0.7)",
         activeTintColor: COLORS.MAIN,
         keyboardHidesTabBar: true,
-        showLabel: false,
       }}
       appearence={{
         tabBarBackground: "#fff",

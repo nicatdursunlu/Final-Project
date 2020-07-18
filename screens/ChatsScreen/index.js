@@ -3,15 +3,13 @@ import { StyleSheet, View, FlatList } from "react-native";
 
 import { ChatsCover } from "./ChatsCover";
 import { connect } from "react-redux";
+import { CustomText } from "../../components";
 import {
   getAndListenForChatLists,
   selecteChatsLists,
   makeReadMessage,
   initChatList,
 } from "../../store/chats";
-import { CustomText } from "../../components";
-import { GLOBAL_STYLES } from "../../styles";
-import { initOtherUser } from "../../store/auth";
 
 const mapStateToProps = (state) => ({
   lists: selecteChatsLists(state),
@@ -33,7 +31,6 @@ export const ChatsScreen = connect(mapStateToProps, {
       getAndListenForChatLists();
       return initChatList;
     }, []);
-
     const gotoChat = ({ id, companion_img, companion_name }) => {
       navigation.navigate("SingleChat", {
         companion_name,
@@ -42,7 +39,9 @@ export const ChatsScreen = connect(mapStateToProps, {
       });
       makeReadMessage(id);
     };
-
+    const renderItem = ({ item }) => (
+      <ChatsCover chat={item} onPress={() => gotoChat(item)} />
+    );
     return (
       <View style={styles.container}>
         <CustomText weight="bold" style={styles.title}>
@@ -50,10 +49,8 @@ export const ChatsScreen = connect(mapStateToProps, {
         </CustomText>
         <FlatList
           data={lists}
+          renderItem={renderItem}
           contentContainerStyle={styles.list}
-          renderItem={({ item }) => (
-            <ChatsCover chat={item} onPress={() => gotoChat(item)} />
-          )}
         />
       </View>
     );
@@ -64,9 +61,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    paddingHorizontal: 15,
   },
   title: {
-    marginLeft: GLOBAL_STYLES.HORIZONTAL,
     marginVertical: 10,
     color: "#859bde",
     fontSize: 13,

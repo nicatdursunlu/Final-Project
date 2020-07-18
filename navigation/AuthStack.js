@@ -1,10 +1,9 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { TopNavigationAction } from "@ui-kitten/components";
+import { TopNavigationAction, Icon } from "@ui-kitten/components";
 
 import { WelcomeScreen, SignUpScreen, LogInScreen } from "./../screens";
-import { HeaderStyles } from "./../styles/HeaderStyles";
-import { leftIcon } from "../styles/icons";
+import { HeaderStyles } from "./../styles";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -12,10 +11,16 @@ export const AuthStack = () => (
   <Navigator
     screenOptions={({ navigation }) => ({
       ...HeaderStyles,
-      headerTitleStyle: { fontSize: 25, color: "#fff" },
       headerLeft: () => (
         <TopNavigationAction
-          icon={leftIcon}
+          icon={(props) => (
+            <Icon
+              {...props}
+              name="arrow-left"
+              pack="feather"
+              style={{ height: 25, color: "#fff" }}
+            />
+          )}
           onPress={() => navigation.goBack()}
         />
       ),

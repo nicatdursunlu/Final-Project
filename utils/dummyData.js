@@ -1,5 +1,6 @@
-import { IMAGES } from "./../styles/images";
-import { userIcon, mailIcon, captionIcon } from "../styles/icons";
+import React from "react";
+import { IMAGES } from "../styles/images";
+import { Icon } from "@ui-kitten/components";
 
 export const BLOOD_TYPES = ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"];
 export const LANGUAGES = ["English", "Azerbaijani", "Russian"];
@@ -35,14 +36,14 @@ export const AUTH_DATA = [
     value: "username",
     placeholder: "john_doe",
     name: "username",
-    accessoryRight: userIcon,
+    accessoryRight: (props) => <Icon {...props} name="user" pack="feather" />,
   },
   {
     label: "Email",
     value: "email",
     placeholder: "johndoe@gmail.com",
     name: "email",
-    accessoryRight: mailIcon,
+    accessoryRight: (props) => <Icon {...props} name="mail" pack="feather" />,
     keyboardType: "email-address",
   },
 
@@ -52,7 +53,7 @@ export const AUTH_DATA = [
     placeholder: "password",
     name: "password",
     caption: "should contain at least 6 symbols",
-    captionIcon: captionIcon,
+    captionIcon: (props) => <Icon {...props} name="alert-circle-outline" />,
   },
   {
     label: "Repeat password",
@@ -60,34 +61,56 @@ export const AUTH_DATA = [
     placeholder: "confirm password",
     name: "repassword",
     caption: "should contain at least 6 symbols",
-    captionIcon: captionIcon,
+    captionIcon: (props) => <Icon {...props} name="alert-circle-outline" />,
   },
 ];
 
 export const ITEMS = [
   {
     title: "Saved",
-    name: "bookmark",
+    icon: () => (
+      <Icon
+        name="bookmark"
+        pack="feather"
+        style={{ color: "gray", height: 23 }}
+      />
+    ),
     goTo: "Saved",
   },
   {
     title: "Settings",
-    name: "settings",
+    icon: () => (
+      <Icon
+        name="settings"
+        pack="feather"
+        style={{ color: "gray", height: 23 }}
+      />
+    ),
     goTo: "Settings",
   },
   {
     title: "About",
-    name: "info",
+    icon: () => (
+      <Icon name="info" pack="feather" style={{ color: "gray", height: 23 }} />
+    ),
     goTo: "About",
   },
   {
     title: "Contact",
-    name: "help-circle",
+    icon: () => (
+      <Icon
+        name="help-circle"
+        pack="feather"
+        style={{ color: "gray", height: 23 }}
+      />
+    ),
     goTo: "Contact",
   },
   {
     title: "Rate The App",
-    name: "star",
+    icon: () => (
+      <Icon name="star" pack="feather" style={{ color: "gray", height: 23 }} />
+    ),
     goTo: "Rate",
   },
 ];

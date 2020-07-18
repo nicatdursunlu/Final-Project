@@ -5,7 +5,6 @@ import * as WebBrowser from "expo-web-browser";
 import { Input, Icon } from "@ui-kitten/components";
 
 import { Container } from "../../commons";
-import { userIcon } from "../../styles/icons";
 import { getWidthByPercents } from "./../../utils";
 import { logIn, sendEmail } from "../../store/auth";
 import { CustomBtn, Link } from "./../../components";
@@ -65,7 +64,9 @@ export const LogInScreen = connect(null, { logIn, sendEmail })(
           label="Email"
           placeholder="Email"
           keyboardType="email-address"
-          accessoryRight={userIcon}
+          accessoryRight={(props) => (
+            <Icon {...props} name="user" pack="feather" />
+          )}
           onChangeText={(val) => fieldsChangeHandler("email", val)}
           style={{ marginBottom: 15 }}
         />

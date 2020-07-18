@@ -3,19 +3,13 @@ import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { Input, Icon } from "@ui-kitten/components";
 
-import {
-  CustomText,
-  CustomBtn,
-  Field,
-  SelectGroup,
-  MapModal,
-} from "../components";
+import { CustomText, CustomBtn, SelectGroup, MapModal } from "../components";
 
-import { getWidthByPercents } from "./../utils/getWidthByPercents";
-import { BLOOD_TYPES } from "../utils/selectOptions";
-import { addPostToList } from "../store/posts";
-import { Container } from "./../commons";
 import { COLORS } from "../styles";
+import { Container } from "./../commons";
+import { addPostToList } from "../store/posts";
+import { getWidthByPercents } from "./../utils";
+import { BLOOD_TYPES } from "../utils/dummy";
 
 export const CreateScreen = connect(null, { addPostToList })(
   ({ addPostToList, navigation }) => {
@@ -39,7 +33,6 @@ export const CreateScreen = connect(null, { addPostToList })(
       addPostToList(fields);
       navigation.navigate("Home");
     };
-
     return (
       <Container>
         <SelectGroup
@@ -56,13 +49,13 @@ export const CreateScreen = connect(null, { addPostToList })(
               <Icon name="chevron-right" pack="feather" style={styles.icon} />
             </View>
           </TouchableOpacity>
-          <Field
+          <Input
             label="Add location name, important"
             placeholder="Icharishahar, Baku "
             onChangeText={(val) => fieldsChangeHandler("location", val)}
             style={{ marginBottom: 15 }}
           />
-          <Field
+          <Input
             label="Add contact number(recommended)"
             placeholder="example: +994 77 777 77 77"
             keyboardType="phone-pad"

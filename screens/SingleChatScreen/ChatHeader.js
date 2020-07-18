@@ -4,7 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 
 import { ICONS } from "../../styles";
-import { CustomText, avatarMaker } from "../../components";
+import { CustomText, AvatarMaker } from "../../components";
 
 export const ChatHeader = ({ route, navigation, children }) => {
   const { companion_img, companion_name } = route?.params;
@@ -27,7 +27,7 @@ export const ChatHeader = ({ route, navigation, children }) => {
         <Image style={styles.img} source={{ uri: companion_img }} />
       )}
       {!companion_img && (
-        <View style={styles.img}>{avatarMaker(companion_name, 20)}</View>
+        <View style={styles.img}>{AvatarMaker(companion_name, 20)}</View>
       )}
       <CustomText weight="semi" style={styles.name}>
         {companion_name}

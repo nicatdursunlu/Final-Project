@@ -28,7 +28,7 @@ export const ChatForm = ({ onPress, value, textChange }) => {
       ]}
     >
       <Input
-        style={styles.field}
+        style={[styles.field, { width: state ? "85%" : "70%" }]}
         value={value}
         onChangeText={(val) => textChangehandler(val)}
         placeholder="Type here to start send"
@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#f9f9f9",
   },
   field: {
-    width: "90%",
     borderRadius: 20,
     marginVertical: 5,
     borderColor: "#dadada",

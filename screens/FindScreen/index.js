@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 
 import { CustomText, SelectGroup } from "../../components";
 import { SectionGroup } from "./SectionGroup";
-import { TITLES, BLOOD_TYPES } from "./../../utils/selectOptions";
+import { TITLES, BLOOD_TYPES } from "./../../utils/dummyData";
 import { Container } from "../../commons";
 
 export const FindScreen = () => {
