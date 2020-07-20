@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { StyleSheet, Modal, TouchableOpacity, Alert } from "react-native";
-import { Ionicons } from "react-native-vector-icons";
-import MapView, { Marker } from "react-native-maps";
 import { StatusBar } from "expo-status-bar";
-
-import { COLORS } from "./../styles/colors";
+import { Icon } from "@ui-kitten/components";
+import MapView, { Marker } from "react-native-maps";
+import { StyleSheet, Modal, Alert, View } from "react-native";
 
 export const MapModal = ({ onSave, close, visible, initialRegion, type }) => {
   const isStatic = type === "static";
@@ -41,18 +39,22 @@ export const MapModal = ({ onSave, close, visible, initialRegion, type }) => {
       >
         {markerCoordinates && <Marker coordinate={markerCoordinates} />}
       </MapView>
-
-      <TouchableOpacity style={[styles.btn, styles.btnBack]} onPress={close}>
-        <Ionicons name="md-arrow-back" size={24} color={COLORS.TEXT} />
-      </TouchableOpacity>
-      {onSave && (
-        <TouchableOpacity
-          style={[styles.btn, styles.btnSave]}
-          onPress={saveHandler}
-        >
-          <Ionicons name="ios-save" size={24} color={COLORS.TEXT} />
-        </TouchableOpacity>
-      )}
+      <View style={styles.top}>
+        <Icon
+          name="md-arrow-back"
+          pack="ion"
+          style={styles.icon}
+          onPress={close}
+        />
+        {onSave && (
+          <Icon
+            name="ios-save"
+            pack="ion"
+            style={styles.icon}
+            onPress={saveHandler}
+          />
+        )}
+      </View>
     </Modal>
   );
 };
@@ -61,20 +63,16 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
   },
-  btn: {
+  top: {
+    top: 20,
+    width: "100%",
+    flexDirection: "row",
     position: "absolute",
-
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    top: 15,
+    paddingHorizontal: 20,
+    justifyContent: "space-between",
   },
-  btnBack: {
-    left: 15,
-  },
-  btnSave: {
-    right: 15,
+  icon: {
+    color: "#000",
+    height: 25,
   },
 });

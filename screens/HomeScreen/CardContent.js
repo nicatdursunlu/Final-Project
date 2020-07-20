@@ -1,78 +1,54 @@
-import React, { useState } from "react";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { useTheme } from "@react-navigation/native";
 
 import { CustomText } from "../../components";
-import { MapModal } from "../../components/MapModal";
-import { COLORS } from "../../styles";
-import { Icon } from "@ui-kitten/components";
 
-export const CardContent = ({ bloodType, location, desc, coordinates }) => {
-  const [isMapOpen, setIsMapOpen] = useState(false);
+export const CardContent = ({ bloodType, desc }) => {
+  const { colors } = useTheme();
   return (
     <View style={styles.container}>
-      <View style={styles.iconRow}>
-        <Icon name="droplet" pack="feather" style={styles.icon} />
-        <CustomText weight="bold" style={styles.bloodDonationTitle}>
+      <View style={[styles.blood, { backgroundColor: colors.bloodBG }]}>
+        <CustomText
+          weight="bold"
+          style={{ ...styles.bloodText, ...{ color: colors.text } }}
+        >
           {bloodType}
         </CustomText>
       </View>
-      <View style={styles.iconRow}>
-        <Icon name="map" pack="feather" style={styles.icon} />
-        <TouchableOpacity
-          onPress={() => {
-            setIsMapOpen(true);
-          }}
-        >
-          <CustomText style={styles.markTitle}>{location}</CustomText>
-        </TouchableOpacity>
+      <View style={styles.info}>
+        <CustomText style={styles.infoText}>{desc}</CustomText>
       </View>
-      <View style={styles.iconRow}>
-        <Icon name="clock" pack="feather" style={styles.icon} />
-
-        <CustomText style={styles.tagTitle}>{desc}</CustomText>
-      </View>
-      <MapModal
-        visible={isMapOpen}
-        close={() => setIsMapOpen(false)}
-        type="static"
-        initialRegion={{
-          latitude: coordinates[0],
-          longitude: coordinates[1],
-          latitudeDelta: 0.5522,
-          longitudeDelta: 0.5521,
-        }}
-      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 15,
-    backgroundColor: COLORS.CARD_BG,
-    width: "100%",
-    borderRadius: 10,
-    marginVertical: 15,
-  },
-  iconRow: {
+    paddingVertical: 20,
+    paddingHorizontal: 10,
     flexDirection: "row",
-    marginVertical: 10,
-    alignItems: "center",
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: "#636366",
+    borderTopColor: "#636366",
   },
-  icon: {
-    height: 25,
+  blood: {
+    width: 60,
+    height: 60,
     marginRight: 10,
-    color: "gray",
+    borderRadius: 30,
+    alignItems: "center",
+    justifyContent: "center",
   },
-  bloodDonationTitle: {
+
+  bloodText: {
     fontSize: 22,
   },
-  markTitle: {
-    fontSize: 15,
-    textDecorationLine: "underline",
-    color: COLORS.LINK,
+  info: {
+    justifyContent: "center",
   },
-  tagTitle: {
+  infoText: {
     width: 200,
     fontSize: 12,
   },

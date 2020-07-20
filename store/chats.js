@@ -174,7 +174,6 @@ export const sendMessage = (messageObj) => async (dispatch, getState) => {
     const companion_id = messageObj.chatID
       .split("_")
       .find((chatID) => chatID !== userID);
-
     const ref = await firebase
       .firestore()
       .collection("messages")

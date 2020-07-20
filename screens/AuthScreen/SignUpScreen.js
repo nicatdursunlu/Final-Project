@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import { signUp } from "./../../store/auth";
 import { Container } from "./../../commons";
 import { ModalWindow } from "./ModalWindow";
-import { GLOBAL_STYLES, COLORS } from "./../../styles";
 import { CustomBtn, Link } from "./../../components";
 import { SIGNUP_INITIAL_STATE, AUTH_DATA } from "../../utils/dummy";
 import { getWidthByPercents } from "../../utils/getWidthByPercents";
@@ -27,7 +26,8 @@ export const SignUpScreen = connect(null, { signUp })(({ signUp }) => {
   const togglePass = (props) => (
     <Icon
       {...props}
-      name={showPass ? "eye" : "eye-off"}
+      name={showPass ? "md-eye" : "md-eye-off"}
+      pack="ion"
       onPress={() => setShowPass(!showPass)}
     />
   );
@@ -58,7 +58,7 @@ export const SignUpScreen = connect(null, { signUp })(({ signUp }) => {
   };
 
   return (
-    <Container>
+    <Container style={{ backgroundColor: "#fff" }}>
       {AUTH_DATA.map((item) => {
         const {
           label,
@@ -112,10 +112,10 @@ export const SignUpScreen = connect(null, { signUp })(({ signUp }) => {
         />
       </View>
       <CustomBtn
-        title="Create Account"
-        style={styles.bottomSpacing}
-        width={getWidthByPercents(80, 2)}
         onPress={onSubmit}
+        title="Create Account"
+        style={{ borderWidth: 0 }}
+        width={getWidthByPercents(80, 2)}
       />
     </Container>
   );
@@ -134,9 +134,8 @@ const styles = StyleSheet.create({
   link: {
     fontSize: 13,
     marginLeft: 32,
-    color: COLORS.PRIMARY,
   },
   bottomSpacing: {
-    marginBottom: GLOBAL_STYLES.BOTTOM,
+    marginBottom: 15,
   },
 });

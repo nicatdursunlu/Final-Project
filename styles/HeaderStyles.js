@@ -6,6 +6,12 @@ export const HeaderStyles = {
   headerMode: "screen",
   headerTitleAlign: "center",
   headerTitleStyle: {
+    color: "#ff6767",
+    fontSize: 20,
+  },
+};
+export const AuthHeader = {
+  headerTitleStyle: {
     fontSize: 20,
     color: "#fff",
   },

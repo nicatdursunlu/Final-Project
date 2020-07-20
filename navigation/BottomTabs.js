@@ -2,26 +2,24 @@ import React from "react";
 import { Icon } from "@ui-kitten/components";
 import { AnimatedTabBarNavigator } from "react-native-animated-nav-tab-bar";
 
-import { COLORS } from "../styles/colors";
 import { DrawerStack } from "./DrawerStack";
 import { ChatsScreen, CreateScreen, FindScreen, HomeScreen } from "../screens";
+import { useTheme } from "@react-navigation/native";
 
 const { Navigator, Screen } = AnimatedTabBarNavigator();
 
-export const BottomTabs = ({ navigation, route }) => {
-  if (route.state && route.state.index === 4)
-    navigation.setOptions({ headerShown: false });
-  else navigation.setOptions({ headerShown: true });
+export const BottomTabs = () => {
+  const { colors } = useTheme();
   return (
     <Navigator
       initialRouteName="Home"
       tabBarOptions={{
-        activeBackgroundColor: "rgba(255, 57,57,0.7)",
-        activeTintColor: COLORS.MAIN,
+        activeBackgroundColor: colors.tabbarActive,
+        activeTintColor: colors.tabbarTint,
         keyboardHidesTabBar: true,
       }}
       appearence={{
-        tabBarBackground: "#fff",
+        tabBarBackground: colors.tabbarBG,
         topPadding: 10,
         horizontalPadding: 10,
       }}
@@ -40,7 +38,7 @@ export const BottomTabs = ({ navigation, route }) => {
               pack="feather"
               style={{
                 height: 20,
-                color: focused ? COLORS.TITLE : COLORS.ICON,
+                color: focused ? colors.tabbarTint : "#999999",
               }}
             />
           );

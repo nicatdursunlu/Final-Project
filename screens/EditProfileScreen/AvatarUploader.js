@@ -4,18 +4,18 @@ import {
   View,
   Image,
   Alert,
-  TouchableOpacity,
   Platform,
   ActionSheetIOS,
+  TouchableOpacity,
 } from "react-native";
 import { connect } from "react-redux";
 import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
+import { useTheme } from "@react-navigation/native";
 
-import { selectPhoto, uploadPhoto, removeAvatar } from "../../store/auth";
-import { CustomText } from "../../components";
 import { ModalWindow } from "./ModalWindow";
-import { AvatarMaker } from "../../components/AvatarMaker";
+import { CustomText, AvatarMaker } from "../../components";
+import { selectPhoto, uploadPhoto, removeAvatar } from "../../store/auth";
 
 const mapStateToProps = (state) => ({
   photo: selectPhoto(state),
@@ -37,16 +37,12 @@ export const AvatarUploader = connect(mapStateToProps, {
       const permission = await requestCameraPermissions();
       if (permission) {
         let image;
-        if (isCamera) {
+        if (isCamera)
           image = await ImagePicker.launchCameraAsync(imagePickerOptions);
-        } else {
+        else
           image = await ImagePicker.launchImageLibraryAsync(imagePickerOptions);
-        }
         const { cancelled, uri } = image;
-
-        if (!cancelled) {
-          uploadPhoto(uri);
-        }
+        if (!cancelled) uploadPhoto(uri);
       }
     } catch (error) {
       console.log("selectImageError: ", error);
@@ -87,7 +83,7 @@ export const AvatarUploader = connect(mapStateToProps, {
         else if (buttonIndex === 3) deleteHandler();
       }
     );
-
+  const { colors } = useTheme();
   return (
     <View style={styles.container}>
       {photo ? (
@@ -96,7 +92,9 @@ export const AvatarUploader = connect(mapStateToProps, {
         <View style={styles.photo}>{AvatarMaker(fullName, 45)}</View>
       )}
       <TouchableOpacity onPress={Platform.OS === "ios" ? oniosPress : onPress}>
-        <CustomText style={styles.text}>Change Profile Photo</CustomText>
+        <CustomText style={{ ...styles.text, ...{ color: colors.link } }}>
+          Change Profile Photo
+        </CustomText>
       </TouchableOpacity>
       <ModalWindow
         visible={isEdit}

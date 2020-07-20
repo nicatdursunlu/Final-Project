@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
-import { Input } from "@ui-kitten/components";
 import { connect } from "react-redux";
+import { StyleSheet, View } from "react-native";
+import { useTheme } from "@react-navigation/native";
 
-import { AvatarUploader } from "./AvatarUploader";
+import { Container } from "./../../commons";
 import { BLOOD_TYPES } from "../../utils/dummy";
+import { AvatarUploader } from "./AvatarUploader";
 import { getWidthByPercents } from "../../utils/getWidthByPercents";
-import { CustomText, SelectGroup, CustomBtn } from "../../components";
-import { Container } from "./../../commons/Container";
+import { CustomText, SelectGroup, CustomBtn, Field } from "../../components";
 import {
   selectName,
   selectUsername,
@@ -68,49 +68,48 @@ export const EditProfileScreen = connect(mapStateToProps, {
       else addBloodType(fields.bloodType);
       navigation.goBack();
     };
-
+    const width = getWidthByPercents(75, 2);
+    const btnWidth = getWidthByPercents(45, 2);
+    const { colors } = useTheme();
     return (
       <Container>
         <AvatarUploader navigation={navigation} fullName={fullName} />
         <View style={styles.row}>
           <CustomText>Fullname</CustomText>
-          <Input
+          <Field
+            style={{ width }}
             value={fields.fullName}
             placeholder={fields.fullName}
-            style={styles.field}
             onChangeText={(val) => fieldsChangeHandler("fullName", val)}
           />
         </View>
         <View style={styles.row}>
           <CustomText>Username</CustomText>
-          <Input
+          <Field
+            style={{ width }}
             value={fields.username}
             placeholder={fields.username}
-            style={styles.field}
             onChangeText={(val) => fieldsChangeHandler("username", val)}
           />
         </View>
         <View style={styles.row}>
           <CustomText>Blood type</CustomText>
           <SelectGroup
-            onChangeOption={(val) => fieldsChangeHandler("bloodType", val)}
-            options={BLOOD_TYPES}
+            style={{ width }}
             initial={bloodType}
-            style={styles.bloodType}
+            options={BLOOD_TYPES}
+            onChangeOption={(val) => fieldsChangeHandler("bloodType", val)}
           />
         </View>
         <View style={styles.actions}>
           <CustomBtn
             title="Cancel"
-            width={getWidthByPercents(45, 2)}
             onPress={goBack}
-            style={{ backgroundColor: "lightgrey" }}
+            width={btnWidth}
+            titleStyle={{ color: colors.secondaryText }}
+            style={{ backgroundColor: colors.card }}
           />
-          <CustomBtn
-            title="Save"
-            width={getWidthByPercents(45, 2)}
-            onPress={onSubmit}
-          />
+          <CustomBtn title="Save" width={btnWidth} onPress={onSubmit} />
         </View>
       </Container>
     );
@@ -127,24 +126,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   row: {
+    width: "100%",
+    marginVertical: 7,
     flexDirection: "row",
     alignItems: "baseline",
-    width: "100%",
     justifyContent: "space-between",
-    marginVertical: 7,
-  },
-  field: {
-    width: getWidthByPercents(70, 2),
-  },
-  bloodType: {
-    width: getWidthByPercents(70, 2),
   },
   actions: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
     zIndex: -2,
-    marginTop: 20,
     width: "100%",
+    marginTop: 20,
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });

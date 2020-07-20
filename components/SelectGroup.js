@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { StyleSheet, View, TouchableOpacity, ScrollView } from "react-native";
 import { Icon } from "@ui-kitten/components";
+import { useTheme } from "@react-navigation/native";
+import { StyleSheet, View, TouchableOpacity, ScrollView } from "react-native";
 
 import { CustomText } from "./CustomText";
-import { COLORS } from "./../styles/colors";
 
 export const SelectGroup = ({ onChangeOption, options, initial, style }) => {
   const [groups, setGroups] = useState({
@@ -25,30 +25,40 @@ export const SelectGroup = ({ onChangeOption, options, initial, style }) => {
 
     onChangeOption(options[index]);
   };
+  const { colors } = useTheme();
+  const color = {
+    backgroundColor: colors.inputBG,
+    borderColor: colors.inputBorder,
+  };
   return (
     <View style={[{ width: "100%" }, style]}>
       <TouchableOpacity onPress={toggleHandler}>
-        <View style={styles.container}>
-          <CustomText weight="semi">{groups.selected}</CustomText>
+        <View style={[styles.container, color]}>
+          <CustomText weight="semi" style={{ color: colors.inputText }}>
+            {groups.selected}
+          </CustomText>
           <Icon
-            name={groups.state ? "chevron-up" : "chevron-down"}
             pack="feather"
-            style={styles.icon}
+            style={{ height: 15, color: colors.inputText }}
+            name={groups.state ? "chevron-up" : "chevron-down"}
           />
         </View>
       </TouchableOpacity>
       {groups.state && (
         <ScrollView
-          style={styles.group}
-          contentContainerStyle={{ flexGrow: 1 }}
           nestedScrollEnabled
+          style={[styles.group, color]}
+          contentContainerStyle={{ flexGrow: 1 }}
         >
           {options.map((option, index) => (
             <TouchableOpacity
               key={option}
               onPress={() => setGroupItemHandler(option, index)}
             >
-              <CustomText weight="regular" style={styles.groupItem}>
+              <CustomText
+                weight="regular"
+                style={{ ...styles.groupItem, ...color }}
+              >
                 {option}
               </CustomText>
             </TouchableOpacity>
@@ -61,18 +71,13 @@ export const SelectGroup = ({ onChangeOption, options, initial, style }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "rgb(247, 249, 252)",
     borderWidth: 1,
     borderRadius: 4,
-    borderColor: "rgb(228, 233, 242)",
-  },
-  icon: {
-    height: 15,
+    paddingVertical: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    justifyContent: "space-between",
   },
   group: {
     top: 40,
@@ -85,13 +90,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     position: "absolute",
     paddingHorizontal: 20,
-    backgroundColor: "#fff",
-    borderColor: "rgb(228, 233, 242)",
   },
   groupItem: {
     fontSize: 17,
     paddingVertical: 7,
-    borderBottomWidth: 1,
-    borderColor: COLORS.BORDER,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
 });

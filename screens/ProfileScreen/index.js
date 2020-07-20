@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, Platform } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
+import { Divider } from "react-native-elements";
+import { useTheme } from "@react-navigation/native";
 
 import { UserInfo } from "./UserInfo";
 import { Container } from "../../commons";
@@ -13,7 +15,6 @@ import {
   selectName,
   selectBlood,
   selectPhoto,
-  selectMail,
   getAndListenForUsers,
   selectOtherUser,
   initOtherUser,
@@ -21,7 +22,6 @@ import {
 } from "../../store/auth";
 
 const mapStateToProps = (state) => ({
-  email: selectMail(state),
   username: selectUsername(state),
   photo: selectPhoto(state),
   userID: selectUserID(state),
@@ -36,18 +36,17 @@ export const ProfileScreen = connect(mapStateToProps, {
   initOtherUser,
 })(
   ({
+    photo,
+    posts,
+    route,
     userID,
     username,
     fullName,
     bloodType,
-    photo,
-    email,
     navigation,
-    posts,
-    route,
     otherProfile,
-    getAndListenForUsers,
     initOtherUser,
+    getAndListenForUsers,
   }) => {
     const user = route.params?.author_id;
     const profileType = route.params?.type;
@@ -62,7 +61,7 @@ export const ProfileScreen = connect(mapStateToProps, {
     }, []);
     const userInfo = !!profileType
       ? otherProfile
-      : { username, fullName, bloodType, photo, email };
+      : { username, fullName, bloodType, photo };
 
     const onPressHandler = () => {
       if (!!profileType) {
@@ -75,22 +74,20 @@ export const ProfileScreen = connect(mapStateToProps, {
         navigation.navigate("Edit Profile");
       }
     };
+    const { colors } = useTheme();
     return (
-      <>
-        <View style={styles.bar}>
-          <CustomText weight="semi" style={styles.username}>
-            {userInfo.username}
-          </CustomText>
+      <Container>
+        <UserInfo
+          {...{ ...userInfo }}
+          profileType={profileType}
+          onPress={onPressHandler}
+        />
+        <View style={styles.divider}>
+          <View style={[styles.line, { borderColor: colors.divider }]} />
+          <CustomText>Posts</CustomText>
+          <View style={[styles.line, { borderColor: colors.divider }]} />
         </View>
-        <Container>
-          <UserInfo
-            {...{ ...userInfo }}
-            profileType={profileType}
-            onPress={onPressHandler}
-          />
-          <View style={styles.divider}>
-            <CustomText style={styles.text}>Posts</CustomText>
-          </View>
+        <View style={styles.card}>
           {userPosts.map((item) => (
             <CardCover
               key={item.id}
@@ -99,34 +96,25 @@ export const ProfileScreen = connect(mapStateToProps, {
               userID={userID}
             />
           ))}
-        </Container>
-      </>
+        </View>
+      </Container>
     );
   }
 );
 const styles = StyleSheet.create({
-  bar: {
-    height: 45,
-    marginTop: Platform.OS === "ios" ? 20 : 24,
-    borderBottomColor: "#dadada",
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#fff",
-  },
-  username: {
-    fontSize: 16,
-  },
   divider: {
     width: "100%",
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderTopColor: "#dadada",
-    borderBottomColor: "#dadada",
-    marginBottom: 15,
+    marginVertical: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
-  text: {
-    paddingVertical: 10,
-    alignSelf: "center",
+  line: {
+    width: "40%",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  card: {
+    width: "100%",
+    marginBottom: 60,
   },
 });

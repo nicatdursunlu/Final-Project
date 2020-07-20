@@ -4,7 +4,6 @@ import { Modal, Button } from "@ui-kitten/components";
 
 import { CustomText } from "../../components";
 import { getWidthByPercents } from "../../utils/getWidthByPercents";
-import { COLORS } from "../../styles";
 
 const { height } = Dimensions.get("screen");
 
@@ -67,7 +66,6 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "red",
-    borderWidth: 0,
     width: 170,
     borderRadius: 12,
   },

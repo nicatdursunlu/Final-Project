@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
+import { useTheme } from "@react-navigation/native";
 import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 
 import { CustomText } from "../../components";
 import { getTimeFromPosted } from "../../utils";
-import { AvatarMaker } from "../../components/AvatarMaker";
+import { AvatarMaker, MapModal } from "../../components";
 
 export const CardHeader = ({
   author_id,
   userID,
   user_photo,
   author_name,
+  location,
+  coordinates,
   time,
   navigation,
 }) => {
+  const [isMapOpen, setIsMapOpen] = useState(false);
   const formattedTime = getTimeFromPosted(time);
   const isMe = author_id === userID;
   const goTo = () => {
@@ -24,40 +28,80 @@ export const CardHeader = ({
           type: "other",
         });
   };
-
+  const { colors } = useTheme();
   return (
     <View style={styles.container}>
-      {user_photo ? (
-        <Image
-          resizeMode="cover"
-          style={styles.image}
-          source={{ uri: user_photo }}
-        />
-      ) : (
-        <View style={styles.image}>{AvatarMaker(author_name, 15)}</View>
-      )}
       <TouchableOpacity onPress={goTo}>
-        <CustomText weight="semi" style={styles.name}>
-          {isMe ? "Me" : author_name}
-        </CustomText>
-        <CustomText weight="regular" style={styles.lastSeen}>
-          {formattedTime}
-        </CustomText>
+        {user_photo ? (
+          <Image style={styles.image} source={{ uri: user_photo }} />
+        ) : (
+          <View style={styles.image}>{AvatarMaker(author_name, 15)}</View>
+        )}
       </TouchableOpacity>
+      <View style={styles.info}>
+        <TouchableOpacity onPress={goTo} style={styles.header}>
+          <CustomText weight="semi" style={{ fontSize: 15 }}>
+            {isMe ? "Me" : author_name}
+          </CustomText>
+          <CustomText
+            weight="regular"
+            style={{ ...styles.time, ...{ color: colors.time } }}
+          >
+            {formattedTime}
+          </CustomText>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setIsMapOpen(true)}
+          style={styles.location}
+        >
+          <CustomText numberOfLines={1} style={styles.locationText}>
+            {location}
+          </CustomText>
+        </TouchableOpacity>
+      </View>
+
+      <MapModal
+        visible={isMapOpen}
+        close={() => setIsMapOpen(false)}
+        type="static"
+        initialRegion={{
+          latitude: coordinates[0],
+          longitude: coordinates[1],
+          latitudeDelta: 0.5522,
+          longitudeDelta: 0.5521,
+        }}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    width: "100%",
+    padding: 10,
     flexDirection: "row",
     alignItems: "center",
-    width: "100%",
   },
   image: {
     width: 35,
     height: 35,
     borderRadius: 18,
     marginRight: 10,
+  },
+  info: {
+    width: "85%",
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  time: {
+    fontSize: 12,
+  },
+  location: {
+    width: 180,
+  },
+  locationText: {
+    fontSize: 12,
   },
 });

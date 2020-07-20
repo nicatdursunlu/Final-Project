@@ -14,7 +14,7 @@ const mapStateToProps = (state) => ({
 });
 
 export const RootNav = connect(mapStateToProps)(({ auth, theme }) => (
-  <NavigationContainer>
+  <NavigationContainer theme={theme === "light" ? LightTheme : DarkTheme}>
     {auth ? <AppStack /> : <AuthStack />}
   </NavigationContainer>
 ));

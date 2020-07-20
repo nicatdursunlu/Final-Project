@@ -15,12 +15,12 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     borderRadius: 100,
-    backgroundColor: "#f2f4f8",
+    backgroundColor: "#dbdbdb", //dark
     alignItems: "center",
     justifyContent: "center",
   },
   text: {
     textTransform: "capitalize",
-    color: "#ff6767",
+    color: "#ff6767", //dark
   },
 });
