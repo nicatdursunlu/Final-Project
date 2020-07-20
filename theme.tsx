@@ -57,7 +57,7 @@ export const DarkTheme: Theme = {
 };
 
 export const LightTheme: Theme = {
-  dark: true,
+  dark: false,
   colors: {
     background: "#fff",
     card: "#f2f1f7",

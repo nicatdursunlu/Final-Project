@@ -5,14 +5,16 @@ import { Icon } from "@ui-kitten/components";
 import { useTheme } from "@react-navigation/native";
 import { StyleSheet, View, Image, TouchableOpacity, Alert } from "react-native";
 
-import { ICONS } from "../../styles/icons";
+import { ICONS } from "./../../styles/icons";
 import { CustomText } from "../../components";
 import { toggleSavePost } from "../../store/posts";
 
 export const CardBottom = connect(null, { toggleSavePost })(
   ({ saved, userID, id, toggleSavePost, number }) => {
     const isSaved = saved.find((item) => item === userID);
-    const { theme, colors } = useTheme();
+    const { dark, colors } = useTheme();
+    const srcDark = isSaved ? ICONS.savedDark : ICONS.saveDark;
+    const srcLight = isSaved ? ICONS.savedLight : ICONS.saveLight;
 
     return (
       <View style={styles.container}>
@@ -43,18 +45,7 @@ export const CardBottom = connect(null, { toggleSavePost })(
           </CustomText>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => toggleSavePost(id, isSaved, userID)}>
-          <Image
-            style={styles.saveIcon}
-            source={
-              theme
-                ? isSaved
-                  ? ICONS.savedDark
-                  : ICONS.saveDark
-                : isSaved
-                ? ICONS.savedLight
-                : ICONS.saveLight
-            }
-          />
+          <Image style={styles.saveIcon} source={dark ? srcDark : srcLight} />
         </TouchableOpacity>
       </View>
     );
