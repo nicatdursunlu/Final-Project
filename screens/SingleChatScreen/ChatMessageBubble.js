@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTheme } from "@react-navigation/native";
 import { StyleSheet, View, TouchableWithoutFeedback } from "react-native";
 
 import { CustomText } from "../../components";
@@ -9,19 +10,30 @@ export const ChatMessageBubble = ({ message, userID }) => {
   const [show, setShow] = useState(false);
 
   const isMyMsg = userID === author_id;
-
-  const bubbleStyles = [styles.bubble];
-  if (isMyMsg) bubbleStyles.push(styles.myBubble);
-  if (!isMyMsg) bubbleStyles.push(styles.companionBubble);
-
-  const showTime = () => {
-    setShow((v) => !v);
+  const { colors } = useTheme();
+  const companionBubble = {
+    alignSelf: "flex-start",
+    backgroundColor: colors.otherMsg,
+    borderBottomEndRadius: 18,
   };
+  const myBubble = {
+    alignSelf: "flex-end",
+    backgroundColor: colors.myMsg,
+    borderBottomStartRadius: 18,
+  };
+  const bubbleStyles = [styles.bubble];
+  if (isMyMsg) bubbleStyles.push(myBubble);
+  else bubbleStyles.push(companionBubble);
+
+  const showTime = () => setShow((v) => !v);
 
   return (
     <View style={[styles.container, { opacity: show ? 0.6 : 1 }]}>
       {show && (
-        <CustomText weight="semi" style={styles.time}>
+        <CustomText
+          weight="semi"
+          style={{ ...styles.time, ...{ color: colors.time } }}
+        >
           {getMessageTime(time)}
         </CustomText>
       )}
@@ -31,7 +43,7 @@ export const ChatMessageBubble = ({ message, userID }) => {
             weight="semi"
             style={{
               ...styles.text,
-              ...{ color: isMyMsg ? "white" : "rgba(0,0,0,0.5)" },
+              ...{ color: !isMyMsg ? colors.text : "#fff" },
             }}
           >
             {text}
@@ -49,31 +61,17 @@ const styles = StyleSheet.create({
   },
   bubble: {
     maxWidth: "75%",
-    paddingHorizontal: 13,
     paddingVertical: 6,
-    borderTopStartRadius: 18,
+    paddingHorizontal: 14,
     borderTopEndRadius: 18,
-    backgroundColor: "#DADADA",
-    alignSelf: "flex-start",
-  },
-  companionBubble: {
-    borderBottomEndRadius: 18,
-    backgroundColor: "#eee",
-  },
-  myBubble: {
-    alignSelf: "flex-end",
-    backgroundColor: "#859bde",
-    alignItems: "flex-end",
-    borderBottomStartRadius: 18,
-    color: "white",
+    borderTopStartRadius: 18,
   },
   text: {
     fontSize: 15,
   },
   time: {
-    fontSize: 10,
-    color: "rgba(0,0,0,0.5)",
     margin: 5,
+    fontSize: 10,
     textAlign: "center",
   },
 });

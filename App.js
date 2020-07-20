@@ -2,17 +2,31 @@ import React, { useState } from "react";
 import { AppLoading } from "expo";
 import { Provider } from "react-redux";
 import * as eva from "@eva-design/eva";
-import { StatusBar } from "expo-status-bar";
-import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { PersistGate } from "redux-persist/integration/react";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+// import * as Localization from 'expo-localization';
+// import i18n from 'i18n-js';
 
-import store, { persistor } from "./store/index";
-import { RootNav } from "./navigation/RootNav";
 import { loadFonts } from "./styles/fonts";
-import { FeatherIconsPack } from "./utils";
+import { RootNav } from "./navigation/RootNav";
+import store, { persistor } from "./store/index";
+import { FeatherIconsPack, IoniconsPack } from "./utils";
+
+// import en from './en.json'
+// import az from './az.json'
+// import ru from './ru.json'
+
+// i18n.translations={
+//   en,
+//   ru,
+//   az,
+// }
 
 export default function App() {
+  // i18n.locale = Localization.locale;
+
+  // i18n.fallbacks = true;
+
   const [loaded, setLoaded] = useState(false);
   if (!loaded) {
     return (
@@ -26,14 +40,11 @@ export default function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <IconRegistry icons={[EvaIconsPack, FeatherIconsPack]} />
+        <IconRegistry icons={[FeatherIconsPack, IoniconsPack]} />
         <ApplicationProvider {...eva} theme={eva.light}>
-          <StatusBar style="auto" />
           <RootNav />
         </ApplicationProvider>
       </PersistGate>
     </Provider>
   );
 }
-
-// https://reactnavigation.org/docs/localization

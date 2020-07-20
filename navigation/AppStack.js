@@ -1,8 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { TopNavigationAction, Icon } from "@ui-kitten/components";
+import { Icon } from "@ui-kitten/components";
 import { createStackNavigator } from "@react-navigation/stack";
-import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import {
+  useTheme,
+  getFocusedRouteNameFromRoute,
+} from "@react-navigation/native";
 
 import { BottomTabs } from "./BottomTabs";
 import { HeaderStyles } from "../styles";
@@ -14,28 +17,25 @@ import {
   EditProfileScreen,
   RateScreen,
   AboutScreen,
-  ContactScreen,
   SettingsScreen,
 } from "./../screens";
 
 const { Navigator, Screen } = createStackNavigator();
 
 export const AppStack = () => {
+  const { colors } = useTheme();
   return (
     <Navigator
       headerMode="screen"
       screenOptions={({ navigation }) => ({
-        headerLeft: () => (
-          <TopNavigationAction
-            icon={(props) => (
-              <Icon
-                {...props}
-                name="arrow-left"
-                pack="feather"
-                style={{ height: 25, color: "#152222" }}
-              />
-            )}
+        ...HeaderStyles,
+        headerLeft: (props) => (
+          <Icon
+            {...props}
+            name="md-arrow-back"
+            pack="ion"
             onPress={() => navigation.goBack()}
+            style={{ height: 25, color: colors.text, marginLeft: 15 }} //dark
           />
         ),
       })}
@@ -43,7 +43,7 @@ export const AppStack = () => {
       <Screen
         name="BottomTabs"
         component={BottomTabs}
-        options={({ route, navigation }) => ({
+        options={({ route }) => ({
           ...HeaderStyles,
           headerTitle: getHeaderTitle(route),
           headerLeft: null,
@@ -67,7 +67,6 @@ export const AppStack = () => {
       <Screen name="Saved">{() => <HomeScreen type="saved" />}</Screen>
       <Screen name="Rate" component={RateScreen} />
       <Screen name="About" component={AboutScreen} />
-      <Screen name="Contact" component={ContactScreen} />
       <Screen name="Settings" component={SettingsScreen} />
     </Navigator>
   );

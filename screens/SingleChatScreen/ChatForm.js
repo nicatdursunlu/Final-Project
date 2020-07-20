@@ -1,41 +1,50 @@
 import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
-  TouchableOpacity,
   Image,
+  TouchableOpacity,
   KeyboardAvoidingView,
 } from "react-native";
-import { Input } from "@ui-kitten/components";
+import { useTheme } from "@react-navigation/native";
 
-import { ICONS } from "../../styles";
+import { ICONS } from "./../../styles/icons";
+import { Field } from "./../../components/Field";
+import { Icon } from "@ui-kitten/components";
 
 export const ChatForm = ({ onPress, value, textChange }) => {
   const [state, setState] = useState(false);
-
   const textChangehandler = (val) => {
     if (val.trim() !== "") setState(true);
     else setState(false);
     textChange(val);
   };
   useEffect(() => textChangehandler(value), [value]);
-
+  const { colors } = useTheme();
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS == "ios" ? "padding" : "height"}
       style={[
         styles.container,
-        { justifyContent: state ? "space-between" : "center" },
+        {
+          backgroundColor: colors.chatBG,
+          justifyContent: state ? "space-between" : "center",
+        },
       ]}
     >
-      <Input
-        style={[styles.field, { width: state ? "85%" : "70%" }]}
+      <Field
         value={value}
-        onChangeText={(val) => textChangehandler(val)}
         placeholder="Type here to start send"
+        textStyle={{ color: "#000" }}
+        onChangeText={(val) => textChangehandler(val)}
+        style={[styles.field, { width: state ? "85%" : "70%" }]}
       />
       {state && (
         <TouchableOpacity onPress={onPress}>
-          <Image source={ICONS.send} style={styles.sendIcon} />
+          <Icon
+            name="send"
+            pack="feather"
+            style={[styles.icon, { color: colors.secondaryText }]}
+          />
         </TouchableOpacity>
       )}
     </KeyboardAvoidingView>
@@ -44,23 +53,21 @@ export const ChatForm = ({ onPress, value, textChange }) => {
 
 const styles = StyleSheet.create({
   container: {
-    bottom: 0,
-    borderTopWidth: 1,
-    borderColor: "#eee",
-    flexDirection: "row",
     alignItems: "center",
+    alignContent: "center",
+    flexDirection: "row",
     paddingHorizontal: 10,
-    backgroundColor: "#f9f9f9",
+    borderColor: "#999999",
+    borderTopWidth: StyleSheet.hairlineWidth,
   },
   field: {
+    marginTop: 7,
+    marginBottom: 7,
     borderRadius: 20,
-    marginVertical: 5,
-    borderColor: "#dadada",
     backgroundColor: "#fff",
   },
-  sendIcon: {
-    width: 20,
-    height: 20,
+  icon: {
+    height: 25,
     marginRight: 10,
   },
 });

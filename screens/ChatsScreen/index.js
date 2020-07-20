@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
+import { useTheme } from "@react-navigation/native";
 
 import { ChatsCover } from "./ChatsCover";
 import { connect } from "react-redux";
@@ -42,10 +43,11 @@ export const ChatsScreen = connect(mapStateToProps, {
     const renderItem = ({ item }) => (
       <ChatsCover chat={item} onPress={() => gotoChat(item)} />
     );
+    const { colors } = useTheme();
     return (
       <View style={styles.container}>
-        <CustomText weight="bold" style={styles.title}>
-          Resent Chats
+        <CustomText style={{ ...styles.title, ...{ color: colors.link } }}>
+          Recent Chats
         </CustomText>
         <FlatList
           data={lists}
@@ -60,12 +62,10 @@ export const ChatsScreen = connect(mapStateToProps, {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     paddingHorizontal: 15,
   },
   title: {
     marginVertical: 10,
-    color: "#859bde",
-    fontSize: 13,
+    fontSize: 14,
   },
 });

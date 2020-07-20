@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { CustomText } from "./CustomText";
-import { COLORS } from "./../styles/colors";
 
 export const Link = ({ title, onPress, style }) => (
   <TouchableOpacity onPress={onPress}>
@@ -14,7 +13,7 @@ export const Link = ({ title, onPress, style }) => (
 
 const styles = StyleSheet.create({
   title: {
-    color: COLORS.PRIMARY,
+    color: "#0070c9",
     fontSize: 16,
     textDecorationLine: "underline",
   },

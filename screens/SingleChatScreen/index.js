@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
-
+import { View } from "react-native";
 import { connect } from "react-redux";
+
 import {
   setMessage,
-  getAndListenForSingleChat,
-  selecteSingleChat,
   sendMessage,
   initSingleChat,
+  selecteSingleChat,
+  getAndListenForSingleChat,
 } from "../../store/chats";
-
+import { ChatForm } from "./ChatForm";
 import { ChatHeader } from "./ChatHeader";
 import { ChatMessages } from "./ChatMessages";
-import { ChatForm } from "./ChatForm";
 import { selectUserID } from "../../store/auth";
 
 const mapStateToProps = (state) => ({
@@ -22,19 +21,19 @@ const mapStateToProps = (state) => ({
 
 export const SingleChatScreen = connect(mapStateToProps, {
   setMessage,
-  getAndListenForSingleChat,
   sendMessage,
   initSingleChat,
+  getAndListenForSingleChat,
 })(
   ({
     route,
-    navigation,
+    userID,
+    messages,
     setMessage,
+    navigation,
+    sendMessage,
     initSingleChat,
     getAndListenForSingleChat,
-    messages,
-    userID,
-    sendMessage,
   }) => {
     useEffect(() => {
       initSingleChat();
@@ -42,12 +41,12 @@ export const SingleChatScreen = connect(mapStateToProps, {
     }, []);
 
     const [messageObj, setMessageObj] = useState({
-      chatID: route?.params.chatID,
       text: "",
       time: Date.now(),
-      companion_name: route?.params.companion_name,
-      companion_img: route?.params.companion_img,
       author_id: userID,
+      chatID: route?.params.chatID,
+      companion_img: route?.params.companion_img,
+      companion_name: route?.params.companion_name,
     });
 
     const setMessageText = (val) => {
@@ -65,21 +64,15 @@ export const SingleChatScreen = connect(mapStateToProps, {
       }));
     };
     return (
-      <View style={styles.body}>
+      <View style={{ flex: 1 }}>
         <ChatHeader route={route} navigation={navigation} />
         <ChatMessages messages={messages} userID={userID} />
         <ChatForm
-          onPress={sendMessageHandler}
           value={messageObj.text}
+          onPress={sendMessageHandler}
           textChange={(val) => setMessageText(val)}
         />
       </View>
     );
   }
 );
-const styles = StyleSheet.create({
-  body: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-});

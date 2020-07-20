@@ -39,11 +39,6 @@ const initialState = {
 
 export function reducer(state = initialState, { type, payload }) {
   switch (type) {
-    case SET_OTHER_USER:
-      return {
-        ...state,
-        otherUser: payload,
-      };
     case SET_AUTH_STATUS:
       return {
         ...state,
@@ -104,16 +99,17 @@ export function reducer(state = initialState, { type, payload }) {
         ...state,
         otherUser: {},
       };
+    case SET_OTHER_USER:
+      return {
+        ...state,
+        otherUser: payload,
+      };
     default:
       return state;
   }
 }
 
 // ACTION CREATORS
-export const setOtherUser = (payload) => ({
-  type: SET_OTHER_USER,
-  payload,
-});
 
 export const setAuthStatus = (payload) => ({
   type: SET_AUTH_STATUS,
@@ -156,6 +152,11 @@ export const resetPassword = (payload) => ({
 
 export const setAuthLogout = () => ({
   type: SET_AUTH_LOGOUT,
+});
+
+export const setOtherUser = (payload) => ({
+  type: SET_OTHER_USER,
+  payload,
 });
 
 export const initOtherUser = () => ({
@@ -323,7 +324,6 @@ export const getAndListenForUsers = (author_id) => async (dispatch) => {
     const key = await fbApp.db.ref(`users/${author_id}`).key;
     const user = await fbApp.db.ref(`users/${author_id}`).once("value");
     dispatch(setOtherUser({ userID: key, ...user.val() }));
-    // console.log("ggg", { userID: key, ...user.val() });
   } catch (err) {
     console.log("user not found", err);
   }

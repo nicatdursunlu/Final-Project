@@ -1,20 +1,25 @@
 import React from "react";
-import { StyleSheet, View, Image, TouchableOpacity, Alert } from "react-native";
 import { connect } from "react-redux";
 import call from "react-native-phone-call";
-
-import { toggleSavePost } from "../../store/posts";
-import { CustomText } from "../../components";
-import { ICONS } from "../../styles/icons";
-import { COLORS } from "../../styles";
 import { Icon } from "@ui-kitten/components";
+import { useTheme } from "@react-navigation/native";
+import { StyleSheet, View, Image, TouchableOpacity, Alert } from "react-native";
+
+import { ICONS } from "./../../styles/icons";
+import { CustomText } from "../../components";
+import { toggleSavePost } from "../../store/posts";
 
 export const CardBottom = connect(null, { toggleSavePost })(
   ({ saved, userID, id, toggleSavePost, number }) => {
     const isSaved = saved.find((item) => item === userID);
+    const { dark, colors } = useTheme();
+    const srcDark = isSaved ? ICONS.savedDark : ICONS.saveDark;
+    const srcLight = isSaved ? ICONS.savedLight : ICONS.saveLight;
+
     return (
       <View style={styles.container}>
         <TouchableOpacity
+          style={styles.phone}
           onPress={() =>
             number
               ? call({
@@ -27,18 +32,20 @@ export const CardBottom = connect(null, { toggleSavePost })(
                 )
           }
         >
-          <View style={styles.btn}>
-            <Icon name="phone" pack="feather" style={styles.icon} />
-            <CustomText weight="bold" style={styles.btnTitle}>
-              call now
-            </CustomText>
-          </View>
+          <Icon
+            name="phone"
+            pack="feather"
+            style={[styles.phoneIcon, { color: colors.text }]}
+          />
+          <CustomText
+            weight="bold"
+            style={{ ...styles.phoneText, ...{ color: colors.text } }}
+          >
+            call
+          </CustomText>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => toggleSavePost(id, isSaved, userID)}>
-          <Image
-            style={styles.btnIcon}
-            source={isSaved ? ICONS.saved : ICONS.bookmark}
-          />
+          <Image style={styles.saveIcon} source={dark ? srcDark : srcLight} />
         </TouchableOpacity>
       </View>
     );
@@ -47,32 +54,27 @@ export const CardBottom = connect(null, { toggleSavePost })(
 
 const styles = StyleSheet.create({
   container: {
+    paddingHorizontal: 10,
+    paddingVertical: 7,
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "space-between",
-    width: "100%",
   },
-  btn: {
-    borderRadius: 15,
-    width: 105,
-    backgroundColor: COLORS.PRIMARY,
+  phone: {
     flexDirection: "row",
     alignItems: "center",
   },
-  icon: {
+  phoneIcon: {
     height: 18,
-    color: "#fff",
-    marginLeft: 10,
-    paddingVertical: 5,
+    paddingVertical: 6,
+    marginRight: 10,
   },
-  btnTitle: {
-    color: COLORS.TITLE,
-    marginLeft: 8,
+  phoneText: {
     fontSize: 12,
     textTransform: "uppercase",
   },
-  btnIcon: {
-    width: 22,
-    height: 22,
-    marginLeft: 10,
+  saveIcon: {
+    width: 20,
+    height: 20,
   },
 });

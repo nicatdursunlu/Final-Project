@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { StyleSheet, View, Switch } from "react-native";
-import { Toggle, Divider } from "@ui-kitten/components";
+import { Toggle } from "@ui-kitten/components";
+import { StyleSheet, View } from "react-native";
+import { useTheme } from "@react-navigation/native";
 
 import { Container } from "../commons";
 import { LANGUAGES } from "../utils/dummy";
@@ -27,51 +28,50 @@ export const SettingsScreen = connect(mapStateToProps, {
     if (val) setTheme("dark");
     else setTheme("light");
   };
-
+  const { colors } = useTheme();
+  const border = { borderBottomColor: colors.inputText };
   return (
     <Container>
-      <Divider style={{ width: "100%" }} />
-      <View style={styles.options}>
+      <View style={[styles.options, border]}>
         <CustomText style={styles.optionsText}>Theme</CustomText>
         <View style={styles.row}>
           <CustomText>{theme === "light" ? "Light" : "Dark"}</CustomText>
           <Toggle
-            checked={theme === "dark" ? true : false}
             onChange={themeHandler}
-            style={{ marginLeft: 10 }}
+            style={{ marginLeft: 20 }}
+            checked={theme === "dark" ? true : false}
           />
         </View>
       </View>
-      <Divider style={{ width: "100%" }} />
-      <View style={styles.options}>
+      <View style={[styles.options, border]}>
         <CustomText style={styles.optionsText}>Language</CustomText>
         <SelectGroup
-          options={LANGUAGES}
           initial={language}
+          options={LANGUAGES}
           onChangeOption={setLanguage}
-          style={{ width: getWidthByPercents(50, 2) }}
+          style={{ width: getWidthByPercents(40, 2) }}
         />
       </View>
-      <Divider style={{ width: "100%" }} />
     </Container>
   );
 });
 
 const styles = StyleSheet.create({
   options: {
-    justifyContent: "space-between",
-    flexDirection: "row",
-    marginVertical: 5,
-    alignItems: "center",
     height: 50,
     width: "100%",
+    marginVertical: 5,
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   row: {
-    flexDirection: "row",
     alignItems: "center",
+    flexDirection: "row",
   },
   optionsText: {
-    fontSize: 16,
     padding: 14,
+    fontSize: 16,
   },
 });

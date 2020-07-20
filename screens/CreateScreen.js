@@ -1,29 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
-import { Input, Icon } from "@ui-kitten/components";
 import * as Location from "expo-location";
+import { Icon } from "@ui-kitten/components";
+import { useTheme } from "@react-navigation/native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 
-import { CustomText, CustomBtn, SelectGroup, MapModal } from "../components";
-
-import { COLORS } from "../styles";
 import { Container } from "./../commons";
+import { BLOOD_TYPES } from "../utils/dummy";
 import { addPostToList } from "../store/posts";
 import { getWidthByPercents } from "./../utils";
-import { BLOOD_TYPES } from "../utils/dummy";
-import { Field } from "./../components/Field";
+import {
+  Field,
+  MapModal,
+  CustomBtn,
+  CustomText,
+  SelectGroup,
+} from "../components";
 
 export const CreateScreen = connect(null, { addPostToList })(
   ({ addPostToList, navigation }) => {
     const [location, setLocation] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
     const [fields, setFields] = useState({
-      bloodType: "",
-      number: "",
-      location: "Add location",
       desc: "",
+      number: "",
+      bloodType: "",
       coordinates: [],
+      location: "Add location",
     });
+
     const [isMapOpen, setIsMapOpen] = useState(false);
     //GETTING PERMISSION FOR LOCATION
     useEffect(() => {
@@ -81,25 +86,37 @@ export const CreateScreen = connect(null, { addPostToList })(
         }));
       }
     };
-
+    const { colors } = useTheme();
+    const OPTIONS_COLOR = {
+      backgroundColor: colors.inputBG,
+      borderColor: colors.inputBorder,
+    };
     return (
       <Container>
         <SelectGroup
+          style={styles.field}
           options={BLOOD_TYPES}
+          initial="Select blood type"
           onChangeOption={(val) => fieldsChangeHandler("bloodType", val)}
         />
         <View style={styles.body}>
           <Field
+            value={fields.number}
+            keyboardType="phone-pad"
             label="Add contact number(recommended)"
             placeholder="example: +994 77 777 77 77"
-            keyboardType="phone-pad"
             onChangeText={(val) => fieldsChangeHandler("number", val)}
-            style={{ marginBottom: 15 }}
           />
           <TouchableOpacity style={{ width: "100%" }} onPress={openMap}>
-            <View style={styles.options}>
-              <CustomText weight="semi">{fields.location}</CustomText>
-              <Icon name="chevron-right" pack="feather" style={styles.icon} />
+            <View style={[styles.options, OPTIONS_COLOR]}>
+              <CustomText weight="semi" style={{ color: colors.inputText }}>
+                {fields.location}
+              </CustomText>
+              <Icon
+                name="chevron-right"
+                pack="feather"
+                style={{ height: 15, color: colors.inputText }}
+              />
             </View>
           </TouchableOpacity>
           <Field
@@ -107,17 +124,15 @@ export const CreateScreen = connect(null, { addPostToList })(
             textStyle={{ minHeight: 110 }}
             placeholder="Tell us more..."
             onChangeText={(val) => fieldsChangeHandler("desc", val)}
-            style={{ marginBottom: 15 }}
           />
           <CustomBtn
             title="Post"
-            width={getWidthByPercents(80, 2)}
             onPress={onSubmit}
+            width={getWidthByPercents(80, 2)}
           />
         </View>
         <MapModal
           visible={isMapOpen}
-          close={() => setIsMapOpen(false)}
           onSave={(coordinates) => {
             getLocationName(coordinates);
             setFields((field) => ({
@@ -132,10 +147,9 @@ export const CreateScreen = connect(null, { addPostToList })(
             latitudeDelta: 0.1522,
             longitudeDelta: 0.1521,
           }}
+          close={() => setIsMapOpen(false)}
         />
-        {errorMsg && (
-          <CustomText style={styles.errorMsg}>{errorMsg}</CustomText>
-        )}
+        {errorMsg && <CustomText>{errorMsg}</CustomText>}
       </Container>
     );
   }
@@ -150,20 +164,18 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
   },
+  field: {
+    marginBottom: 15,
+  },
   options: {
     width: "100%",
-    marginVertical: 15,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
     borderWidth: 1,
     borderRadius: 4,
-    borderColor: "rgb(228, 233, 242)",
-    backgroundColor: COLORS.SELECT_BG,
-  },
-  icon: {
-    height: 15,
+    marginBottom: 15,
+    paddingVertical: 10,
+    alignItems: "center",
+    flexDirection: "row",
+    paddingHorizontal: 20,
+    justifyContent: "space-between",
   },
 });

@@ -152,7 +152,6 @@ export const addPostToList = (data) => async (dispatch, getState) => {
 };
 
 export const toggleSavePost = (postID, isSaved, userID) => async (dispatch) => {
-  console.log("postID", postID);
   try {
     const ref = firebase.firestore().collection("posts").doc(postID);
     const post = await ref.get();

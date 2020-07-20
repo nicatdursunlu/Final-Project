@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Alert } from "react-native";
 import { connect } from "react-redux";
 import * as WebBrowser from "expo-web-browser";
-import { Input, Icon } from "@ui-kitten/components";
+import { Icon, Input } from "@ui-kitten/components";
 
 import { Container } from "../../commons";
 import { getWidthByPercents } from "./../../utils";
@@ -23,7 +23,8 @@ export const LogInScreen = connect(null, { logIn, sendEmail })(
     const togglePass = (props) => (
       <Icon
         {...props}
-        name={visible ? "eye" : "eye-off"}
+        name={visible ? "md-eye" : "md-eye-off"}
+        pack="ion"
         onPress={() => setVisible(!visible)}
       />
     );
@@ -58,11 +59,11 @@ export const LogInScreen = connect(null, { logIn, sendEmail })(
     };
 
     return (
-      <Container>
+      <Container style={{ backgroundColor: "#fff" }}>
         <Input
           value={fields.email}
           label="Email"
-          placeholder="Email"
+          placeholder="email"
           keyboardType="email-address"
           accessoryRight={(props) => (
             <Icon {...props} name="user" pack="feather" />
@@ -84,16 +85,16 @@ export const LogInScreen = connect(null, { logIn, sendEmail })(
             />
             <Link
               title="Forgot your password?"
-              style={{ color: "#6979f8", marginBottom: 20 }}
+              style={{ marginBottom: 20 }}
               onPress={() => setIsLogIn(false)}
             />
           </>
         )}
-
         <CustomBtn
+          style={{ borderWidth: 0 }}
+          width={getWidthByPercents(80, 2)}
           title={isLogIn ? "Login" : "Send email"}
           onPress={isLogIn ? onSubmit : sendEmailHandler}
-          width={getWidthByPercents(80, 2)}
         />
       </Container>
     );

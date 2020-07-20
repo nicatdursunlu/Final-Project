@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "@react-navigation/native";
 import { StyleSheet, TouchableOpacity, Image, View } from "react-native";
 
 import { CustomText, AvatarMaker } from "../../components";
@@ -6,6 +7,7 @@ import { getMessageTime } from "../../utils/getMessageTime";
 
 export const ChatsCover = ({ chat, onPress }) => {
   const { companion_name, companion_img, last_msg, time, readed } = chat;
+  const { colors } = useTheme();
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.listCover}>
@@ -14,27 +16,40 @@ export const ChatsCover = ({ chat, onPress }) => {
         )}
         {!companion_img && (
           <View style={styles.userAvatar}>
-            {AvatarMaker(companion_name, 23)}
+            {AvatarMaker(companion_name, 22)}
           </View>
         )}
         <View style={styles.content}>
           <View>
-            <CustomText weight="semi" style={styles.title}>
+            <CustomText
+              weight="semi"
+              style={{ ...styles.title, ...{ color: colors.text } }}
+            >
               {companion_name}
             </CustomText>
             <CustomText
               numberOfLines={1}
-              style={styles.lastMessage}
               weight={readed ? "regular" : "bold"}
+              style={{ ...styles.lastMessage, ...{ color: colors.lastMsg } }}
             >
               {last_msg}
             </CustomText>
           </View>
           <View style={styles.timeRow}>
-            <CustomText weight="bold" style={styles.time}>
+            <CustomText
+              weight="bold"
+              style={{ ...styles.time, ...{ color: colors.secondaryText } }}
+            >
               {getMessageTime(time)}
             </CustomText>
-            {!readed && <View style={styles.unread} />}
+            {!readed && (
+              <View
+                style={{
+                  ...styles.unread,
+                  ...{ backgroundColor: colors.link },
+                }}
+              />
+            )}
           </View>
         </View>
       </View>
@@ -45,8 +60,10 @@ export const ChatsCover = ({ chat, onPress }) => {
 const styles = StyleSheet.create({
   listCover: {
     flexDirection: "row",
-    height: 65,
+    height: 68,
     alignItems: "center",
+    borderBottomColor: "#8994a3",
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   content: {
     flex: 1,
@@ -56,14 +73,13 @@ const styles = StyleSheet.create({
   },
 
   userAvatar: {
-    borderRadius: 25,
     width: 50,
     height: 50,
+    borderRadius: 25,
     marginRight: 15,
   },
   title: {
     fontSize: 18,
-    color: "#859bde",
   },
   lastMessage: {
     fontSize: 13,
@@ -80,6 +96,5 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: "#859bde",
   },
 });

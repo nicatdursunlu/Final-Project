@@ -1,27 +1,27 @@
 import React from "react";
-import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import { Icon } from "@ui-kitten/components";
 import { LinearGradient } from "expo-linear-gradient";
-import { StatusBar } from "expo-status-bar";
+import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
 
-import { ICONS } from "../../styles";
 import { CustomText, AvatarMaker } from "../../components";
+import { useTheme } from "@react-navigation/native";
 
-export const ChatHeader = ({ route, navigation, children }) => {
+export const ChatHeader = ({ route, navigation }) => {
   const { companion_img, companion_name } = route?.params;
+  const { colors } = useTheme();
   return (
-    <View style={styles.container}>
-      <StatusBar
-        backgroundColor="transparent"
-        translucent={true}
-        barStyle="dark"
-      />
-      <LinearGradient
+    <View style={[styles.container, { backgroundColor: colors.chatBG }]}>
+      {/* <LinearGradient
         style={styles.gradient}
         start={[-0.7, -7]}
         colors={["white", "#859bde"]}
-      />
+      /> */}
       <TouchableOpacity onPress={() => navigation.navigate("Chats")}>
-        <Image style={styles.left} source={ICONS.left} />
+        <Icon
+          name="chevron-left"
+          pack="feather"
+          style={[styles.left, { color: colors.link }]}
+        />
       </TouchableOpacity>
       {!!companion_img && (
         <Image style={styles.img} source={{ uri: companion_img }} />
@@ -29,7 +29,10 @@ export const ChatHeader = ({ route, navigation, children }) => {
       {!companion_img && (
         <View style={styles.img}>{AvatarMaker(companion_name, 20)}</View>
       )}
-      <CustomText weight="semi" style={styles.name}>
+      <CustomText
+        weight="semi"
+        style={{ ...styles.name, ...{ color: colors.text } }}
+      >
         {companion_name}
       </CustomText>
     </View>
@@ -38,19 +41,18 @@ export const ChatHeader = ({ route, navigation, children }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 25,
-    paddingBottom: 10,
+    paddingTop: 20,
+    paddingBottom: 5,
     overflow: "hidden",
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 15,
   },
-  gradient: {
-    ...StyleSheet.absoluteFill,
-  },
+  // gradient: {
+  //   ...StyleSheet.absoluteFill,
+  // },
   left: {
-    height: 20,
-    width: 20,
+    height: 30,
     marginRight: 30,
   },
   img: {
@@ -60,7 +62,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   name: {
-    color: "#fbfbfb",
     fontSize: 15,
   },
 });

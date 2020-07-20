@@ -53,7 +53,9 @@ export const AUTH_DATA = [
     placeholder: "password",
     name: "password",
     caption: "should contain at least 6 symbols",
-    captionIcon: (props) => <Icon {...props} name="alert-circle-outline" />,
+    captionIcon: (props) => (
+      <Icon {...props} name="alert-circle" pack="feather" />
+    ),
   },
   {
     label: "Repeat password",
@@ -61,7 +63,9 @@ export const AUTH_DATA = [
     placeholder: "confirm password",
     name: "repassword",
     caption: "should contain at least 6 symbols",
-    captionIcon: (props) => <Icon {...props} name="alert-circle-outline" />,
+    captionIcon: (props) => (
+      <Icon {...props} name="alert-circle" pack="feather" />
+    ),
   },
 ];
 
@@ -72,7 +76,7 @@ export const ITEMS = [
       <Icon
         name="bookmark"
         pack="feather"
-        style={{ color: "gray", height: 23 }}
+        style={{ color: "#999999", height: 23 }}
       />
     ),
     goTo: "Saved",
@@ -83,7 +87,7 @@ export const ITEMS = [
       <Icon
         name="settings"
         pack="feather"
-        style={{ color: "gray", height: 23 }}
+        style={{ color: "#999999", height: 23 }}
       />
     ),
     goTo: "Settings",
@@ -91,25 +95,22 @@ export const ITEMS = [
   {
     title: "About",
     icon: () => (
-      <Icon name="info" pack="feather" style={{ color: "gray", height: 23 }} />
+      <Icon
+        name="info"
+        pack="feather"
+        style={{ color: "#999999", height: 23 }}
+      />
     ),
     goTo: "About",
   },
   {
-    title: "Contact",
+    title: "Rate Us",
     icon: () => (
       <Icon
-        name="help-circle"
+        name="star"
         pack="feather"
-        style={{ color: "gray", height: 23 }}
+        style={{ color: "#999999", height: 23 }}
       />
-    ),
-    goTo: "Contact",
-  },
-  {
-    title: "Rate The App",
-    icon: () => (
-      <Icon name="star" pack="feather" style={{ color: "gray", height: 23 }} />
     ),
     goTo: "Rate",
   },

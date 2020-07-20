@@ -61,11 +61,11 @@ export const HomeScreen = connect(mapStateToProps, {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    marginBottom: 60,
   },
   list: {
     flexGrow: 1,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
+    marginHorizontal: 15,
+    paddingTop: 15,
   },
 });

@@ -15,12 +15,11 @@ export const Container = ({ children, style }) => (
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    backgroundColor: "#fff",
+    paddingTop: 20,
   },
   container: {
     flexGrow: 1,
     alignItems: "center",
     paddingHorizontal: 15,
-    backgroundColor: "#fff",
   },
 });
