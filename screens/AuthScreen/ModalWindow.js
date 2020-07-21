@@ -38,7 +38,7 @@ export const ModalWindow = ({ visible, onBackdropPress, onPress }) => {
             and Conditions Use.
           </CustomText>
           <Button style={styles.button} onPress={onPress}>
-            Acccept
+            Accept
           </Button>
         </View>
       </ScrollView>

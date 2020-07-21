@@ -4,27 +4,26 @@ import { Provider } from "react-redux";
 import * as eva from "@eva-design/eva";
 import { PersistGate } from "redux-persist/integration/react";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
-// import * as Localization from 'expo-localization';
-// import i18n from 'i18n-js';
+// import * as Localization from "expo-localization";
+// import i18n from "i18n-js";
 
 import { loadFonts } from "./styles/fonts";
 import { RootNav } from "./navigation/RootNav";
 import store, { persistor } from "./store/index";
 import { FeatherIconsPack, IoniconsPack } from "./utils";
 
-// import en from './en.json'
-// import az from './az.json'
-// import ru from './ru.json'
+// import en from "./translations/en.json";
+// import az from "./translations/az.json";
+// import ru from "./translations/ru.json";
 
-// i18n.translations={
+// i18n.translations = {
 //   en,
 //   ru,
 //   az,
-// }
+// };
 
 export default function App() {
   // i18n.locale = Localization.locale;
-
   // i18n.fallbacks = true;
 
   const [loaded, setLoaded] = useState(false);

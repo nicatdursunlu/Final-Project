@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
-  Image,
   TouchableOpacity,
   KeyboardAvoidingView,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 
-import { ICONS } from "./../../styles/icons";
 import { Field } from "./../../components/Field";
 import { Icon } from "@ui-kitten/components";
 
@@ -34,9 +32,12 @@ export const ChatForm = ({ onPress, value, textChange }) => {
       <Field
         value={value}
         placeholder="Type here to start send"
-        textStyle={{ color: "#000" }}
+        textStyle={{ color: colors.text }}
         onChangeText={(val) => textChangehandler(val)}
-        style={[styles.field, { width: state ? "85%" : "70%" }]}
+        style={[
+          styles.field,
+          { backgroundColor: colors.chatFormBG, width: state ? "85%" : "70%" },
+        ]}
       />
       {state && (
         <TouchableOpacity onPress={onPress}>

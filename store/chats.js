@@ -109,36 +109,6 @@ export const makeReadMessage = (id) => async (dispatch, getState) => {
   }
 };
 
-export const setMessage = () => async (dispatch) => {
-  try {
-    firebase
-      .firestore()
-      .collection("messages")
-      .doc("yCfsEKPhXYNtcXs5rdAPjZ9Kp2G2_KLwjxxOrXmN8qdOedfYjVLUQWdT2")
-      .set({
-        messages: [
-          {
-            author_id: "yCfsEKPhXYNtcXs5rdAPjZ9Kp2G2",
-            text: "salam necesen?",
-            time: 1594588984928,
-          },
-          {
-            author_id: "KLwjxxOrXmN8qdOedfYjVLUQWdT2",
-            text: "sukur sen necesen?",
-            time: 1594593181379,
-          },
-          {
-            author_id: "yCfsEKPhXYNtcXs5rdAPjZ9Kp2G2",
-            text: "mende yaxsiyam yaxsi olasan coxdandi gorunmursen?",
-            time: 1594593222797,
-          },
-        ],
-      });
-  } catch (error) {
-    console.log("setMessage error", error);
-  }
-};
-
 export const getAndListenForSingleChat = (chatID) => async (
   dispatch,
   getState

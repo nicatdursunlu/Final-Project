@@ -3,6 +3,7 @@ import { Alert } from "react-native";
 import { connect } from "react-redux";
 import * as WebBrowser from "expo-web-browser";
 import { Icon, Input } from "@ui-kitten/components";
+import i18n from "i18n-js";
 
 import { Container } from "../../commons";
 import { getWidthByPercents } from "./../../utils";
@@ -62,7 +63,9 @@ export const LogInScreen = connect(null, { logIn, sendEmail })(
       <Container style={{ backgroundColor: "#fff" }}>
         <Input
           value={fields.email}
+          // label={i18n.t("email")}
           label="Email"
+          // placeholder={i18n.t("email")}
           placeholder="email"
           keyboardType="email-address"
           accessoryRight={(props) => (
@@ -76,7 +79,9 @@ export const LogInScreen = connect(null, { logIn, sendEmail })(
           <>
             <Input
               value={fields.password}
+              // label={i18n.t("password")}
               label="Password"
+              // placeholder={i18n.t("password")}
               placeholder="password"
               secureTextEntry={!visible}
               accessoryRight={togglePass}
@@ -84,6 +89,7 @@ export const LogInScreen = connect(null, { logIn, sendEmail })(
               style={{ marginBottom: 15 }}
             />
             <Link
+              // title={i18n.t("forgot_your_password?")}
               title="Forgot your password?"
               style={{ marginBottom: 20 }}
               onPress={() => setIsLogIn(false)}
@@ -93,6 +99,7 @@ export const LogInScreen = connect(null, { logIn, sendEmail })(
         <CustomBtn
           style={{ borderWidth: 0 }}
           width={getWidthByPercents(80, 2)}
+          // title={isLogIn ? i18n.t("login") : i18n.t("send_email")}
           title={isLogIn ? "Login" : "Send email"}
           onPress={isLogIn ? onSubmit : sendEmailHandler}
         />

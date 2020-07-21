@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
-import { Divider } from "react-native-elements";
 import { useTheme } from "@react-navigation/native";
 
 import { UserInfo } from "./UserInfo";
@@ -11,23 +10,23 @@ import { selectPostLists } from "../../store/posts";
 import { CardCover } from "./../HomeScreen/CardCover";
 import { generateChatID } from "./../../utils/generateChatID";
 import {
-  selectUserID,
   selectName,
   selectBlood,
   selectPhoto,
-  getAndListenForUsers,
-  selectOtherUser,
+  selectUserID,
   initOtherUser,
+  selectOtherUser,
   selectUsername,
+  getAndListenForUsers,
 } from "../../store/auth";
 
 const mapStateToProps = (state) => ({
-  username: selectUsername(state),
   photo: selectPhoto(state),
   userID: selectUserID(state),
   fullName: selectName(state),
   posts: selectPostLists(state),
   bloodType: selectBlood(state),
+  username: selectUsername(state),
   otherProfile: selectOtherUser(state),
 });
 
@@ -64,15 +63,13 @@ export const ProfileScreen = connect(mapStateToProps, {
       : { username, fullName, bloodType, photo };
 
     const onPressHandler = () => {
-      if (!!profileType) {
+      if (!!profileType)
         navigation.navigate("SingleChat", {
           companion_name: otherProfile.fullName,
           companion_img: otherProfile.photo,
           chatID: generateChatID(userID, otherProfile.userID),
         });
-      } else {
-        navigation.navigate("Edit Profile");
-      }
+      else navigation.navigate("Edit Profile");
     };
     const { colors } = useTheme();
     return (

@@ -1,4 +1,5 @@
 import fbApp from "../firebaseInit";
+import * as firebase from "firebase";
 import { Alert } from "react-native";
 
 // ACTION TYPES
@@ -7,12 +8,12 @@ const SET_AUTH_SUCCESS = "SET_AUTH_SUCCESS";
 const SET_AUTH_LOGOUT = "SET_AUTH_LOGOUT";
 const SET_PHOTO = "SET_PHOTO";
 const DELETE_PHOTO = "DELETE_PHOTO";
-const CHANGE_USERNAME = "CHANGE_USERNAME";
-const CHANGE_FULL_NAME = "CHANGE_FULL_NAME";
 const RESET_PASSWORD = "RESET_PASSWORD";
-const SELECT_BLOOD_TYPE = "SELECT_BLOOD_TYPE";
 const SET_OTHER_USER = "SET_OTHER_USER";
 const INIT_OTHER_USER = "INIT_OTHER_USER";
+const UPDATE_CREDENTIALS = "UPDATE_CREDENTIALS";
+const CHANGE_EMAIL = "CHANGE_EMAIL";
+const CHANGE_PASSWORD = "CHANGE_PASSWORD";
 
 // SELECTORS
 export const MODULE_NAME = "auth";
@@ -33,6 +34,7 @@ const initialState = {
   fullName: null,
   bloodType: null,
   email: null,
+  password: null,
   photo: null,
   otherUser: {},
 };
@@ -48,12 +50,14 @@ export function reducer(state = initialState, { type, payload }) {
       return {
         ...state,
         status: true,
-        userID: payload.userID,
-        username: payload.username,
+        ...payload,
+      };
+    case UPDATE_CREDENTIALS:
+      return {
+        ...state,
         fullName: payload.fullName,
+        username: payload.username,
         bloodType: payload.bloodType,
-        photo: payload.photo,
-        email: payload.email,
       };
     case SET_PHOTO:
       return {
@@ -65,25 +69,20 @@ export function reducer(state = initialState, { type, payload }) {
         ...state,
         photo: "",
       };
-    case CHANGE_USERNAME:
-      return {
-        ...state,
-        username: payload,
-      };
-    case CHANGE_FULL_NAME:
-      return {
-        ...state,
-        fullName: payload,
-      };
-    case SELECT_BLOOD_TYPE:
-      return {
-        ...state,
-        bloodType: payload,
-      };
     case RESET_PASSWORD:
       return {
         ...state,
         email: payload,
+      };
+    case CHANGE_EMAIL:
+      return {
+        ...state,
+        email: payload,
+      };
+    case CHANGE_PASSWORD:
+      return {
+        ...state,
+        password: payload,
       };
     case SET_AUTH_LOGOUT:
       return {
@@ -93,6 +92,9 @@ export function reducer(state = initialState, { type, payload }) {
         username: null,
         fullName: null,
         email: null,
+        bloodType: null,
+        password: null,
+        photo: null,
       };
     case INIT_OTHER_USER:
       return {
@@ -110,7 +112,6 @@ export function reducer(state = initialState, { type, payload }) {
 }
 
 // ACTION CREATORS
-
 export const setAuthStatus = (payload) => ({
   type: SET_AUTH_STATUS,
   payload,
@@ -130,18 +131,18 @@ export const deletePhoto = () => ({
   type: DELETE_PHOTO,
 });
 
-export const changeUsername = (payload) => ({
-  type: CHANGE_USERNAME,
+export const updateCredentials = (payload) => ({
+  type: UPDATE_CREDENTIALS,
   payload,
 });
 
-export const changeFullname = (payload) => ({
-  type: CHANGE_FULL_NAME,
+export const changeEmail = (payload) => ({
+  type: CHANGE_EMAIL,
   payload,
 });
 
-export const selectBloodType = (payload) => ({
-  type: SELECT_BLOOD_TYPE,
+export const changePassword = (payload) => ({
+  type: CHANGE_PASSWORD,
   payload,
 });
 
@@ -177,54 +178,52 @@ export const signUp = (email, password, username, fullName) => async (
         console.log(error.code, error.message);
       });
 
+    fbApp.db.ref(`users/${uid}`).set({
+      username,
+      fullName,
+      email,
+      password,
+      bloodType: "",
+      photo: "",
+    });
+
     dispatch(
       setAuthSuccess({
         userID: uid,
         username,
         fullName,
         email,
+        password,
       })
     );
-
-    fbApp.db.ref(`users/${uid}`).set({
-      username,
-      fullName,
-      email,
-      bloodType: "",
-      photo: "",
-    });
   } catch (error) {
     Alert.alert("Signup failed", error.message);
   }
 };
 
-export const logIn = (Email, password) => async (dispatch) => {
+export const logIn = (Email, Password) => async (dispatch) => {
   try {
     const {
       user: { uid },
-    } = await fbApp.auth.signInWithEmailAndPassword(Email, password);
+    } = await fbApp.auth
+      .signInWithEmailAndPassword(Email, Password)
+      .catch(function (error) {
+        Alert.alert(error.code, error.message);
+        console.log(error.code, error.message);
+      });
 
-    const userDataSnapshot = await fbApp.db.ref(`users/${uid}`).once("value");
-    const {
-      username,
-      fullName,
-      bloodType,
-      photo,
-      email,
-    } = userDataSnapshot.val();
+    const userData = await (
+      await fbApp.db.ref(`users/${uid}`).once("value")
+    ).val();
 
     dispatch(
       setAuthSuccess({
         userID: uid,
-        username,
-        fullName,
-        bloodType,
-        photo,
-        email,
+        ...userData,
       })
     );
   } catch (error) {
-    Alert.alert("Login failed", error.message);
+    console.log("Login failed", error.message);
   }
 };
 
@@ -233,6 +232,7 @@ export const logOut = () => async (dispatch) => {
     await fbApp.auth.signOut();
     dispatch(setAuthLogout());
   } catch (error) {
+    Alert.alert(error.code, error.message);
     console.log("logOut error", error);
   }
 };
@@ -243,7 +243,35 @@ export const removeAvatar = () => async (dispatch, getState) => {
     await fbApp.db.ref(`users/${userID}/photo`).set("");
     dispatch(deletePhoto());
   } catch (error) {
-    Alert.alert(error.message);
+    Alert.alert(error.code, error.message);
+  }
+};
+
+export const uploadPhoto = (uri) => async (dispatch, getState) => {
+  try {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    const key = (await fbApp.db.ref("keys").push()).key;
+    const snap = await fbApp.storage.ref(key).put(blob);
+    const url = await snap.ref.getDownloadURL();
+    const userID = selectUserID(getState());
+    await fbApp.db.ref(`users/${userID}/photo`).set(url);
+    dispatch(setPhoto(url));
+  } catch (error) {
+    Alert.alert("Error", error.message);
+  }
+};
+export const updateUserInfo = (userInfo) => async (dispatch) => {
+  try {
+    const { uid } = fbApp.auth.currentUser;
+    const { fullName, username, bloodType } = userInfo;
+
+    console.log("updateUserInfo", userInfo);
+    dispatch(updateCredentials({ ...userInfo }));
+    fbApp.db.ref(`users/${uid}`).update({ fullName, username, bloodType });
+  } catch (error) {
+    console.log("updateUserInfo error", error);
+    Alert.alert(error.code, error.message);
   }
 };
 
@@ -252,7 +280,89 @@ export const sendEmail = (email) => async (dispatch) => {
     await fbApp.auth.sendPasswordResetEmail(email);
     dispatch(resetPassword({ email }));
   } catch (error) {
+    Alert.alert(error.code, error.message);
     console.log("sendEmail error: ", error);
+  }
+};
+
+export const updateEmail = (email, password) => async (dispatch) => {
+  try {
+    const currentUser = fbApp.auth.currentUser;
+
+    const { uid } = currentUser;
+    const user = (await fbApp.db.ref(`users/${uid}`).once("value")).val();
+
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      user.email,
+      password
+    );
+    await currentUser.reauthenticateWithCredential(credential);
+
+    console.log("credential", credential);
+    console.log("user", user);
+
+    if (user.password === password) {
+      await currentUser.updateEmail(email);
+    } else {
+      Alert.alert("Wrong password", "Please, write your correct password");
+    }
+
+    fbApp.db.ref(`users/${uid}`).update({ email });
+    dispatch(changeEmail(email));
+  } catch (error) {
+    Alert.alert(error.code, error.message);
+    console.log("updateEmail error ", error);
+  }
+};
+
+export const updatePassword = (email, currentPass, password) => async (
+  dispatch
+) => {
+  try {
+    const currentUser = fbApp.auth.currentUser;
+    const { uid } = currentUser;
+    const user = (await fbApp.db.ref(`users/${uid}`).once("value")).val();
+
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      email,
+      currentPass
+    );
+    await currentUser.reauthenticateWithCredential(credential);
+
+    if (user.password === currentPass) {
+      await currentUser.updatePassword(password);
+    } else {
+      Alert.alert("Wrong password", "Please, write your current password");
+    }
+
+    fbApp.db.ref(`users/${uid}`).update({ password });
+    dispatch(changePassword(password));
+  } catch (error) {
+    Alert.alert(error.code, error.message);
+    console.log("updatePassword error ", error);
+  }
+};
+
+export const deleteAccount = (email, password) => async () => {
+  try {
+    const currentUser = fbApp.auth.currentUser;
+    const { uid } = currentUser;
+    const user = (await fbApp.db.ref(`users/${uid}`).once("value")).val();
+
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      email,
+      password
+    );
+    await currentUser.reauthenticateWithCredential(credential);
+
+    if (password === user.password) {
+      currentUser.delete();
+    } else {
+      Alert.alert("Wrong password", "Please, write your correct password");
+    }
+  } catch (error) {
+    Alert.alert(error.code, error.message);
+    console.log("deleteAccount error ", error);
   }
 };
 
@@ -264,60 +374,12 @@ export const verifyEmail = (email) => async (dispatch) => {
   }
 };
 
-export const editUsername = (username) => async (dispatch, getState) => {
-  try {
-    const userID = selectUserID(getState());
-    await fbApp.db.ref(`users/${userID}/username`).set(username);
-    dispatch(changeUsername(username));
-  } catch (error) {
-    console.log("editUsername: ", error);
-  }
-};
-
-export const editFullname = (fullName) => async (dispatch, getState) => {
-  try {
-    const userID = selectUserID(getState());
-    await fbApp.db.ref(`users/${userID}/fullName`).set(fullName);
-    dispatch(changeFullname(fullName));
-  } catch (error) {
-    console.log("editFullname: ", error);
-  }
-};
-
-export const addBloodType = (bloodType) => async (dispatch, getState) => {
-  try {
-    const userID = selectUserID(getState());
-    await fbApp.db.ref(`users/${userID}/bloodType`).set(bloodType);
-    dispatch(selectBloodType(bloodType));
-  } catch (error) {
-    console.log("addBloodType: ", error);
-  }
-};
-
-export const changePassword = () => async (dispatch) => {
-  try {
-    const user = fbApp.auth.currentUser;
-    user.updatePassword("123456789123");
-  } catch (error) {}
-};
-
-export const uploadPhoto = (uri) => async (dispatch, getState) => {
-  try {
-    const response = await fetch(uri);
-    const blob = await response.blob();
-
-    const key = (await fbApp.db.ref("keys").push()).key;
-    const snap = await fbApp.storage.ref(key).put(blob);
-    const url = await snap.ref.getDownloadURL();
-
-    const userID = selectUserID(getState());
-    const result = await fbApp.db.ref(`users/${userID}/photo`).set(url);
-
-    dispatch(setPhoto(url));
-  } catch (error) {
-    Alert.alert(error.message);
-  }
-};
+// export const changePassword = () => async (dispatch) => {
+//   try {
+//     const user = fbApp.auth.currentUser;
+//     user.updatePassword("123456789123");
+//   } catch (error) {}
+// };
 
 export const getAndListenForUsers = (author_id) => async (dispatch) => {
   try {

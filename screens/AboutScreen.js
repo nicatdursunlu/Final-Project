@@ -24,13 +24,13 @@ export const AboutScreen = () => {
         style={styles.row}
         onPress={() =>
           call({
-            number: "7700",
+            number: "(012) 440 65 86",
             prompt: false,
           })
         }
       >
         <Icon name="phone-call" pack="feather" style={[styles.icon, color]} />
-        <CustomText>*7700</CustomText>
+        <CustomText>(012) 440 65 86</CustomText>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.row}

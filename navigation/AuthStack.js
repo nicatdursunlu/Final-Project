@@ -1,6 +1,7 @@
 import React from "react";
 import { Icon } from "@ui-kitten/components";
 import { createStackNavigator } from "@react-navigation/stack";
+import i18n from "i18n-js";
 
 import { HeaderStyles, AuthHeader } from "./../styles";
 import { WelcomeScreen, SignUpScreen, LogInScreen } from "./../screens";
