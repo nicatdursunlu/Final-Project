@@ -6,7 +6,6 @@ const SET_POSTS_LISTS = "SET_POSTS_LIST";
 const TOGGLE_POST_SAVE = "TOGGLE_POST_SAVE";
 const SET_SAVED_POST = "SET_SAVED_POST";
 const ADD_SAVED_POST = "ADD_SAVED_POST";
-const ADD_POST = "ADD_POST";
 const DELETE_SAVED_POST = "DELETE_SAVED_POST";
 const DELETE_SAVED_POST_LISTS = "DELETE_SAVED_POST_LISTS";
 
@@ -26,13 +25,6 @@ export function reducer(state = initialState, { type, payload }) {
         ...state,
         posts: payload,
       };
-
-    case ADD_POST:
-      return {
-        ...state,
-        posts: [payload, ...state.posts],
-      };
-
     case TOGGLE_POST_SAVE:
       return {
         ...state,
@@ -78,10 +70,6 @@ export function reducer(state = initialState, { type, payload }) {
 
 export const setPostLists = (payload) => ({
   type: SET_POSTS_LISTS,
-  payload,
-});
-export const addPost = (payload) => ({
-  type: ADD_POST,
   payload,
 });
 export const togglePostSaves = (payload) => ({
@@ -144,8 +132,6 @@ export const addPostToList = (data) => async (dispatch, getState) => {
     };
 
     const post = await ref.set(postData);
-
-    dispatch(addPost({ ...postData, id: key }));
   } catch (error) {
     console.log("addPostToList error =>", error);
   }

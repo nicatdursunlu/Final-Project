@@ -3,7 +3,6 @@ import { View } from "react-native";
 import { connect } from "react-redux";
 
 import {
-  setMessage,
   sendMessage,
   initSingleChat,
   selecteSingleChat,
@@ -20,7 +19,6 @@ const mapStateToProps = (state) => ({
 });
 
 export const SingleChatScreen = connect(mapStateToProps, {
-  setMessage,
   sendMessage,
   initSingleChat,
   getAndListenForSingleChat,
@@ -29,15 +27,14 @@ export const SingleChatScreen = connect(mapStateToProps, {
     route,
     userID,
     messages,
-    setMessage,
     navigation,
     sendMessage,
     initSingleChat,
     getAndListenForSingleChat,
   }) => {
     useEffect(() => {
-      initSingleChat();
       getAndListenForSingleChat(route?.params.chatID);
+      return initSingleChat;
     }, []);
 
     const [messageObj, setMessageObj] = useState({

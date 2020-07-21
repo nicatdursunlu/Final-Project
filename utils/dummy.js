@@ -46,7 +46,6 @@ export const AUTH_DATA = [
     accessoryRight: (props) => <Icon {...props} name="mail" pack="feather" />,
     keyboardType: "email-address",
   },
-
   {
     label: "Password",
     value: "password",

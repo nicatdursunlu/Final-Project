@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, View, Alert } from "react-native";
 import { CheckBox, Text, Icon, Input } from "@ui-kitten/components";
 import { connect } from "react-redux";
+import i18n from "i18n-js";
 
 import { signUp } from "./../../store/auth";
 import { Container } from "./../../commons";

@@ -1,6 +1,7 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import i18n from "i18n-js";
 import { useTheme } from "@react-navigation/native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 import { CustomText } from "./CustomText";
 
@@ -16,6 +17,7 @@ export const CustomBtn = ({
     <TouchableOpacity onPress={onPress} style={{ width }}>
       <View style={[styles.btn, { borderColor: colors.inputBorder }, style]}>
         <CustomText weight="bold" style={{ ...styles.title, ...titleStyle }}>
+          {/* {i18n.t(title)} */}
           {title}
         </CustomText>
       </View>

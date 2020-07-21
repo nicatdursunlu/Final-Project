@@ -24,6 +24,7 @@ type Theme = {
     time: string;
     cardBG: string;
     bloodBG: string;
+    chatFormBG: string;
   };
 };
 
@@ -53,6 +54,7 @@ export const DarkTheme: Theme = {
     time: "#ffffff80",
     cardBG: "#1a2138",
     bloodBG: "#0b0d17",
+    chatFormBG: "#1a2138",
   },
 };
 
@@ -82,5 +84,6 @@ export const LightTheme: Theme = {
     time: "#00000080",
     cardBG: "#ebedf1",
     bloodBG: "#fff",
+    chatFormBG: "#fff",
   },
 };

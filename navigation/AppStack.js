@@ -6,6 +6,7 @@ import {
   useTheme,
   getFocusedRouteNameFromRoute,
 } from "@react-navigation/native";
+import i18n from "i18n-js";
 
 import { BottomTabs } from "./BottomTabs";
 import { HeaderStyles } from "../styles";
@@ -18,6 +19,9 @@ import {
   RateScreen,
   AboutScreen,
   SettingsScreen,
+  EditEmailScreen,
+  ChangePassScreen,
+  DeleteAccountScreen,
 } from "./../screens";
 
 const { Navigator, Screen } = createStackNavigator();
@@ -35,7 +39,7 @@ export const AppStack = () => {
             name="md-arrow-back"
             pack="ion"
             onPress={() => navigation.goBack()}
-            style={{ height: 25, color: colors.text, marginLeft: 15 }} //dark
+            style={{ height: 25, color: colors.text, marginLeft: 15 }}
           />
         ),
       })}
@@ -52,7 +56,12 @@ export const AppStack = () => {
       <Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={{ headerShown: false }}
+        options={({ route }) => ({
+          headerTitle: route.params?.author_name,
+          headerTitleStyle: {
+            fontSize: 17,
+          },
+        })}
       />
       <Screen
         name="SingleChat"
@@ -68,6 +77,9 @@ export const AppStack = () => {
       <Screen name="Rate" component={RateScreen} />
       <Screen name="About" component={AboutScreen} />
       <Screen name="Settings" component={SettingsScreen} />
+      <Screen name="Edit Email" component={EditEmailScreen} />
+      <Screen name="Change Password" component={ChangePassScreen} />
+      <Screen name="Delete Acoount" component={DeleteAccountScreen} />
     </Navigator>
   );
 };

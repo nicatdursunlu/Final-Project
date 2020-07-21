@@ -13,10 +13,8 @@ import {
   selectUsername,
   selectBlood,
   selectPhoto,
-  editUsername,
-  editFullname,
-  addBloodType,
   uploadPhoto,
+  updateUserInfo,
 } from "../../store/auth";
 
 const mapStateToProps = (state) => ({
@@ -27,94 +25,75 @@ const mapStateToProps = (state) => ({
 });
 
 export const EditProfileScreen = connect(mapStateToProps, {
-  editUsername,
-  editFullname,
-  addBloodType,
   uploadPhoto,
-})(
-  ({
-    username,
+  updateUserInfo,
+})(({ username, fullName, bloodType, navigation, updateUserInfo }) => {
+  const [fields, setFields] = useState({
     fullName,
-    bloodType,
-    editUsername,
-    editFullname,
-    addBloodType,
-    navigation,
-  }) => {
-    const fieldsInitialState = {
-      fullName: fullName,
-      username: username,
-      bloodType: bloodType || "",
-    };
+    username,
+    bloodType: bloodType || "",
+  });
+  const fieldsChangeHandler = (name, value) =>
+    setFields((fields) => ({
+      ...fields,
+      [name]: value,
+    }));
 
-    const [fields, setFields] = useState(fieldsInitialState);
+  const goBack = () => {
+    navigation.goBack();
+  };
 
-    const fieldsChangeHandler = (name, value) =>
-      setFields((fields) => ({
-        ...fields,
-        [name]: value,
-      }));
+  const onSubmit = () => {
+    updateUserInfo(fields);
+    navigation.goBack();
+  };
 
-    const goBack = () => {
-      navigation.goBack();
-    };
-
-    const onSubmit = () => {
-      if (fields.fullName.trim() === "") editFullname(fullName);
-      else editFullname(fields.fullName);
-      if (fields.username.trim() === "") editUsername(username);
-      else editUsername(fields.username);
-      if (fields.bloodType.trim() === "") addBloodType(bloodType);
-      else addBloodType(fields.bloodType);
-      navigation.goBack();
-    };
-    const width = getWidthByPercents(75, 2);
-    const btnWidth = getWidthByPercents(45, 2);
-    const { colors } = useTheme();
-    return (
-      <Container>
-        <AvatarUploader navigation={navigation} fullName={fullName} />
-        <View style={styles.row}>
-          <CustomText>Fullname</CustomText>
-          <Field
-            style={{ width }}
-            value={fields.fullName}
-            placeholder={fields.fullName}
-            onChangeText={(val) => fieldsChangeHandler("fullName", val)}
-          />
-        </View>
-        <View style={styles.row}>
-          <CustomText>Username</CustomText>
-          <Field
-            style={{ width }}
-            value={fields.username}
-            placeholder={fields.username}
-            onChangeText={(val) => fieldsChangeHandler("username", val)}
-          />
-        </View>
-        <View style={styles.row}>
-          <CustomText>Blood type</CustomText>
-          <SelectGroup
-            style={{ width }}
-            initial={bloodType}
-            options={BLOOD_TYPES}
-            onChangeOption={(val) => fieldsChangeHandler("bloodType", val)}
-          />
-        </View>
-        <View style={styles.actions}>
-          <CustomBtn
-            title="Cancel"
-            onPress={goBack}
-            width={btnWidth}
-            titleStyle={{ color: colors.secondaryText }}
-            style={{ backgroundColor: colors.card }}
-          />
-          <CustomBtn title="Save" width={btnWidth} onPress={onSubmit} />
-        </View>
-      </Container>
-    );
-  }
-);
+  const width = getWidthByPercents(75, 2);
+  const btnWidth = getWidthByPercents(45, 2);
+  const { colors } = useTheme();
+  return (
+    <Container>
+      <AvatarUploader navigation={navigation} fullName={fullName} />
+      <View style={styles.row}>
+        <CustomText>Fullname</CustomText>
+        <Field
+          style={{ width }}
+          value={fields.fullName}
+          placeholder={fields.fullName}
+          onChangeText={(val) => fieldsChangeHandler("fullName", val)}
+        />
+      </View>
+      <View style={styles.row}>
+        <CustomText>Username</CustomText>
+        <Field
+          style={{ width }}
+          value={fields.username}
+          placeholder={fields.username}
+          onChangeText={(val) => fieldsChangeHandler("username", val)}
+        />
+      </View>
+      <View style={styles.row}>
+        <CustomText>Blood type</CustomText>
+        <SelectGroup
+          style={{ width }}
+          initial={bloodType}
+          options={BLOOD_TYPES}
+          onChangeOption={(val) => fieldsChangeHandler("bloodType", val)}
+        />
+      </View>
+      <View style={styles.actions}>
+        <CustomBtn
+          title="Cancel"
+          onPress={goBack}
+          width={btnWidth}
+          titleStyle={{ color: colors.secondaryText }}
+          style={{ backgroundColor: colors.card }}
+        />
+        <CustomBtn title="Save" width={btnWidth} onPress={onSubmit} />
+      </View>
+    </Container>
+  );
+});
 
 const styles = StyleSheet.create({
   container: {

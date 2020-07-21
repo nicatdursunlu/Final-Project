@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Icon } from "@ui-kitten/components";
 import { useTheme } from "@react-navigation/native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
+import i18n from "i18n-js";
 
 import { logOut } from "../store/auth";
 import { ITEMS } from "../utils/dummy";
@@ -21,7 +22,8 @@ export const DrawerContent = connect(null, { logOut })(
           />
         ))}
         <DrawerItem
-          label="Log out"
+          // label={i18n.t("log_out")}
+          label="log out"
           icon={() => (
             <Icon
               name="log-out"
