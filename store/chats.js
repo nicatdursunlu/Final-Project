@@ -8,8 +8,8 @@ const INIT_SINGLE_CHAT = "INIT_SINGLE_CHAT";
 const INIT_CHAT_LIST = "INIT_CHAT_LIST";
 
 export const MODULE_NAME = "chats";
-export const selecteChatsLists = (state) => state[MODULE_NAME].chats;
-export const selecteSingleChat = (state) => state[MODULE_NAME].singleChat;
+export const selectChatsLists = (state) => state[MODULE_NAME].chats;
+export const selectSingleChat = (state) => state[MODULE_NAME].singleChat;
 
 const initialState = {
   chats: [],
@@ -91,7 +91,7 @@ export const getAndListenForChatLists = () => async (dispatch, getState) => {
 export const makeReadMessage = (id) => async (dispatch, getState) => {
   try {
     const userID = selectUserID(getState());
-    const lists = selecteChatsLists(getState());
+    const lists = selectChatsLists(getState());
     const selectedChat = lists.find((list) => list.id === id);
     delete selectedChat[id];
     await firebase

@@ -2,31 +2,31 @@ import React, { useEffect } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import { useTheme } from "@react-navigation/native";
 
-import { ChatsCover } from "./ChatsCover";
 import { connect } from "react-redux";
+import { ChatsCover } from "./ChatsCover";
 import { CustomText } from "../../components";
 import {
-  getAndListenForChatLists,
-  selecteChatsLists,
-  makeReadMessage,
   initChatList,
+  makeReadMessage,
+  selectChatsLists,
+  getAndListenForChatLists,
 } from "../../store/chats";
 
 const mapStateToProps = (state) => ({
-  lists: selecteChatsLists(state),
+  lists: selectChatsLists(state),
 });
 
 export const ChatsScreen = connect(mapStateToProps, {
-  getAndListenForChatLists,
-  makeReadMessage,
   initChatList,
+  makeReadMessage,
+  getAndListenForChatLists,
 })(
   ({
-    navigation,
-    getAndListenForChatLists,
-    makeReadMessage,
-    initChatList,
     lists,
+    navigation,
+    initChatList,
+    makeReadMessage,
+    getAndListenForChatLists,
   }) => {
     useEffect(() => {
       getAndListenForChatLists();
@@ -40,9 +40,9 @@ export const ChatsScreen = connect(mapStateToProps, {
       });
       makeReadMessage(id);
     };
-    const renderItem = ({ item }) => (
-      <ChatsCover chat={item} onPress={() => gotoChat(item)} />
-    );
+    const renderItem = ({ item }) => {
+      return <ChatsCover chat={item} onPress={() => gotoChat(item)} />;
+    };
     const { colors } = useTheme();
     return (
       <View style={styles.container}>

@@ -4,16 +4,16 @@ import { useTheme } from "@react-navigation/native";
 import { Toggle, Icon } from "@ui-kitten/components";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 
-import { Container } from "./../../commons";
-import { LANGUAGES } from "./../../utils/dummy";
-import { CustomText, SelectGroup } from "./../../components";
-import { getWidthByPercents } from "./../../utils/getWidthByPercents";
+import { Container } from "../../commons";
+import { LANGUAGES } from "../../utils/dummy";
+import { CustomText, SelectGroup } from "../../components";
+import { getWidthByPercents } from "../../utils/getWidthByPercents";
 import {
   getTheme,
   setTheme,
   getLanguage,
   setLanguage,
-} from "./../../store/settings";
+} from "../../store/settings";
 
 const mapStateToProps = (state) => ({
   theme: getTheme(state),

@@ -1,6 +1,6 @@
 import React from "react";
 import Swiper from "react-native-swiper";
-import { StyleSheet, View, Image, ImageBackground } from "react-native";
+import { View, Image, StyleSheet, ImageBackground } from "react-native";
 
 import { IMAGES } from "./../../styles";
 import { SLIDER_IMAGES } from "../../utils/dummy";
@@ -11,23 +11,23 @@ export const WelcomeScreen = ({ navigation }) => (
   <ImageBackground style={styles.body} source={IMAGES.footer}>
     <Swiper autoplay={true}>
       {SLIDER_IMAGES.map((image) => (
-        <Image source={image.uri} key={image.uri} style={styles.img} />
+        <Image key={image.uri} source={image.uri} style={styles.img} />
       ))}
     </Swiper>
     <View style={styles.actions}>
       <CustomBtn
         title="Get Started"
+        style={{ borderWidth: 0 }}
         width={getWidthByPercents(80, 2)}
         onPress={() => navigation.navigate("Signup")}
-        style={{ borderWidth: 0 }}
       />
       <View style={styles.row}>
         <CustomText style={styles.text}>
           Already have an account ? &nbsp;
         </CustomText>
         <Link
-          style={{ color: "#fff" }}
           title="Log in"
+          style={{ color: "#fff" }}
           onPress={() => navigation.navigate("Login")}
         />
       </View>
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#fff", //light
+    backgroundColor: "#fff",
   },
 
   img: {

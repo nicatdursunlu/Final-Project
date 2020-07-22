@@ -1,6 +1,12 @@
 import React, { useState } from "react";
+import { Image } from "react-native-elements";
 import { useTheme } from "@react-navigation/native";
-import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 
 import { CustomText } from "../../components";
 import { getTimeFromPosted } from "../../utils";
@@ -33,7 +39,12 @@ export const CardHeader = ({
     <View style={styles.container}>
       <TouchableOpacity onPress={goTo}>
         {user_photo ? (
-          <Image style={styles.image} source={{ uri: user_photo }} />
+          <Image
+            style={styles.image}
+            source={{ uri: user_photo }}
+            PlaceholderContent={<ActivityIndicator />}
+            placeholderStyle={{ backgroundColor: "#f2f4f8" }}
+          />
         ) : (
           <View style={styles.image}>{AvatarMaker(author_name, 15)}</View>
         )}

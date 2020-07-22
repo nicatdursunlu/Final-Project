@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import {
-  StyleSheet,
   View,
-  Image,
   Alert,
   Platform,
+  StyleSheet,
   ActionSheetIOS,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { connect } from "react-redux";
+import { Image } from "react-native-elements";
 import * as Permissions from "expo-permissions";
 import * as ImagePicker from "expo-image-picker";
 import { useTheme } from "@react-navigation/native";
@@ -87,7 +88,12 @@ export const AvatarUploader = connect(mapStateToProps, {
   return (
     <View style={styles.container}>
       {photo ? (
-        <Image source={{ uri: photo }} style={styles.photo} />
+        <Image
+          source={{ uri: photo }}
+          style={styles.photo}
+          PlaceholderContent={<ActivityIndicator />}
+          placeholderStyle={{ backgroundColor: "#f2f4f8" }}
+        />
       ) : (
         <View style={styles.photo}>{AvatarMaker(fullName, 45)}</View>
       )}

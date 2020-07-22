@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import {
   sendMessage,
   initSingleChat,
-  selecteSingleChat,
+  selectSingleChat,
   getAndListenForSingleChat,
 } from "../../store/chats";
 import { ChatForm } from "./ChatForm";
@@ -14,7 +14,7 @@ import { ChatMessages } from "./ChatMessages";
 import { selectUserID } from "../../store/auth";
 
 const mapStateToProps = (state) => ({
-  messages: selecteSingleChat(state),
+  messages: selectSingleChat(state),
   userID: selectUserID(state),
 });
 
@@ -36,7 +36,6 @@ export const SingleChatScreen = connect(mapStateToProps, {
       getAndListenForSingleChat(route?.params.chatID);
       return initSingleChat;
     }, []);
-
     const [messageObj, setMessageObj] = useState({
       text: "",
       time: Date.now(),
@@ -45,7 +44,6 @@ export const SingleChatScreen = connect(mapStateToProps, {
       companion_img: route?.params.companion_img,
       companion_name: route?.params.companion_name,
     });
-
     const setMessageText = (val) => {
       setMessageObj((messageObj) => ({
         ...messageObj,

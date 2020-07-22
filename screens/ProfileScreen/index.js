@@ -53,7 +53,6 @@ export const ProfileScreen = connect(mapStateToProps, {
       profileType === "other"
         ? posts.filter((post) => post.author_id === user)
         : posts.filter((post) => post.author_id === userID);
-
     useEffect(() => {
       if (profileType === "other") getAndListenForUsers(user);
       return initOtherUser;
@@ -61,13 +60,13 @@ export const ProfileScreen = connect(mapStateToProps, {
     const userInfo = !!profileType
       ? otherProfile
       : { username, fullName, bloodType, photo };
-
     const onPressHandler = () => {
       if (!!profileType)
         navigation.navigate("SingleChat", {
           companion_name: otherProfile.fullName,
           companion_img: otherProfile.photo,
           chatID: generateChatID(userID, otherProfile.userID),
+          companion_id: otherProfile.userID,
         });
       else navigation.navigate("Edit Profile");
     };
@@ -85,14 +84,22 @@ export const ProfileScreen = connect(mapStateToProps, {
           <View style={[styles.line, { borderColor: colors.divider }]} />
         </View>
         <View style={styles.card}>
-          {userPosts.map((item) => (
-            <CardCover
-              key={item.id}
-              item={item}
-              navigation={navigation}
-              userID={userID}
-            />
-          ))}
+          {userPosts.length > 0 ? (
+            userPosts.map((item) => (
+              <CardCover
+                key={item.id}
+                item={item}
+                navigation={navigation}
+                userID={userID}
+              />
+            ))
+          ) : (
+            <CustomText style={styles.post}>
+              {profileType === "other"
+                ? "This user has no posts"
+                : "Share your first post"}
+            </CustomText>
+          )}
         </View>
       </Container>
     );
@@ -113,5 +120,10 @@ const styles = StyleSheet.create({
   card: {
     width: "100%",
     marginBottom: 60,
+    alignItems: "center",
+  },
+  post: {
+    fontSize: 20,
+    marginTop: 20,
   },
 });

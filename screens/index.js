@@ -10,7 +10,7 @@ export { LogInScreen } from "./AuthScreen/LogInScreen";
 export { EditProfileScreen } from "./EditProfileScreen";
 export { SignUpScreen } from "./AuthScreen/SignUpScreen";
 export { WelcomeScreen } from "./AuthScreen/WelcomeScreen";
-export { SettingsScreen } from "./SettingsScreen/SettingsScreen";
+export { SettingsScreen } from "./SettingsScreen/index";
 export { EditEmailScreen } from "./SettingsScreen/EditEmailScreen";
 export { ChangePassScreen } from "./SettingsScreen/ChangePassScreen";
 export { DeleteAccountScreen } from "./SettingsScreen/DeleteAccountScreen";
