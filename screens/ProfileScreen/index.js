@@ -5,7 +5,7 @@ import { useTheme } from "@react-navigation/native";
 
 import { UserInfo } from "./UserInfo";
 import { Container } from "../../commons";
-import { CustomText } from "../../components";
+import { TCustomText } from "../../components";
 import { selectPostLists } from "../../store/posts";
 import { CardCover } from "./../HomeScreen/CardCover";
 import { generateChatID } from "./../../utils/generateChatID";
@@ -23,7 +23,7 @@ import {
 const mapStateToProps = (state) => ({
   photo: selectPhoto(state),
   userID: selectUserID(state),
-  fullName: selectName(state),
+  fullname: selectName(state),
   posts: selectPostLists(state),
   bloodType: selectBlood(state),
   username: selectUsername(state),
@@ -40,7 +40,7 @@ export const ProfileScreen = connect(mapStateToProps, {
     route,
     userID,
     username,
-    fullName,
+    fullname,
     bloodType,
     navigation,
     otherProfile,
@@ -59,11 +59,11 @@ export const ProfileScreen = connect(mapStateToProps, {
     }, []);
     const userInfo = !!profileType
       ? otherProfile
-      : { username, fullName, bloodType, photo };
+      : { username, fullname, bloodType, photo };
     const onPressHandler = () => {
       if (!!profileType)
         navigation.navigate("SingleChat", {
-          companion_name: otherProfile.fullName,
+          companion_name: otherProfile.fullname,
           companion_img: otherProfile.photo,
           chatID: generateChatID(userID, otherProfile.userID),
           companion_id: otherProfile.userID,
@@ -80,7 +80,7 @@ export const ProfileScreen = connect(mapStateToProps, {
         />
         <View style={styles.divider}>
           <View style={[styles.line, { borderColor: colors.divider }]} />
-          <CustomText>Posts</CustomText>
+          <TCustomText>posts</TCustomText>
           <View style={[styles.line, { borderColor: colors.divider }]} />
         </View>
         <View style={styles.card}>
@@ -94,11 +94,9 @@ export const ProfileScreen = connect(mapStateToProps, {
               />
             ))
           ) : (
-            <CustomText style={styles.post}>
-              {profileType === "other"
-                ? "This user has no posts"
-                : "Share your first post"}
-            </CustomText>
+            <TCustomText style={styles.post}>
+              {profileType === "other" ? "this_user" : "share_post"}
+            </TCustomText>
           )}
         </View>
       </Container>
@@ -114,7 +112,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   line: {
-    width: "40%",
+    width: "35%",
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   card: {

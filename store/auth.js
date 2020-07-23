@@ -20,7 +20,7 @@ export const MODULE_NAME = "auth";
 export const selectAuthStatus = (state) => state[MODULE_NAME].status;
 export const selectUserID = (state) => state[MODULE_NAME].userID;
 export const selectUsername = (state) => state[MODULE_NAME].username;
-export const selectName = (state) => state[MODULE_NAME].fullName;
+export const selectName = (state) => state[MODULE_NAME].fullname;
 export const selectPhoto = (state) => state[MODULE_NAME].photo;
 export const selectBlood = (state) => state[MODULE_NAME].bloodType;
 export const selectMail = (state) => state[MODULE_NAME].email;
@@ -31,7 +31,7 @@ const initialState = {
   status: false,
   userID: null,
   username: null,
-  fullName: null,
+  fullname: null,
   bloodType: null,
   email: null,
   password: null,
@@ -55,7 +55,7 @@ export function reducer(state = initialState, { type, payload }) {
     case UPDATE_CREDENTIALS:
       return {
         ...state,
-        fullName: payload.fullName,
+        fullname: payload.fullname,
         username: payload.username,
         bloodType: payload.bloodType,
       };
@@ -90,7 +90,7 @@ export function reducer(state = initialState, { type, payload }) {
         status: false,
         userID: null,
         username: null,
-        fullName: null,
+        fullname: null,
         email: null,
         bloodType: null,
         password: null,
@@ -165,7 +165,7 @@ export const initOtherUser = () => ({
 });
 
 // MIDDLEWARES
-export const signUp = (email, password, username, fullName) => async (
+export const signUp = (email, password, username, fullname) => async (
   dispatch
 ) => {
   try {
@@ -180,7 +180,7 @@ export const signUp = (email, password, username, fullName) => async (
 
     fbApp.db.ref(`users/${uid}`).set({
       username,
-      fullName,
+      fullname,
       email,
       password,
       bloodType: "",
@@ -191,7 +191,7 @@ export const signUp = (email, password, username, fullName) => async (
       setAuthSuccess({
         userID: uid,
         username,
-        fullName,
+        fullname,
         email,
         password,
       })
@@ -264,9 +264,9 @@ export const uploadPhoto = (uri) => async (dispatch, getState) => {
 export const updateUserInfo = (userInfo) => async (dispatch) => {
   try {
     const { uid } = fbApp.auth.currentUser;
-    const { fullName, username, bloodType } = userInfo;
+    const { fullname, username, bloodType } = userInfo;
     dispatch(updateCredentials({ ...userInfo }));
-    fbApp.db.ref(`users/${uid}`).update({ fullName, username, bloodType });
+    fbApp.db.ref(`users/${uid}`).update({ fullname, username, bloodType });
   } catch (error) {
     console.log("updateUserInfo error", error);
     Alert.alert(error.code, error.message);

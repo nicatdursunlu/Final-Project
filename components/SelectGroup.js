@@ -3,7 +3,7 @@ import { Icon } from "@ui-kitten/components";
 import { useTheme } from "@react-navigation/native";
 import { StyleSheet, View, TouchableOpacity, ScrollView } from "react-native";
 
-import { CustomText } from "./CustomText";
+import { TCustomText } from "./TCustomText";
 
 export const SelectGroup = ({ onChangeOption, options, initial, style }) => {
   const [groups, setGroups] = useState({
@@ -34,12 +34,12 @@ export const SelectGroup = ({ onChangeOption, options, initial, style }) => {
     <View style={[{ width: "100%" }, style]}>
       <TouchableOpacity onPress={toggleHandler}>
         <View style={[styles.container, color]}>
-          <CustomText weight="semi" style={{ color: colors.inputText }}>
+          <TCustomText weight="semi" style={{ color: colors.inputText }}>
             {groups.selected}
-          </CustomText>
+          </TCustomText>
           <Icon
             pack="feather"
-            style={{ height: 15, color: colors.inputText }}
+            style={{ height: 20, color: colors.inputText }}
             name={groups.state ? "chevron-up" : "chevron-down"}
           />
         </View>
@@ -55,12 +55,12 @@ export const SelectGroup = ({ onChangeOption, options, initial, style }) => {
               key={option}
               onPress={() => setGroupItemHandler(option, index)}
             >
-              <CustomText
+              <TCustomText
                 weight="regular"
                 style={{ ...styles.groupItem, ...color }}
               >
                 {option}
-              </CustomText>
+              </TCustomText>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     justifyContent: "space-between",
   },
   group: {

@@ -4,8 +4,8 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import { AppStack } from "./AppStack";
 import { AuthStack } from "./AuthStack";
-import { selectAuthStatus } from "../store/auth";
 import { getTheme } from "../store/settings";
+import { selectAuthStatus } from "../store/auth";
 import { LightTheme, DarkTheme } from "../theme";
 
 const mapStateToProps = (state) => ({

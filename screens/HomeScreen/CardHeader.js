@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 
-import { CustomText } from "../../components";
+import { CustomText, TCustomText } from "../../components";
 import { getTimeFromPosted } from "../../utils";
 import { AvatarMaker, MapModal } from "../../components";
 
@@ -51,9 +51,16 @@ export const CardHeader = ({
       </TouchableOpacity>
       <View style={styles.info}>
         <TouchableOpacity onPress={goTo} style={styles.header}>
-          <CustomText weight="semi" style={{ fontSize: 15 }}>
-            {isMe ? "Me" : author_name}
-          </CustomText>
+          {isMe ? (
+            <TCustomText weight="semi" style={{ fontSize: 15 }}>
+              me
+            </TCustomText>
+          ) : (
+            <CustomText weight="semi" style={{ fontSize: 15 }}>
+              {author_name}
+            </CustomText>
+          )}
+
           <CustomText
             weight="regular"
             style={{ ...styles.time, ...{ color: colors.time } }}

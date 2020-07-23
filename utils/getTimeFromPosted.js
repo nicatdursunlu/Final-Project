@@ -1,3 +1,5 @@
+import i18n from "i18n-js";
+
 export function getTimeFromPosted(time) {
   const date = new Date();
   const postSharedDate = new Date(time);
@@ -12,11 +14,11 @@ export function getTimeFromPosted(time) {
 
   if (day - sharedDay === 0) {
     if (hour - sharedHour === 0) {
-      return `${minute - sharedMinute} minutes ago`;
+      return [minute - sharedMinute, " ", i18n.t("minutes")];
     } else if (hour - sharedHour >= 1) {
-      return `${hour - sharedHour} hours ago`;
+      return [hour - sharedHour, " ", i18n.t("hours")];
     }
   } else {
-    return `${day - sharedDay} days ago`;
+    return [day - sharedDay, " ", i18n.t("days")];
   }
 }

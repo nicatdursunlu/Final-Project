@@ -6,7 +6,7 @@ export const MODULE_NAME = "settings";
 export const getTheme = (state) => state[MODULE_NAME].theme;
 export const getLanguage = (state) => state[MODULE_NAME].language;
 
-const initialState = { language: "en", theme: "light" };
+const initialState = { language: "azerbaijani", theme: "light" };
 
 export function reducer(state = initialState, { type, payload }) {
   switch (type) {

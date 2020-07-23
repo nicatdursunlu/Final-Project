@@ -1,26 +1,24 @@
 import React, { useState } from "react";
+import i18n from "i18n-js";
 import { StyleSheet, Alert } from "react-native";
 import { connect, useSelector } from "react-redux";
 
 import { Container } from "../../commons";
-import { Field, CustomBtn } from "../../components";
 import { GLOBAL_STYLES } from "../../styles";
 import { getWidthByPercents } from "../../utils";
+import { Field, CustomBtn } from "../../components";
 import { deleteAccount, logOut, selectMail } from "../../store/auth";
 
 export const DeleteAccountScreen = connect(null, {
-  deleteAccount,
   logOut,
+  deleteAccount,
 })(({ deleteAccount, logOut }) => {
   const email = useSelector(selectMail);
   const [password, setPassword] = useState("");
 
   const onSumbit = () => {
     if (password.trim() === "") {
-      Alert.alert(
-        "Password required",
-        "If you want to delete this account, you must write your password for security"
-      );
+      Alert.alert(i18n.t("pass_required"), i18n.t("pass_required2"));
     } else {
       deleteAccount(email, password);
       logOut();
@@ -30,7 +28,7 @@ export const DeleteAccountScreen = connect(null, {
   return (
     <Container style={styles.container}>
       <Field
-        label="Password"
+        label="password"
         placeholder="password"
         secureTextEntry={false}
         style={styles.field}
@@ -38,7 +36,7 @@ export const DeleteAccountScreen = connect(null, {
         onChangeText={(val) => setPassword(val)}
       />
       <CustomBtn
-        title="Delete Account"
+        title="delete_account"
         width={getWidthByPercents(80, 2)}
         onPress={onSumbit}
       />

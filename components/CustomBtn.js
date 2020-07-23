@@ -1,9 +1,8 @@
 import React from "react";
-import i18n from "i18n-js";
 import { useTheme } from "@react-navigation/native";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
-import { CustomText } from "./CustomText";
+import { TCustomText } from "./TCustomText";
 
 export const CustomBtn = ({
   title,
@@ -16,10 +15,9 @@ export const CustomBtn = ({
   return (
     <TouchableOpacity onPress={onPress} style={{ width }}>
       <View style={[styles.btn, { borderColor: colors.inputBorder }, style]}>
-        <CustomText weight="bold" style={{ ...styles.title, ...titleStyle }}>
-          {/* {i18n.t(title)} */}
+        <TCustomText weight="bold" style={{ ...styles.title, ...titleStyle }}>
           {title}
-        </CustomText>
+        </TCustomText>
       </View>
     </TouchableOpacity>
   );

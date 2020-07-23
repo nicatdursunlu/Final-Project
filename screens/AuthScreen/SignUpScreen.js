@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Alert } from "react-native";
-import { CheckBox, Text, Icon, Input } from "@ui-kitten/components";
-import { connect } from "react-redux";
 import i18n from "i18n-js";
+import { connect } from "react-redux";
+import { StyleSheet, View, Alert } from "react-native";
+import { CheckBox, Icon, Input } from "@ui-kitten/components";
 
 import { signUp } from "./../../store/auth";
 import { Container } from "./../../commons";
 import { ModalWindow } from "./ModalWindow";
-import { CustomBtn, Link } from "./../../components";
+import { CustomBtn, Link, TCustomText } from "./../../components";
 import { SIGNUP_INITIAL_STATE, AUTH_DATA } from "../../utils/dummy";
 import { getWidthByPercents } from "../../utils/getWidthByPercents";
 
@@ -41,68 +41,64 @@ export const SignUpScreen = connect(null, { signUp })(({ signUp }) => {
   const validateForm = () => {
     for (let key in fields) {
       if (fields[key].trim() === "") {
-        Alert.alert(`${key} is required`);
+        Alert.alert(`${i18n.t(key)}  ${i18n.t("req")}`);
         return false;
       } else if (fields.password !== fields.repassword) {
-        Alert.alert("Passwords must match");
+        Alert.alert(i18n.t("pass_match"));
         return false;
       } else if (!checked) {
-        Alert.alert("Agree with our Terms and Conditions");
+        Alert.alert(i18n.t("agree"));
         return false;
       } else return true;
     }
   };
 
   const onSubmit = () => {
-    const { email, password, username, fullName } = fields;
-    if (validateForm()) signUp(email, password, username, fullName);
+    const { email, password, username, fullname } = fields;
+    if (validateForm()) signUp(email, password, username, fullname);
   };
 
   return (
     <Container style={{ backgroundColor: "#fff" }}>
       {AUTH_DATA.map((item) => {
         const {
+          name,
           label,
           value,
-          placeholder,
-          name,
-          accessoryRight,
-          keyboardType,
           caption,
+          placeholder,
           captionIcon,
+          keyboardType,
+          accessoryRight,
         } = item;
         return (
           <Input
             key={item.value}
-            label={label}
+            label={i18n.t(label)}
             value={fields[value]}
-            placeholder={placeholder}
-            onChangeText={(val) => fieldsChangeHandler(name, val)}
+            caption={i18n.t(caption)}
+            captionIcon={captionIcon}
             keyboardType={keyboardType}
+            style={styles.bottomSpacing}
+            placeholder={i18n.t(placeholder)}
+            onChangeText={(val) => fieldsChangeHandler(name, val)}
             accessoryRight={
               value === "password" || value === "repassword"
                 ? togglePass
                 : accessoryRight
             }
-            caption={caption}
-            captionIcon={captionIcon}
             secureTextEntry={
               (value === "password" || value === "repassword") && !showPass
             }
-            style={styles.bottomSpacing}
           />
         );
       })}
       <View style={styles.container}>
         <CheckBox checked={checked} onChange={(val) => setChecked(val)}>
-          {
-            <Text style={styles.checkText}>
-              By creating an account, you agree to our
-            </Text>
-          }
+          {<TCustomText style={styles.checkText}>agreement</TCustomText>}
         </CheckBox>
         <Link
-          title="Terms & Conditions"
+          title="terms_and_conditions"
           style={styles.link}
           onPress={() => setShowModal(!showModal)}
         />
@@ -114,7 +110,7 @@ export const SignUpScreen = connect(null, { signUp })(({ signUp }) => {
       </View>
       <CustomBtn
         onPress={onSubmit}
-        title="Create Account"
+        title="create_account"
         style={{ borderWidth: 0 }}
         width={getWidthByPercents(80, 2)}
       />
@@ -129,7 +125,8 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   checkText: {
-    marginLeft: 10,
+    color: "#000",
+    marginHorizontal: 10,
     fontSize: 16,
   },
   link: {

@@ -27,7 +27,7 @@ export const FindScreen = connect(mapStateToProps)(
       <Container>
         <Field
           value={search}
-          placeholder="Search by location"
+          placeholder="search_by_location"
           accessoryRight={() => (
             <Icon
               name="md-search"
@@ -43,7 +43,7 @@ export const FindScreen = connect(mapStateToProps)(
         />
         <SelectGroup
           options={BLOOD_TYPES}
-          initial="Find People by blood type"
+          initial="search_by_blood_type"
           onChangeOption={(val) => {
             setBloodType(val);
             setList(getSearchBloodList(posts, val));
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     height: 20,
-    color: "#999999",
-    marginRight: 8,
+    color: "#8f9bb3",
+    marginRight: 10,
   },
 });

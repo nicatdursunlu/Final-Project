@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { StyleSheet, Alert } from "react-native";
 import { connect } from "react-redux";
+import { StyleSheet, Alert } from "react-native";
 
 import { Container } from "../../commons";
-import { Field, CustomBtn } from "../../components";
 import { GLOBAL_STYLES } from "../../styles";
-import { getWidthByPercents } from "../../utils";
 import { updateEmail } from "../../store/auth";
+import { getWidthByPercents } from "../../utils";
+import { Field, CustomBtn } from "../../components";
 
-export const EditEmailScreen = connect(null, {
+export const ChangeEmailScreen = connect(null, {
   updateEmail,
 })(({ navigation, updateEmail }) => {
   const [fields, setFields] = useState({
@@ -43,24 +43,24 @@ export const EditEmailScreen = connect(null, {
   return (
     <Container style={styles.container}>
       <Field
-        label="Email"
+        label="email"
         placeholder="email"
         style={styles.field}
         value={fields.email}
         onChangeText={(val) => fieldsChangeHandler("email", val)}
       />
       <Field
-        label="Confirm your password"
+        label="confirm_pass"
+        style={styles.field}
         placeholder="password"
         secureTextEntry={false}
-        style={styles.field}
         value={fields.password}
         onChangeText={(val) => fieldsChangeHandler("password", val)}
       />
       <CustomBtn
-        title="Save Changes"
-        width={getWidthByPercents(80, 2)}
         onPress={onSumbit}
+        title="save_changes"
+        width={getWidthByPercents(80, 2)}
       />
     </Container>
   );

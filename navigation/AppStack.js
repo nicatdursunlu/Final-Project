@@ -1,4 +1,5 @@
 import React from "react";
+import i18n from "i18n-js";
 import { useSelector } from "react-redux";
 import { Icon } from "@ui-kitten/components";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -6,7 +7,6 @@ import {
   useTheme,
   getFocusedRouteNameFromRoute,
 } from "@react-navigation/native";
-import i18n from "i18n-js";
 
 import { BottomTabs } from "./BottomTabs";
 import { HeaderStyles } from "../styles";
@@ -19,7 +19,7 @@ import {
   RateScreen,
   AboutScreen,
   SettingsScreen,
-  EditEmailScreen,
+  ChangeEmailScreen,
   ChangePassScreen,
   DeleteAccountScreen,
 } from "./../screens";
@@ -71,15 +71,41 @@ export const AppStack = () => {
       <Screen
         name="Edit Profile"
         component={EditProfileScreen}
-        options={{ headerLeft: null }}
+        options={{ headerLeft: null, title: i18n.t("edit_profile") }}
       />
-      <Screen name="Saved">{() => <HomeScreen type="saved" />}</Screen>
-      <Screen name="Rate" component={RateScreen} />
-      <Screen name="About" component={AboutScreen} />
-      <Screen name="Settings" component={SettingsScreen} />
-      <Screen name="Edit Email" component={EditEmailScreen} />
-      <Screen name="Change Password" component={ChangePassScreen} />
-      <Screen name="Delete Acoount" component={DeleteAccountScreen} />
+      <Screen name="Saved" options={{ title: i18n.t("saved") }}>
+        {() => <HomeScreen type="saved" />}
+      </Screen>
+      <Screen
+        name="Rate"
+        component={RateScreen}
+        options={{ title: i18n.t("rate") }}
+      />
+      <Screen
+        name="About"
+        component={AboutScreen}
+        options={{ title: i18n.t("about") }}
+      />
+      <Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{ title: i18n.t("settings") }}
+      />
+      <Screen
+        name="Change Email"
+        component={ChangeEmailScreen}
+        options={{ title: i18n.t("change_email") }}
+      />
+      <Screen
+        name="Change Password"
+        component={ChangePassScreen}
+        options={{ title: i18n.t("change_password") }}
+      />
+      <Screen
+        name="Delete Acoount"
+        component={DeleteAccountScreen}
+        options={{ title: i18n.t("delete_account") }}
+      />
     </Navigator>
   );
 };
@@ -89,13 +115,13 @@ export function getHeaderTitle(route) {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Home";
   switch (routeName) {
     case "Home":
-      return "Home";
+      return i18n.t("home");
     case "Find":
-      return "Find";
+      return i18n.t("find");
     case "Create":
-      return "New Post";
+      return i18n.t("new_post");
     case "Chats":
-      return "Chats";
+      return i18n.t("chats");
     case "Profile":
       return username;
   }

@@ -1,8 +1,8 @@
 import React from "react";
+import { Modal } from "@ui-kitten/components";
 import { View, StyleSheet, Dimensions, ScrollView } from "react-native";
-import { Modal, Button } from "@ui-kitten/components";
 
-import { CustomText } from "../../components";
+import { TCustomText, CustomBtn } from "../../components";
 import { getWidthByPercents } from "../../utils/getWidthByPercents";
 
 const { height } = Dimensions.get("screen");
@@ -16,30 +16,13 @@ export const ModalWindow = ({ visible, onBackdropPress, onPress }) => {
     >
       <ScrollView style={styles.container}>
         <View style={styles.card}>
-          <CustomText style={styles.text}>
-            These Terms and Conditions constitute a legally binding agreement
-            made between you, whether personally or on behalf of an entity
-            (“you”) and [your business name] (“we,” “us” or “our”), concerning
-            your access to and use of our mobile application (the
-            “Application”). You agree that by accessing the Application, you
-            have read, understood, and agree to be bound by all of these Terms
-            and Conditions Use. These Terms and Conditions constitute a legally
-            binding agreement made between you, whether personally or on behalf
-            of an entity (“you”) and [your business name] (“we,” “us” or “our”),
-            concerning your access to and use of our mobile application (the
-            “Application”). You agree that by accessing the Application, you
-            have read, understood, and agree to be bound by all of these Terms
-            and Conditions Use. These Terms and Conditions constitute a legally
-            binding agreement made between you, whether personally or on behalf
-            of an entity (“you”) and [your business name] (“we,” “us” or “our”),
-            concerning your access to and use of our mobile application (the
-            “Application”). You agree that by accessing the Application, you
-            have read, understood, and agree to be bound by all of these Terms
-            and Conditions Use.
-          </CustomText>
-          <Button style={styles.button} onPress={onPress}>
-            Accept
-          </Button>
+          <TCustomText style={styles.text}>terms_text</TCustomText>
+          <CustomBtn
+            title="accept"
+            style={{ borderWidth: 0 }}
+            width={getWidthByPercents(80, 2)}
+            onPress={onPress}
+          />
         </View>
       </ScrollView>
     </Modal>
@@ -49,7 +32,7 @@ export const ModalWindow = ({ visible, onBackdropPress, onPress }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
+    backgroundColor: "#fff",
     width: getWidthByPercents(95, 2),
     height: height * 0.7,
   },
@@ -64,9 +47,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
     paddingBottom: 50,
   },
-  button: {
-    backgroundColor: "red",
-    width: 170,
-    borderRadius: 12,
-  },
+  // button: {
+  //   backgroundColor: "red",
+  //   width: 170,
+  //   borderRadius: 12,
+  // },
 });

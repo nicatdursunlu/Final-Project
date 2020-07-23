@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import i18n from "i18n-js";
 import { Alert } from "react-native";
 import { connect } from "react-redux";
 import * as WebBrowser from "expo-web-browser";
 import { Icon, Input } from "@ui-kitten/components";
-import i18n from "i18n-js";
 
 import { Container } from "../../commons";
 import { getWidthByPercents } from "./../../utils";
@@ -40,7 +40,7 @@ export const LogInScreen = connect(null, { logIn, sendEmail })(
     const onSubmit = () => {
       for (let key in fields) {
         if (fields[key].trim() === "") {
-          Alert.alert(`${key} is required`);
+          Alert.alert(`${i18n.t(key)}  ${i18n.t("req")}`);
           return false;
         }
       }
@@ -63,10 +63,8 @@ export const LogInScreen = connect(null, { logIn, sendEmail })(
       <Container style={{ backgroundColor: "#fff" }}>
         <Input
           value={fields.email}
-          // label={i18n.t("email")}
-          label="Email"
-          // placeholder={i18n.t("email")}
-          placeholder="email"
+          label={i18n.t("email")}
+          placeholder={i18n.t("email")}
           keyboardType="email-address"
           accessoryRight={(props) => (
             <Icon {...props} name="user" pack="feather" />
@@ -79,18 +77,15 @@ export const LogInScreen = connect(null, { logIn, sendEmail })(
           <>
             <Input
               value={fields.password}
-              // label={i18n.t("password")}
-              label="Password"
-              // placeholder={i18n.t("password")}
-              placeholder="password"
+              label={i18n.t("password")}
+              placeholder={i18n.t("password")}
               secureTextEntry={!visible}
               accessoryRight={togglePass}
               onChangeText={(val) => fieldsChangeHandler("password", val)}
               style={{ marginBottom: 15 }}
             />
             <Link
-              // title={i18n.t("forgot_your_password?")}
-              title="Forgot your password?"
+              title="forgot_password"
               style={{ marginBottom: 20 }}
               onPress={() => setIsLogIn(false)}
             />
@@ -99,8 +94,7 @@ export const LogInScreen = connect(null, { logIn, sendEmail })(
         <CustomBtn
           style={{ borderWidth: 0 }}
           width={getWidthByPercents(80, 2)}
-          // title={isLogIn ? i18n.t("login") : i18n.t("send_email")}
-          title={isLogIn ? "Login" : "Send email"}
+          title={isLogIn ? "login" : "send_email"}
           onPress={isLogIn ? onSubmit : sendEmailHandler}
         />
       </Container>
