@@ -48,13 +48,7 @@ export const SettingsScreen = connect(mapStateToProps, {
         <SelectGroup
           initial={language}
           options={LANGUAGES}
-          onChangeOption={(val) => {
-            setLanguage(val);
-            Alert.alert(
-              "Whooops",
-              "Work in progress. Change language from device settings"
-            );
-          }}
+          onChangeOption={setLanguage}
           style={{ width: getWidthByPercents(55, 2) }}
         />
       </View>
