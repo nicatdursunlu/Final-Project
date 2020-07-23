@@ -265,8 +265,6 @@ export const updateUserInfo = (userInfo) => async (dispatch) => {
   try {
     const { uid } = fbApp.auth.currentUser;
     const { fullName, username, bloodType } = userInfo;
-
-    console.log("updateUserInfo", userInfo);
     dispatch(updateCredentials({ ...userInfo }));
     fbApp.db.ref(`users/${uid}`).update({ fullName, username, bloodType });
   } catch (error) {

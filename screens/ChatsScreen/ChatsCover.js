@@ -1,6 +1,12 @@
 import React from "react";
+import { Image } from "react-native-elements";
 import { useTheme } from "@react-navigation/native";
-import { StyleSheet, TouchableOpacity, Image, View } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 
 import { CustomText, AvatarMaker } from "../../components";
 import { getMessageTime } from "../../utils/getMessageTime";
@@ -11,10 +17,14 @@ export const ChatsCover = ({ chat, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.listCover}>
-        {!!companion_img && (
-          <Image style={styles.userAvatar} source={{ uri: companion_img }} />
-        )}
-        {!companion_img && (
+        {companion_img ? (
+          <Image
+            style={styles.userAvatar}
+            source={{ uri: companion_img }}
+            PlaceholderContent={<ActivityIndicator />}
+            placeholderStyle={{ backgroundColor: "#f2f4f8" }}
+          />
+        ) : (
           <View style={styles.userAvatar}>
             {AvatarMaker(companion_name, 22)}
           </View>
@@ -71,7 +81,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
-
   userAvatar: {
     width: 50,
     height: 50,

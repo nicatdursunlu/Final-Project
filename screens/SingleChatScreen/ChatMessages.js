@@ -10,6 +10,6 @@ export const ChatMessages = ({ messages, userID }) => (
     renderItem={({ item }) => (
       <ChatMessageBubble message={item} userID={userID} />
     )}
-    keyExtractor={(item) => item.time.toString()}
+    keyExtractor={(item) => item.time.toString() + item.text}
   />
 );

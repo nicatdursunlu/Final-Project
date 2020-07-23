@@ -45,7 +45,7 @@ export const CardBottom = connect(null, { toggleSavePost })(
           </CustomText>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => toggleSavePost(id, isSaved, userID)}>
-          <Image style={styles.saveIcon} source={dark ? srcDark : srcLight} />
+          <Image style={styles.saveIcon} source={dark ? srcDark : srcLight}  />
         </TouchableOpacity>
       </View>
     );
