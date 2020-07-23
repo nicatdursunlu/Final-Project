@@ -1,11 +1,11 @@
 import React, { useState } from "react";
+// import i18n from "i18n-js";
 import { AppLoading } from "expo";
 import { Provider } from "react-redux";
 import * as eva from "@eva-design/eva";
+// import * as Localization from "expo-localization";
 import { PersistGate } from "redux-persist/integration/react";
 import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
-// import * as Localization from "expo-localization";
-// import i18n from "i18n-js";
 
 import { loadFonts } from "./styles/fonts";
 import { RootNav } from "./navigation/RootNav";

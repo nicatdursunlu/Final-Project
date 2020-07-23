@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Modal } from "@ui-kitten/components";
 
-import { CustomText } from "../../components";
+import { TCustomText } from "../../components";
 import { getWidthByPercents } from "./../../utils/getWidthByPercents";
 
 export const ModalWindow = ({
@@ -13,10 +13,10 @@ export const ModalWindow = ({
   deleteHandler,
 }) => {
   const DUMMY = [
-    { title: "Take Photo", onPress: takePhoto },
-    { title: "Choose from Gallery", onPress: chooseFromGallery },
-    { title: "Remove Current Photo", onPress: deleteHandler },
-    { title: "Cancel", onPress: onBackdropPress },
+    { title: "take_photo", onPress: takePhoto },
+    { title: "choose_from_gallery", onPress: chooseFromGallery },
+    { title: "remove_photo", onPress: deleteHandler },
+    { title: "cancel", onPress: onBackdropPress },
   ];
 
   return (
@@ -28,7 +28,7 @@ export const ModalWindow = ({
     >
       {DUMMY.map((item) => (
         <TouchableOpacity key={item.title} onPress={item.onPress}>
-          <CustomText style={styles.btnText}>{item.title}</CustomText>
+          <TCustomText style={styles.btnText}>{item.title}</TCustomText>
         </TouchableOpacity>
       ))}
     </Modal>

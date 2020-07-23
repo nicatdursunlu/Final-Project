@@ -15,7 +15,7 @@ import * as ImagePicker from "expo-image-picker";
 import { useTheme } from "@react-navigation/native";
 
 import { ModalWindow } from "./ModalWindow";
-import { CustomText, AvatarMaker } from "../../components";
+import { TCustomText, AvatarMaker } from "../../components";
 import { selectPhoto, uploadPhoto, removeAvatar } from "../../store/auth";
 
 const mapStateToProps = (state) => ({
@@ -31,7 +31,7 @@ const imagePickerOptions = {
 export const AvatarUploader = connect(mapStateToProps, {
   uploadPhoto,
   removeAvatar,
-})(({ photo, uploadPhoto, removeAvatar, fullName }) => {
+})(({ photo, uploadPhoto, removeAvatar, fullname }) => {
   const [isEdit, setIsEdit] = useState(false);
   const selectImage = async (isCamera) => {
     try {
@@ -95,12 +95,12 @@ export const AvatarUploader = connect(mapStateToProps, {
           placeholderStyle={{ backgroundColor: "#f2f4f8" }}
         />
       ) : (
-        <View style={styles.photo}>{AvatarMaker(fullName, 45)}</View>
+        <View style={styles.photo}>{AvatarMaker(fullname, 45)}</View>
       )}
       <TouchableOpacity onPress={Platform.OS === "ios" ? oniosPress : onPress}>
-        <CustomText style={{ ...styles.text, ...{ color: colors.link } }}>
-          Change Profile Photo
-        </CustomText>
+        <TCustomText style={{ ...styles.text, ...{ color: colors.link } }}>
+          change_photo
+        </TCustomText>
       </TouchableOpacity>
       <ModalWindow
         visible={isEdit}

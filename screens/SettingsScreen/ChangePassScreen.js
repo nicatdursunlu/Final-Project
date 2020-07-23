@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import i18n from "i18n-js";
 import { StyleSheet, Alert } from "react-native";
 import { connect, useSelector } from "react-redux";
 
@@ -28,11 +29,11 @@ export const ChangePassScreen = connect(null, {
   const validate = () => {
     for (let key in fields) {
       if (fields[key].trim() === "") {
-        Alert.alert(`${key} is required`);
+        Alert.alert({ key }, i18n.t("req"));
         return false;
       }
       if (fields.newPass !== fields.confirmPass) {
-        Alert.alert("Passwords must match");
+        Alert.alert(i18n.t("pass_match"));
         return false;
       } else return true;
     }
@@ -49,28 +50,28 @@ export const ChangePassScreen = connect(null, {
     <Container style={styles.container}>
       <Field
         style={styles.field}
-        label="Current password"
+        label="current_pass"
         value={fields.currentPass}
-        placeholder="current password"
+        placeholder="current_pass"
         onChangeText={(val) => fieldsChangeHandler("currentPass", val)}
       />
       <Field
-        label="New password"
+        label="new_pass"
         style={styles.field}
         value={fields.newPass}
-        placeholder="new password"
+        placeholder="new_pass"
         onChangeText={(val) => fieldsChangeHandler("newPass", val)}
       />
       <Field
         style={styles.field}
-        label="Confirm password"
+        label="confirm_pass"
         value={fields.confirmPass}
-        placeholder="confirm password"
+        placeholder="confirm_pass"
         onChangeText={(val) => fieldsChangeHandler("confirmPass", val)}
       />
       <CustomBtn
         onPress={onSumbit}
-        title="Save Changes"
+        title="save_changes"
         width={getWidthByPercents(80, 2)}
       />
     </Container>

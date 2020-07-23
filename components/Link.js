@@ -1,13 +1,13 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
-import { CustomText } from "./CustomText";
+import { TCustomText } from "./TCustomText";
 
 export const Link = ({ title, onPress, style }) => (
   <TouchableOpacity onPress={onPress}>
-    <CustomText weight="semi" style={{ ...styles.title, ...style }}>
+    <TCustomText weight="semi" style={{ ...styles.title, ...style }}>
       {title}
-    </CustomText>
+    </TCustomText>
   </TouchableOpacity>
 );
 

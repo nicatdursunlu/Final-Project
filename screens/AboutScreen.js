@@ -5,21 +5,17 @@ import { SocialIcon } from "react-native-elements";
 import { useTheme } from "@react-navigation/native";
 import { StyleSheet, View, TouchableOpacity, Linking } from "react-native";
 
-import { CustomText } from "../components";
 import { Container } from "./../commons";
+import { CustomText, TCustomText } from "../components";
 
 export const AboutScreen = () => {
   const { colors } = useTheme();
   const color = { color: colors.inputText };
   return (
     <Container>
-      <CustomText style={{ fontSize: 16, paddingVertical: 20 }}>
-        We are non-profit organization that puts the power to save lives in the
-        palms of your hand, makes donating blood as much easy for you. You can
-        easily post urgent blood need here and find it quickly or you can become
-        someone's hero. {"\n"} {"\n"}If you have any comment or question, please
-        get in touch with us!
-      </CustomText>
+      <TCustomText style={{ fontSize: 16, paddingVertical: 20 }}>
+        about_text
+      </TCustomText>
       <TouchableOpacity
         style={styles.row}
         onPress={() =>

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import * as Location from "expo-location";
 import { Icon } from "@ui-kitten/components";
+import { StyleSheet, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
 
 import { Container } from "./../commons";
 import { BLOOD_TYPES } from "../utils/dummy";
@@ -26,7 +26,7 @@ export const CreateScreen = connect(null, { addPostToList })(
       number: "",
       bloodType: "",
       coordinates: [],
-      location: "Add location",
+      location: "",
     });
 
     const [isMapOpen, setIsMapOpen] = useState(false);
@@ -87,46 +87,43 @@ export const CreateScreen = connect(null, { addPostToList })(
       }
     };
     const { colors } = useTheme();
-    const OPTIONS_COLOR = {
-      backgroundColor: colors.inputBG,
-      borderColor: colors.inputBorder,
-    };
     return (
       <Container>
         <SelectGroup
           style={styles.field}
           options={BLOOD_TYPES}
-          initial="Select blood type"
+          initial="select_blood"
           onChangeOption={(val) => fieldsChangeHandler("bloodType", val)}
         />
         <View style={styles.body}>
           <Field
             value={fields.number}
             keyboardType="phone-pad"
-            label="Add contact number(recommended)"
-            placeholder="example: +994 77 777 77 77"
+            label="add_number"
+            placeholder="example"
             onChangeText={(val) => fieldsChangeHandler("number", val)}
           />
-          <TouchableOpacity style={{ width: "100%" }} onPress={openMap}>
-            <View style={[styles.options, OPTIONS_COLOR]}>
-              <CustomText weight="semi" style={{ color: colors.inputText }}>
-                {fields.location}
-              </CustomText>
+          <Field
+            placeholder="add_location"
+            value={fields.location}
+            disabled={true}
+            accessoryRight={() => (
               <Icon
-                name="chevron-right"
-                pack="feather"
-                style={{ height: 15, color: colors.inputText }}
+                name="md-arrow-forward"
+                pack="ion"
+                onPress={openMap}
+                style={[styles.icon, { color: colors.inputText }]}
               />
-            </View>
-          </TouchableOpacity>
+            )}
+          />
           <Field
             multiline={true}
             textStyle={{ minHeight: 110 }}
-            placeholder="Tell us more..."
+            placeholder="tell_more"
             onChangeText={(val) => fieldsChangeHandler("desc", val)}
           />
           <CustomBtn
-            title="Post"
+            title="post"
             onPress={onSubmit}
             width={getWidthByPercents(80, 2)}
           />
@@ -167,15 +164,8 @@ const styles = StyleSheet.create({
   field: {
     marginBottom: 15,
   },
-  options: {
-    width: "100%",
-    borderWidth: 1,
-    borderRadius: 4,
-    marginBottom: 15,
-    paddingVertical: 10,
-    alignItems: "center",
-    flexDirection: "row",
-    paddingHorizontal: 20,
-    justifyContent: "space-between",
+  icon: {
+    height: 18,
+    marginRight: 12,
   },
 });

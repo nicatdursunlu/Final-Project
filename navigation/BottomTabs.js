@@ -1,4 +1,5 @@
 import React from "react";
+import i18n from "i18n-js";
 import { Icon } from "@ui-kitten/components";
 import { AnimatedTabBarNavigator } from "react-native-animated-nav-tab-bar";
 
@@ -45,13 +46,29 @@ export const BottomTabs = () => {
         },
       })}
     >
-      <Screen name="Home">
+      <Screen name="Home" options={{ title: i18n.t("home") }}>
         {({ ...props }) => <HomeScreen type="posts" {...props} />}
       </Screen>
-      <Screen name="Find" component={FindScreen} />
-      <Screen name="Create" component={CreateScreen} />
-      <Screen name="Chats" component={ChatsScreen} />
-      <Screen name="Profile" component={DrawerStack} />
+      <Screen
+        name="Find"
+        component={FindScreen}
+        options={{ title: i18n.t("find") }}
+      />
+      <Screen
+        name="Create"
+        component={CreateScreen}
+        options={{ title: i18n.t("create") }}
+      />
+      <Screen
+        name="Chats"
+        component={ChatsScreen}
+        options={{ title: i18n.t("chats") }}
+      />
+      <Screen
+        name="Profile"
+        component={DrawerStack}
+        options={{ title: i18n.t("profile") }}
+      />
     </Navigator>
   );
 };

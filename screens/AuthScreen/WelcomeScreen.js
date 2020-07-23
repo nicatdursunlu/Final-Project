@@ -4,7 +4,7 @@ import { View, Image, StyleSheet, ImageBackground } from "react-native";
 
 import { IMAGES } from "./../../styles";
 import { SLIDER_IMAGES } from "../../utils/dummy";
-import { CustomText, CustomBtn, Link } from "./../../components";
+import { TCustomText, CustomBtn, Link } from "./../../components";
 import { getWidthByPercents } from "./../../utils/getWidthByPercents";
 
 export const WelcomeScreen = ({ navigation }) => (
@@ -16,17 +16,15 @@ export const WelcomeScreen = ({ navigation }) => (
     </Swiper>
     <View style={styles.actions}>
       <CustomBtn
-        title="Get Started"
+        title="start"
         style={{ borderWidth: 0 }}
         width={getWidthByPercents(80, 2)}
         onPress={() => navigation.navigate("Signup")}
       />
       <View style={styles.row}>
-        <CustomText style={styles.text}>
-          Already have an account ? &nbsp;
-        </CustomText>
+        <TCustomText style={styles.text}>have_an_account</TCustomText>
         <Link
-          title="Log in"
+          title="login"
           style={{ color: "#fff" }}
           onPress={() => navigation.navigate("Login")}
         />
@@ -58,5 +56,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 17,
     color: "#fff",
+    marginRight: 10,
   },
 });

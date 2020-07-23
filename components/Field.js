@@ -1,31 +1,34 @@
 import React from "react";
+import i18n from "i18n-js";
 import { StyleSheet } from "react-native";
 import { Input } from "@ui-kitten/components";
 import { useTheme } from "@react-navigation/native";
 
 export const Field = ({
-  label,
+  label = "",
   value,
   style,
-  caption,
+  caption = "",
+  disabled,
   textStyle,
   captionIcon,
-  placeholder,
+  placeholder = "",
   onChangeText,
   keyboardType,
   accessoryRight,
   secureTextEntry,
 }) => (
   <Input
-    label={label}
     value={value}
-    caption={caption}
-    placeholder={placeholder}
+    disabled={disabled}
+    label={i18n.t(label)}
+    caption={i18n.t(caption)}
     captionIcon={captionIcon}
     keyboardType={keyboardType}
     onChangeText={onChangeText}
     accessoryRight={accessoryRight}
     style={[styles().input, style]}
+    placeholder={i18n.t(placeholder)}
     secureTextEntry={secureTextEntry}
     textStyle={[styles().text, textStyle]}
   />

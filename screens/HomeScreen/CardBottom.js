@@ -6,7 +6,7 @@ import { useTheme } from "@react-navigation/native";
 import { StyleSheet, View, Image, TouchableOpacity, Alert } from "react-native";
 
 import { ICONS } from "./../../styles/icons";
-import { CustomText } from "../../components";
+import { TCustomText } from "../../components";
 import { toggleSavePost } from "../../store/posts";
 
 export const CardBottom = connect(null, { toggleSavePost })(
@@ -37,15 +37,15 @@ export const CardBottom = connect(null, { toggleSavePost })(
             pack="feather"
             style={[styles.phoneIcon, { color: colors.text }]}
           />
-          <CustomText
+          <TCustomText
             weight="bold"
             style={{ ...styles.phoneText, ...{ color: colors.text } }}
           >
             call
-          </CustomText>
+          </TCustomText>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => toggleSavePost(id, isSaved, userID)}>
-          <Image style={styles.saveIcon} source={dark ? srcDark : srcLight}  />
+          <Image style={styles.saveIcon} source={dark ? srcDark : srcLight} />
         </TouchableOpacity>
       </View>
     );

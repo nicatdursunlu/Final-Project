@@ -4,17 +4,16 @@ import { Rating } from "react-native-elements";
 import { useTheme } from "@react-navigation/native";
 
 import { Container } from "./../commons";
-import { CustomText, CustomBtn } from "../components";
+import { TCustomText, CustomBtn } from "../components";
 import { getWidthByPercents } from "./../utils/getWidthByPercents";
 
 export const RateScreen = () => {
   const { colors } = useTheme();
   return (
     <Container>
-      <CustomText style={{ fontSize: 16, paddingVertical: 20 }}>
-        If you enjoy using this app, would you mind taking a moment to rate it?
-        {"\n"} {"\n"}Thanks for your support!
-      </CustomText>
+      <TCustomText style={{ fontSize: 16, paddingVertical: 20 }}>
+        rate_it
+      </TCustomText>
 
       <Rating
         type="custom"
@@ -27,7 +26,7 @@ export const RateScreen = () => {
         style={{ paddingBottom: 50 }}
       />
       <CustomBtn
-        title="Submit"
+        title="submit"
         width={getWidthByPercents(80, 2)}
         onPress={() =>
           Alert.alert("Submitted", "Thanks for your feedback 🥳🎉")

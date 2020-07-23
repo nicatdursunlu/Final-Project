@@ -1,14 +1,19 @@
 import React from "react";
-import { Image, Avatar } from "react-native-elements";
+import { Image } from "react-native-elements";
 import { useTheme } from "@react-navigation/native";
 import { StyleSheet, View, ActivityIndicator } from "react-native";
 
-import { CustomText, CustomBtn, AvatarMaker } from "../../components";
+import {
+  CustomText,
+  TCustomText,
+  CustomBtn,
+  AvatarMaker,
+} from "../../components";
 
 export const UserInfo = ({
   photo,
   onPress,
-  fullName,
+  fullname,
   bloodType,
   profileType,
 }) => {
@@ -29,22 +34,22 @@ export const UserInfo = ({
               placeholderStyle={{ backgroundColor: "#f2f4f8" }}
             />
           ) : (
-            <View style={styles.img}>{AvatarMaker(fullName, 40)}</View>
+            <View style={styles.img}>{AvatarMaker(fullname, 40)}</View>
           )}
         </View>
         <View style={styles.info}>
           <CustomText weight="bold" style={styles.value}>
             {bloodType || "?"}
           </CustomText>
-          <CustomText style={styles.text}>Blood Type</CustomText>
+          <TCustomText style={styles.text}>blood_type</TCustomText>
         </View>
       </View>
       <CustomText weight="bold" style={styles.name}>
-        {fullName}
+        {fullname}
       </CustomText>
       <CustomBtn
         width="100%"
-        title={!!profileType ? "Send message" : "Edit profile "}
+        title={!!profileType ? "send_message" : "edit_profile"}
         titleStyle={{ ...styles.btnText, ...{ color: colors.text } }}
         onPress={onPress}
         style={[styles.btn, btnColor]}

@@ -27,9 +27,17 @@ export const AuthStack = () => (
     <Screen
       name="Welcome"
       component={WelcomeScreen}
-      options={{ headerShown: false }}
+      options={{ headerShown: false, title: i18n.t("welcome") }}
     />
-    <Screen name="Signup" component={SignUpScreen} />
-    <Screen name="Login" component={LogInScreen} />
+    <Screen
+      name="Signup"
+      component={SignUpScreen}
+      options={{ title: i18n.t("signup") }}
+    />
+    <Screen
+      name="Login"
+      component={LogInScreen}
+      options={{ title: i18n.t("login") }}
+    />
   </Navigator>
 );

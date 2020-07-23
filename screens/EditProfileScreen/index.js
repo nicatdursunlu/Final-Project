@@ -7,7 +7,7 @@ import { Container } from "./../../commons";
 import { BLOOD_TYPES } from "../../utils/dummy";
 import { AvatarUploader } from "./AvatarUploader";
 import { getWidthByPercents } from "../../utils/getWidthByPercents";
-import { CustomText, SelectGroup, CustomBtn, Field } from "../../components";
+import { TCustomText, SelectGroup, CustomBtn, Field } from "../../components";
 import {
   selectName,
   selectUsername,
@@ -18,7 +18,7 @@ import {
 } from "../../store/auth";
 
 const mapStateToProps = (state) => ({
-  fullName: selectName(state),
+  fullname: selectName(state),
   username: selectUsername(state),
   bloodType: selectBlood(state),
   photo: selectPhoto(state),
@@ -27,9 +27,9 @@ const mapStateToProps = (state) => ({
 export const EditProfileScreen = connect(mapStateToProps, {
   uploadPhoto,
   updateUserInfo,
-})(({ username, fullName, bloodType, navigation, updateUserInfo }) => {
+})(({ username, fullname, bloodType, navigation, updateUserInfo }) => {
   const [fields, setFields] = useState({
-    fullName,
+    fullname,
     username,
     bloodType: bloodType || "",
   });
@@ -48,23 +48,23 @@ export const EditProfileScreen = connect(mapStateToProps, {
     navigation.goBack();
   };
 
-  const width = getWidthByPercents(75, 2);
+  const width = getWidthByPercents(65, 2);
   const btnWidth = getWidthByPercents(45, 2);
   const { colors } = useTheme();
   return (
     <Container>
-      <AvatarUploader navigation={navigation} fullName={fullName} />
+      <AvatarUploader navigation={navigation} fullname={fullname} />
       <View style={styles.row}>
-        <CustomText>Fullname</CustomText>
+        <TCustomText>fullname</TCustomText>
         <Field
           style={{ width }}
-          value={fields.fullName}
-          placeholder={fields.fullName}
-          onChangeText={(val) => fieldsChangeHandler("fullName", val)}
+          value={fields.fullname}
+          placeholder={fields.fullname}
+          onChangeText={(val) => fieldsChangeHandler("fullname", val)}
         />
       </View>
       <View style={styles.row}>
-        <CustomText>Username</CustomText>
+        <TCustomText>username</TCustomText>
         <Field
           style={{ width }}
           value={fields.username}
@@ -73,7 +73,7 @@ export const EditProfileScreen = connect(mapStateToProps, {
         />
       </View>
       <View style={styles.row}>
-        <CustomText>Blood type</CustomText>
+        <TCustomText>blood_type</TCustomText>
         <SelectGroup
           style={{ width }}
           initial={bloodType}
@@ -83,13 +83,13 @@ export const EditProfileScreen = connect(mapStateToProps, {
       </View>
       <View style={styles.actions}>
         <CustomBtn
-          title="Cancel"
+          title="cancel"
           onPress={goBack}
           width={btnWidth}
           titleStyle={{ color: colors.secondaryText }}
           style={{ backgroundColor: colors.card }}
         />
-        <CustomBtn title="Save" width={btnWidth} onPress={onSubmit} />
+        <CustomBtn title="save" width={btnWidth} onPress={onSubmit} />
       </View>
     </Container>
   );

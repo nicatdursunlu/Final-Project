@@ -3,11 +3,7 @@ import { IMAGES } from "../styles/images";
 import { Icon } from "@ui-kitten/components";
 
 export const BLOOD_TYPES = ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"];
-export const LANGUAGES = ["English", "Azerbaijani", "Russian"];
-export const TITLES = [
-  { title: "Search on map" },
-  { title: "To whom can i donate" },
-];
+export const LANGUAGES = ["english", "azerbaijani", "russian"];
 
 export const SLIDER_IMAGES = [
   { key: "1", uri: IMAGES.slider1 },
@@ -17,7 +13,7 @@ export const SLIDER_IMAGES = [
 ];
 
 export const SIGNUP_INITIAL_STATE = {
-  fullName: "",
+  fullname: "",
   username: "",
   email: "",
   password: "",
@@ -26,42 +22,45 @@ export const SIGNUP_INITIAL_STATE = {
 
 export const AUTH_DATA = [
   {
-    label: "Full name",
-    value: "fullName",
-    placeholder: "John Doe",
-    name: "fullName",
+    label: "fullname",
+    value: "fullname",
+    placeholder: "johnd",
+    name: "fullname",
+    caption: "",
   },
   {
-    label: "Username",
+    label: "username",
     value: "username",
-    placeholder: "john_doe",
+    placeholder: "johndo",
+    caption: "",
     name: "username",
     accessoryRight: (props) => <Icon {...props} name="user" pack="feather" />,
   },
   {
-    label: "Email",
+    label: "email",
     value: "email",
-    placeholder: "johndoe@gmail.com",
+    placeholder: "john",
     name: "email",
+    caption: "",
     accessoryRight: (props) => <Icon {...props} name="mail" pack="feather" />,
     keyboardType: "email-address",
   },
   {
-    label: "Password",
+    label: "password",
     value: "password",
     placeholder: "password",
     name: "password",
-    caption: "should contain at least 6 symbols",
+    caption: "pass_hint",
     captionIcon: (props) => (
       <Icon {...props} name="alert-circle" pack="feather" />
     ),
   },
   {
-    label: "Repeat password",
+    label: "repeat_pass",
     value: "repassword",
-    placeholder: "confirm password",
+    placeholder: "confirm_pass",
     name: "repassword",
-    caption: "should contain at least 6 symbols",
+    caption: "pass_hint",
     captionIcon: (props) => (
       <Icon {...props} name="alert-circle" pack="feather" />
     ),
@@ -70,7 +69,7 @@ export const AUTH_DATA = [
 
 export const ITEMS = [
   {
-    title: "Saved",
+    title: "saved",
     icon: () => (
       <Icon
         name="bookmark"
@@ -81,7 +80,7 @@ export const ITEMS = [
     goTo: "Saved",
   },
   {
-    title: "Settings",
+    title: "settings",
     icon: () => (
       <Icon
         name="settings"
@@ -92,7 +91,7 @@ export const ITEMS = [
     goTo: "Settings",
   },
   {
-    title: "About",
+    title: "about",
     icon: () => (
       <Icon
         name="info"
@@ -103,7 +102,7 @@ export const ITEMS = [
     goTo: "About",
   },
   {
-    title: "Rate Us",
+    title: "rate_us",
     icon: () => (
       <Icon
         name="star"

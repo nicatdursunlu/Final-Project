@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, FlatList } from "react-native";
-import { useTheme } from "@react-navigation/native";
-
 import { connect } from "react-redux";
+import { useTheme } from "@react-navigation/native";
+import { StyleSheet, View, FlatList } from "react-native";
+
 import { ChatsCover } from "./ChatsCover";
-import { CustomText } from "../../components";
+import { TCustomText } from "../../components";
 import {
   initChatList,
   makeReadMessage,
@@ -46,9 +46,9 @@ export const ChatsScreen = connect(mapStateToProps, {
     const { colors } = useTheme();
     return (
       <View style={styles.container}>
-        <CustomText style={{ ...styles.title, ...{ color: colors.link } }}>
-          Recent Chats
-        </CustomText>
+        <TCustomText style={{ ...styles.title, ...{ color: colors.link } }}>
+          recent_chats
+        </TCustomText>
         <FlatList
           data={lists}
           renderItem={renderItem}
