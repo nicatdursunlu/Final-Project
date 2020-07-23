@@ -28,9 +28,7 @@ export const RateScreen = () => {
       <CustomBtn
         title="submit"
         width={getWidthByPercents(80, 2)}
-        onPress={() =>
-          Alert.alert("Submitted", "Thanks for your feedback 🥳🎉")
-        }
+        onPress={() => Alert.alert(i18n.t("thanks_for_support"))}
       />
     </Container>
   );
