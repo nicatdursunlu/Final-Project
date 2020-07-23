@@ -1,7 +1,6 @@
 import React from "react";
 import i18n from "i18n-js";
 import { connect } from "react-redux";
-import * as Localization from "expo-localization";
 import { NavigationContainer } from "@react-navigation/native";
 
 import { AppStack } from "./AppStack";
@@ -15,6 +14,7 @@ const mapStateToProps = (state) => ({
   theme: getTheme(state),
   language: getLanguage(state),
 });
+
 import en from "./../translations/en.json";
 import az from "./../translations/az.json";
 import ru from "./../translations/ru.json";
@@ -28,9 +28,9 @@ export const RootNav = connect(mapStateToProps)(({ auth, theme, language }) => {
   i18n.locale =
     language === "azerbaijani"
       ? "az-US"
-      : language === "english"
-      ? "en-US"
-      : "ru-US";
+      : language === "russian"
+      ? "ru-US"
+      : "en-US";
 
   i18n.fallbacks = true;
   return (
