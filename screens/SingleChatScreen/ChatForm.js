@@ -31,7 +31,7 @@ export const ChatForm = ({ onPress, value, textChange }) => {
     >
       <Field
         value={value}
-        placeholder="Type here to start send"
+        placeholder="type_here"
         textStyle={{ color: colors.text }}
         onChangeText={(val) => textChangehandler(val)}
         style={[

@@ -112,5 +112,7 @@
 
   "pass_match": "Passwords must match",
   "req": "is required",
-  "agree": "You must agree to our Terms and Conditions to continue"
+  "agree": "You must agree to our Terms and Conditions to continue",
+
+  "reset": "Reset"
 }
