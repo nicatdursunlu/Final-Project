@@ -1,15 +1,31 @@
 import React from "react";
 import i18n from "i18n-js";
 import { Icon } from "@ui-kitten/components";
+import { useTheme, DrawerActions } from "@react-navigation/native";
 import { AnimatedTabBarNavigator } from "react-native-animated-nav-tab-bar";
 
 import { DrawerStack } from "./DrawerStack";
 import { ChatsScreen, CreateScreen, FindScreen, HomeScreen } from "../screens";
-import { useTheme } from "@react-navigation/native";
 
 const { Navigator, Screen } = AnimatedTabBarNavigator();
 
-export const BottomTabs = () => {
+export const BottomTabs = ({ navigation, route }) => {
+  if (route.state && route.state.index === 4)
+    navigation.setOptions({
+      headerRight: () => (
+        <Icon
+          name="md-menu"
+          pack="ion"
+          style={{
+            height: 28,
+            marginRight: 15,
+            color: colors.text,
+          }}
+          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+        />
+      ),
+    });
+  else navigation.setOptions({ headerRight: null });
   const { colors } = useTheme();
   return (
     <Navigator
